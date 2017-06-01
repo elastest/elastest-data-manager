@@ -9,12 +9,12 @@ Copyright © 2017-2019 [<member>]. Licensed under
 elastest-persistence-service
 =================
 
-The EPS is responsible for starting, managing and stopping (shuting down) the different persistent services available for the whole ElasTest platform.
+The EPS is responsible for installing, managing and uninstalling the different persistent services available for the whole ElasTest platform.
 The persistent services under the responsability of EPS are the following ones:
 - Relational database (MySQL)
-- S3 compatible file storage (more details below)
+- Persistance control service (API-including Alluxio, S3 & HDFS compatible)
 - ElasticSearch (for both logs and metrics)
-
+- API for exporting and importing data
 
 What is ElasTest
 -----------------
