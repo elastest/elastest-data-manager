@@ -1,0 +1,296 @@
+swagger: '2.0'
+info:
+  description: 'EPS :: Elastest Persistence Service'
+  version: 1.0.0
+  title: Elastest EPS API
+  termsOfService: 'http://swagger.io/terms/'
+  contact:
+    email: aafent@gmai.com
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+host: elastest.io
+basePath: /eps
+tags:
+  - name: temporary
+    description: >-
+      Temporary storage on a non-replicated file system. This storage area is
+      recycling every 24 hours. 
+    externalDocs:
+      description: Find out more
+      url: 'http://swagger.io'
+  - name: store
+    description: Access to Temporary
+  - name: user
+    description: 'Operations '
+    externalDocs:
+      description: Find out more about our us
+      url: 'http://swagger.io'
+schemes:
+  - http
+paths:
+  /temporary:
+    post:
+      tags:
+        - temporary
+      summary: Submit file for temporary storage
+      description: >-
+        Submit file for temporary storage. The file can be small or big. Small
+        files content included in the model, big files content is fetched using
+        the given URL by the service. 
+      operationId: addtemporary
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: temporary object that needs to be added
+          required: true
+          schema:
+            $ref: '#/definitions/fileObject'
+      responses:
+        '200':
+          description: Successful Post
+          schema:
+            $ref: '#/definitions/fileResponse'
+        '405':
+          description: Invalid input
+  '/temporary/{id}':
+    get:
+      tags:
+        - temporary
+      summary: Get temporary file by its id
+      description: >-
+        Returns the file content if it is a small file or in the case of big
+        returns a URL to that. Caller has to fetch it by using http protocol. 
+      operationId: gettemporaryByid
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: id of temporary file to return back to the caller
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: successful Get
+          schema:
+            $ref: '#/definitions/fileObject'
+        '400':
+          description: Invalid id supplied
+        '404':
+          description: temporary id not found
+        '405':
+          description: Invalid input
+    put:
+      tags:
+        - temporary
+      summary: Updates a temporary
+      description: >-
+        Updates a specific temporary file by an id which is mandatory provided.
+        Automatically returns the file content if it is a small file or in the
+        case of big returns a URL to that. Caller has to fetch it by using http
+        protocol.
+      operationId: updatetemporaryWithForm
+      consumes:
+        - application/x-www-form-urlencoded
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: id of temporary that needs to be updated
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: successful Update has been performed
+          schema:
+            $ref: '#/definitions/fileObject'
+        '400':
+          description: Invalid id supplied
+        '404':
+          description: temporary id not found
+        '405':
+          description: Invalid input
+    delete:
+      tags:
+        - temporary
+      summary: Deletes a temporary
+      description: >-
+        Deletes a specific temporary file by an id which is mandatory provided.
+        Automatically returns the file content if it is a small file or in the
+        case of big returns a URL to that. Caller has to fetch it by using http
+        protocol. 
+      operationId: deletetemporary
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: temporary id to delete
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: successful Delete has been performed
+          schema:
+            $ref: '#/definitions/fileObject'
+        '400':
+          description: Invalid id supplied
+        '404':
+          description: temporary not found
+        '405':
+          description: Invalid input
+  '/file/{name}':
+    post:
+      tags:
+        - file
+      summary: Create permanent file by filename
+      description: >-
+        Creates a specific permanent file by filename which is mandatory
+        provided. Automatically returns the file content if it is a small file
+        or in the case of big returns a URL to that. Caller has to fetch it by
+        using http protocol. 
+      operationId: postpermanentByfilename
+      produces:
+        - application/json
+      parameters:
+        - name: name
+          in: path
+          description: Filename of permanent file to return back to the caller
+          required: true
+          type: string
+        - in: body
+          name: body
+          description: temporary object that needs to be added
+          required: true
+          schema:
+            $ref: '#/definitions/fileObject'
+      responses:
+        '200':
+          description: successful creation of file
+        '400':
+          description: Invalid filename supplied
+        '404':
+          description: filename not found
+        '405':
+          description: Invalid input
+    get:
+      tags:
+        - file
+      summary: Get permanent file by filename
+      description: >-
+        Returns the file content if it is a small file or in the case of big
+        returns a URL to that. Caller has to fetch it by using http protocol. 
+      operationId: getpermanentByfilename
+      produces:
+        - application/json
+      parameters:
+        - name: name
+          in: path
+          description: Filename of permanent file to return back to the caller
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful Get
+          schema:
+            $ref: '#/definitions/fileObject'
+        '400':
+          description: Invalid filename supplied
+        '404':
+          description: filename not found
+        '405':
+          description: Invalid input
+    put:
+      tags:
+        - file
+      summary: Updates a permanent file
+      description: >-
+        Updates a specific permanent file by filename which is mandatory
+        provided. Automatically returns the file content if it is a small file
+        or in the case of big returns a URL to that. Caller has to fetch it by
+        using http protocol.
+      operationId: updatepermanentWithForm
+      consumes:
+        - application/x-www-form-urlencoded
+      produces:
+        - application/json
+      parameters:
+        - name: name
+          in: path
+          description: permanent filename needs to be updated
+          required: true
+          type: string
+        - in: body
+          name: body
+          description: temporary object that needs to be added
+          required: true
+          schema:
+            $ref: '#/definitions/fileObject'
+      responses:
+        '200':
+          description: successful Update has been performed
+        '400':
+          description: Invalid filename supplied
+        '404':
+          description: filename not found
+        '405':
+          description: Invalid input
+    delete:
+      tags:
+        - file
+      summary: Deletes a permanent file
+      description: >-
+        Deletes a specific permanent file by an id which is mandatory provided.
+        Automatically returns the file content if it is a small file or in the
+        case of big returns a URL to that. Caller has to fetch it by using http
+        protocol. 
+      operationId: deletepermanent
+      produces:
+        - application/json
+      parameters:
+        - name: name
+          in: path
+          description: permanent file to delete
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful Delete has been performed
+        '400':
+          description: Invalid filename supplied
+        '404':
+          description: permanent file not found
+        '405':
+          description: Invalid input
+definitions:
+  fileResponse:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+        example: 6653318
+  fileObject:
+    type: object
+    properties:
+      isBigFile:
+        type: boolean
+        example: 'true'
+      bigFileURL:
+        type: string
+        example: 'http://example.com/files/file001.dmp'
+      content:
+        type: string
+        example: ''
+externalDocs:
+  description: Find out more about Swagger
+  url: 'http://swagger.io'
