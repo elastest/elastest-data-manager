@@ -6,11 +6,11 @@
 Copyright © 2017-2019 [<member>]. Licensed under
 [Apache 2.0 License].
 
-elastest-persistence-service
+elastest-data-manager
 =================
 
-The EPS is responsible for installing, managing and uninstalling the different persistent services available for the whole ElasTest platform.
-The persistent services under the responsability of EPS are the following ones:
+The EDM is responsible for installing, managing and uninstalling the different persistent services available for the whole ElasTest platform.
+The persistent services under the responsability of EDM are the following ones:
 - Relational database (MySQL)
 - Persistance control service (API-including Alluxio, S3 & HDFS compatible)
 - ElasticSearch (for both logs and metrics)
