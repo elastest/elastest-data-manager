@@ -18,6 +18,7 @@ The persistent services under the responsibility of EDM are the following ones:
 
 
 ### Building the Docker images locally
+
 ###Hadoop
 
     # From main project folder
