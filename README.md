@@ -46,7 +46,14 @@ and check that the image with tag **elastest/alluxio:1.5.0** is listed.
 ## Start this component using docker-compose
 Note: your terminal need to be in the folder where the docker-compose.yml is located.
 
-You can start this image using docker-compose. It will start a namenode and a datanode. You have the possibility to scale the datanode.
+You can start this image using docker-compose. It will start the following:
+
+- One HDFS namenode
+- One HDFS datanode
+- One Alluxio master
+- One Alluxio worker
+
+You have the possibility to scale the number of HDFS datanodes and Alluxio workers.
 
 ### Starting the component
     # From main project folder
@@ -62,10 +69,14 @@ You can start this image using docker-compose. It will start a namenode and a da
 
 If everything looks good in the logs (no errors), hit `CTRL + C` to detach the console from the logs.
 
-### Scaling the datanode
+### Scaling the number of instances
 If you want to increase the number of HDFS datanodes in your cluster
 
     docker-compose scale hdfs-datanode=<number of instances>
+
+If you want to increase the number of Alluxio workers in your cluster
+
+    docker-compose scale alluxio-worker=<number of instances>
 
 ### Accessing the web interfaces
 Each component provide its own web UI. Open you browser at one of the URLs below, where `dockerhost` is the name / IP of the host running the docker daemon. If using Linux, this is the IP of your linux box. If using OSX or Windows (via Boot2docker), you can find out your docker host by typing `boot2docker ip`. On my machine, the NameNode UI is accessible at `http://192.168.59.103:50070/`
