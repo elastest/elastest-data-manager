@@ -1,0 +1,132 @@
+version: '2'
+
+services:
+
+  hdfs-namenode:
+    image: elastest/hadoop:2.8.0
+    command: hdfs namenode
+    ports: 
+        - "50070:50070"
+        - "9000:9000"
+    hostname: hdfs-namenode
+    networks:
+        - elastest
+
+  hdfs-datanode:
+    image: elastest/hadoop:2.8.0
+    command: hdfs datanode
+    ports:
+# The host port is randomly assigned by Docker, to allow scaling to multiple DataNodes on the same host
+        - "50075"
+    links:
+        - hdfs-namenode
+    networks:
+        - elastest
+
+  alluxio-master:
+    # build: docker-alluxio-base
+    image: elastest/alluxio:1.5.0
+    command: master
+    ports:
+      - 19999:19999
+      - 19998:19998
+    #   - 30000:30000
+    # volumes:
+    #   - data:/data
+    environment:
+      - ALLUXIO_MASTER_HOSTNAME=alluxio-master
+      - ALLUXIO_UNDERFS_ADDRESS=/underStorage
+      # - ALLUXIO_UNDERFS_ADDRESS=hdfs://hdfs-namenode:9000
+    links:
+        - hdfs-namenode
+    volumes:
+      - ./underStorage:/underStorage
+      # - ./tmpfiles:/tmpfiles
+    hostname: alluxio-master
+    networks:
+        - elastest
+
+  alluxio-worker:
+    # build: docker-alluxio-base
+    image: elastest/alluxio:1.5.0
+    command: worker
+    ports:
+      - "29998"
+      - "29999"
+    links:
+      - hdfs-namenode
+      - alluxio-master
+    # volumes:
+    #   - ./tmpfiles:/tmpfiles
+    ## change to your DOCKER_HOST
+    # hostname: 192.168.99.100
+
+    #    privileged: true         ### enable to use ramfs with docker. otherwise it will use disk
+    environment:
+      - ALLUXIO_MASTER_HOSTNAME=alluxio-master
+      - ALLUXIO_RAM_FOLDER=/mnt/ramdisk
+      - ALLUXIO_WORKER_MEMORY_SIZE=1GB
+      - ALLUXIO_UNDERFS_ADDRESS=/underStorage
+      # - ALLUXIO_UNDERFS_ADDRESS=hdfs://hdfs-namenode:9000
+    volumes:
+      - ./underStorage:/underStorage
+      # - ./tmpfiles:/tmpfiles
+    networks:
+        - elastest
+
+
+  alluxio-proxy:
+    # build: docker-alluxio-base
+    image: elastest/alluxio:1.5.0
+    command: proxy
+    ports:
+      - 39999:39999
+    links:
+      - alluxio-master
+    # volumes:
+    #   - ./tmpfiles:/tmpfiles
+    ## change to your DOCKER_HOST
+    # hostname: 192.168.99.100
+
+    #    privileged: true         ### enable to use ramfs with docker. otherwise it will use disk
+    environment:
+      - ALLUXIO_MASTER_HOSTNAME=alluxio-master
+      # - ALLUXIO_RAM_FOLDER=/mnt/ramdisk
+      # - ALLUXIO_WORKER_MEMORY_SIZE=1GB
+      # - ALLUXIO_UNDERFS_ADDRESS=hdfs://hdfs-namenode:9000
+    volumes:
+      - ./underStorage:/underStorage
+      # - ./tmpfiles:/tmpfiles
+    networks:
+        - elastest
+
+
+networks:
+  elastest:
+    driver: bridge
+
+
+
+
+## Run everything in one container
+#  alluxio-local:
+#    build: docker-alluxio-base
+#    command: /start.sh local
+#    ports:
+#      - 19999:19999
+#      - 19998:19998
+#      - 30000:30000
+#      - 29998:29998
+#      - 29999:29999
+#    ## change to your DOCKER_HOST
+#    hostname: 192.168.99.100
+#    #    privileged: true         ### enable to use ramfs with docker. otherwise it will use disk
+#    volumes:
+#      - data:/data
+#    environment:
+#      ALLUXIO_MASTER_ADDRESS: 192.168.99.100
+
+
+
+# volumes:
+#   data:
