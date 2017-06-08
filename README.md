@@ -67,8 +67,6 @@ You have the possibility to scale the number of HDFS datanodes and Alluxio worke
     # View logs
     docker-compose logs
 
-If everything looks good in the logs (no errors), hit `CTRL + C` to detach the console from the logs.
-
 ### Scaling the number of instances
 If you want to increase the number of HDFS datanodes in your cluster
 
