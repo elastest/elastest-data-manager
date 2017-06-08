@@ -18,7 +18,7 @@ The persistent services under the responsibility of EDM are the following ones:
 
 
 ### Building the Docker images locally
-####Hadoop
+###Hadoop
 
     # From main project folder
     cd hadoop
@@ -30,7 +30,7 @@ To verify type:
     
 and check that the image with tag **elastest/hadoop:2.8.0** is listed.
 
-####Alluxio
+###Alluxio
 
     # From main project folder
     cd alluxio
