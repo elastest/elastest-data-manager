@@ -1,0 +1,46 @@
+/opt/alluxio/bin/alluxio fs mount /tmpfiles file:///tmpfiles
+
+docker build -t elastest/alluxio:1.5.0 --build-arg ALLUXIO_TARBALL=alluxio-1.5.0-SNAPSHOT-hadoop-2.8-bin.tar.gz .
+
+	# Read file (HDFS)
+	curl -v -X POST http://localhost:39999/api/v1/paths//hdfs/NOTICE/open-file
+	curl -v -X POST http://localhost:39999/api/v1/streams/1/read
+	curl -v -X POST http://localhost:39999/api/v1/streams/1/close
+
+	# Read file (local)
+	curl -v -X POST http://localhost:39999/api/v1/paths//LICENSE/open-file
+	curl -v -X POST http://localhost:39999/api/v1/streams/2/read
+	curl -v -X POST http://localhost:39999/api/v1/streams/2/close
+
+	# Upload file (HDFS)
+	curl -v -X POST http://localhost:39999/api/v1/paths//hdfs/ipconfig_hadoop.txt/create-file
+	curl -v -X POST http://localhost:39999/api/v1/streams/3/write --data-binary @ipconfig_hadoop.txt -H "Content-Type: application/octet-stream"
+	curl -v -X POST http://localhost:39999/api/v1/streams/3/close
+
+	# Upload file (local)
+	curl -v -X POST http://localhost:39999/api/v1/paths//ipconfig_hadoop.txt/create-file
+	curl -v -X POST http://localhost:39999/api/v1/streams/4/write --data-binary @ipconfig_hadoop.txt -H "Content-Type: application/octet-stream"
+	curl -v -X POST http://localhost:39999/api/v1/streams/4/close
+
+	# Delete file (HDFS)
+	curl -v -X POST http://localhost:39999/api/v1/paths//hdfs/ipconfig_hadoop.txt/delete
+
+	# Delete file (local)
+	curl -v -X POST http://localhost:39999/api/v1/paths//ipconfig_hadoop.txt/delete
+
+# Spark-shell
+val s = sc.textFile("alluxio://alluxio-master:19998/LICENSE")
+s.count()
+val double = s.map(line => line + '\n' + line)
+double.saveAsTextFile("alluxio://alluxio-master:19998/hdfs/LICENSE2")
+
+-Dalluxio.user.file.writetype.default=CACHE_THROUGH
+
+# Alluxio command line
+alluxio/bin/alluxio fs rm -R /hdfs/LICENSE8
+
+docker-compose scale spark-worker=3
+docker-compose scale hdfs-datanode=3
+
+
+https://github.com/elastest/elastest-data-manager.git

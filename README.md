@@ -10,38 +10,13 @@ elastest-data-manager
 =================
 
 The EDM is responsible for installing, managing and uninstalling the different persistent services available for the whole ElasTest platform.
-The persistent services under the responsibility of EDM are the following ones:
+
+The persistent services under the responsibility of EDM are the following:
+
 - Relational database (MySQL)
 - Persistance control service (API-including Alluxio, S3 & HDFS compatible)
 - ElasticSearch (for both logs and metrics)
 - API for exporting and importing data
-
-
-### Building the Docker images locally
-
-**Hadoop**
-
-    # From main project folder
-    cd hadoop
-    docker build -t elastest/hadoop:2.8.0 .
-
-To verify type:
-
-    docker images
-    
-and check that the image with tag **elastest/hadoop:2.8.0** is listed.
-
-**Alluxio**
-
-    # From main project folder
-    cd alluxio
-    docker build -t elastest/alluxio:1.5.0 .
-
-To verify type:
-
-    docker images
-    
-and check that the image with tag **elastest/alluxio:1.5.0** is listed.
 
 ## Start this component using docker-compose
 Note: your terminal need to be in the folder where the docker-compose.yml is located.
@@ -52,8 +27,11 @@ You can start this image using docker-compose. It will start the following:
 - One HDFS datanode
 - One Alluxio master
 - One Alluxio worker
+- An Elasticsearch cluster (with two nodes)
+- A Cerebro instance (web tool for monitoring and administering the Elasticsearch cluster)
+- A Kibana instance
 
-You have the possibility to scale the number of HDFS datanodes and Alluxio workers.
+You have the possibility to scale the number of HDFS datanodes, Alluxio workers and Elasticsearch nodes.
 
 ### Starting the component
     # From main project folder
@@ -67,6 +45,16 @@ You have the possibility to scale the number of HDFS datanodes and Alluxio worke
     # View logs
     docker-compose logs
 
+### Accessing the web interfaces
+Each component provide its own web UI. Open you browser at one of the URLs below, where `dockerhost` is the name / IP of the host running the docker daemon. If using Linux, this is the IP of your linux box. If using OSX or Windows (via Boot2docker), you can find out your docker host by typing `boot2docker ip`. On my machine, the NameNode UI is accessible at `http://192.168.59.103:50070/`
+
+| Component               | Port                                               |
+| ----------------------- | -------------------------------------------------- |
+| HDFS NameNode           | [http://localhost:50070](http://localhost:50070) |
+| Alluxio Web Interface| [http://localhost:19999](http://localhost:19999) |
+| Kibana Web Interface| [http://localhost:5601](http://localhost:5601) |
+| Cerebro Web Interface| [http://localhost:9400/#/overview?host=http:%2F%2Felasticsearch:9200]() |
+
 ### Scaling the number of instances
 If you want to increase the number of HDFS datanodes in your cluster
 
@@ -76,16 +64,14 @@ If you want to increase the number of Alluxio workers in your cluster
 
     docker-compose scale alluxio-worker=<number of instances>
 
-### Accessing the web interfaces
-Each component provide its own web UI. Open you browser at one of the URLs below, where `dockerhost` is the name / IP of the host running the docker daemon. If using Linux, this is the IP of your linux box. If using OSX or Windows (via Boot2docker), you can find out your docker host by typing `boot2docker ip`. On my machine, the NameNode UI is accessible at `http://192.168.59.103:50070/`
+If you want to increase the number of Elasticsearch nodes in your cluster
 
-| Component               | Port                                               |
-| ----------------------- | -------------------------------------------------- |
-| HDFS NameNode           | [http://localhost:50070](http://localhost:50070) |
-| Alluxio Web Interface| [http://localhost:19999](http://localhost:19999) |
+    docker-compose scale esnode=<number of instances>
+    
+### Finding the port for web access of scalable nodes
+To allow worker instances (such as the hdfs-datanode, the alluxio-worker or the esnode) to scale, we need to let docker decide the port used on the host machine. 
 
-### Finding the port for web access
-To allow the datanode to scale, we need to let docker decide the port used on the host machine. To find which port it is
+For example, to find the port for the hdfs-datanode:
 
     docker-compose port hdfs-datanode 50075
 
