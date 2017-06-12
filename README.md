@@ -53,7 +53,7 @@ Each component provide its own web UI. Open you browser at one of the URLs below
 | HDFS NameNode           | [http://localhost:50070](http://localhost:50070) |
 | Alluxio Web Interface| [http://localhost:19999](http://localhost:19999) |
 | Kibana Web Interface| [http://localhost:5601](http://localhost:5601) |
-| Cerebro Web Interface| [http://localhost:9400/#/overview?host=http:%2F%2Felasticsearch:9200]() |
+| Cerebro Web Interface| [http://localhost:9400/#/overview?host=http:%2F%2Felasticsearch:9200](http://localhost:9400/#/overview?host=http:%2F%2Felasticsearch:9200) |
 
 ### Scaling the number of instances
 If you want to increase the number of HDFS datanodes in your cluster
