@@ -28,7 +28,7 @@ You can start this image using docker-compose. It will start the following:
 - One Alluxio master
 - One Alluxio worker
 - An Elasticsearch cluster (with two nodes)
-- A Cerebro instance (web tool for monitoring and administering the Elasticsearch cluster)
+- A Cerebro instance (web tool for monitoring and administering the Elasticsearch cluster )
 - A Kibana instance
 
 You have the possibility to scale the number of HDFS datanodes, Alluxio workers and Elasticsearch nodes.
@@ -68,7 +68,7 @@ If you want to increase the number of Elasticsearch nodes in your cluster
 
     docker-compose scale esnode=<number of instances>
     
-### Finding the port for web access of scalable nodes
+### Finding the port for web access of scalable
 To allow worker instances (such as the hdfs-datanode, the alluxio-worker or the esnode) to scale, we need to let docker decide the port used on the host machine. 
 
 For example, to find the port for the hdfs-datanode:
