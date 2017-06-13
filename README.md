@@ -30,6 +30,7 @@ You can start this image using docker-compose. It will start the following:
 - An Elasticsearch cluster (with two nodes)
 - A Cerebro instance (web tool for monitoring and administering the Elasticsearch cluster )
 - A Kibana instance
+- A MySQL instance
 
 You have the possibility to scale the number of HDFS datanodes, Alluxio workers and Elasticsearch nodes.
 
