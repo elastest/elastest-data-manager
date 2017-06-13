@@ -81,7 +81,7 @@ If you want to increase the number of Elasticsearch nodes in your cluster
 
     docker-compose scale esnode=<number of instances>
     
-### Finding the port for web access of scalable
+### Finding the port for web access of scalable containers
 To allow worker instances (such as the hdfs-datanode, the alluxio-worker or the esnode) to scale, we need to let docker decide the port used on the host machine. 
 
 For example, to find the port for the hdfs-datanode:
