@@ -19,7 +19,7 @@ The persistent services under the responsibility of EDM are the following:
 - API for exporting and importing data
 
 ## Start this component using docker-compose
-Note: your terminal need to be in the folder where the docker-compose.yml is located.
+Note: your terminal need to be in the main project folder where the docker-compose.yml is located.
 
 You can start this image using docker-compose. It will start the following:
 
@@ -33,6 +33,18 @@ You can start this image using docker-compose. It will start the following:
 
 You have the possibility to scale the number of HDFS datanodes, Alluxio workers and Elasticsearch nodes.
 
+### Preparing the Linux host
+If you are in a Linux host, you need to set vm.max_map_count to at least 262144  in order to run the Elasticsearch container. (more info at https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html#docker-cli-run-prod-mode).
+
+You can use the following helper script to do that:
+
+    # From main project folder
+    
+    # Start component (in detached mode)
+    ./prepare-linux-host.sh
+    
+In order to change your system settings, the script will prompt you for your sudo password.
+    
 ### Starting the component
     # From main project folder
     
