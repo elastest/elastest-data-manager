@@ -11,8 +11,10 @@
 
 FROM openjdk:7-jdk-alpine
 
+ENV ALLUXIO_VERSION 1.5.0
+
 #ARG ALLUXIO_TARBALL=http://downloads.alluxio.org/downloads/files/1.4.0/alluxio-1.4.0-bin.tar.gz
-ARG ALLUXIO_TARBALL=http://downloads.alluxio.org/downloads/files/1.5.0-RC3/alluxio-1.5.0-RC3-hadoop-2.8-bin.tar.gz
+ARG ALLUXIO_TARBALL=http://downloads.alluxio.org/downloads/files/${ALLUXIO_VERSION}/alluxio-${ALLUXIO_VERSION}-hadoop-2.8-bin.tar.gz
 
 RUN apk add --update bash && \
     # apk add --update git && \
