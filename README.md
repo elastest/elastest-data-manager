@@ -41,7 +41,6 @@ You can use the following helper script to do that:
     
 In order to change your system settings, the script will prompt you for your sudo password.
    
-
 ## Start this component using docker-compose
 Note: your terminal need to be in the main project folder where the docker-compose.yml is located.
 
@@ -135,7 +134,7 @@ You can try the following examples:
 	curl -v -X POST http://localhost:39999/api/v1/paths//hdfs/LICENSE/delete
 
 ### Elasticsearch
-Elasticsearch is listening at localhost:9200 (if you want to access it with your own client interface ).
+Elasticsearch is listening at localhost:9200 (if you want to access it with your own client interface).
 You can also connect to it and run queries through the provided Cerebro Web Interface. Cerebro can connect to Elasticsearch using hostname elasticsearch and port 9200
 
 ### MySQL
@@ -143,7 +142,19 @@ MySQL Server is listening at localhost:3306.
 You can connect to it with user: elastest and password elastest
 A database elastest is already created and you can use it for your schemas.
 
+## Stop this component using docker-compose
 
+    # From main project folder
+    
+    # Stop containers
+    docker-compose kill
+    
+    # Remove containers
+    docker-compose rm -f
+    
+    # Remove MySQL Data Volume (Optional)
+    docker volume rm elastestdatamanager_elastest_mysql_data
+   
 What is ElasTest
 -----------------
 
