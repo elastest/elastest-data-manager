@@ -19,8 +19,8 @@ The persistent services under the responsibility of EDM are the following:
 - API for exporting and importing data
 
 ## Prerequisites
-Install Docker Compose: https://docs.docker.com/compose/install/
-Install Git: https://www.atlassian.com/git/tutorials/install-git
+- Install Docker Compose: https://docs.docker.com/compose/install/
+- Install Git: https://www.atlassian.com/git/tutorials/install-git
 
 ### Clone the project
     # Clone the project to your system
