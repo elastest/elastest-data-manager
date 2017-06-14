@@ -72,7 +72,7 @@ You have the possibility to scale the number of HDFS datanodes, Alluxio workers 
 Please note that it will take some time (in the order of several seconds - depending on your system) for all the services to be fully available. 
 
 ### Accessing the web interfaces
-Each component provide its own web UI. Open you browser at one of the URLs below, where `dockerhost` is the name / IP of the host running the docker daemon. If using Linux, this is the IP of your linux box. If using OSX or Windows (via Boot2docker), you can find out your docker host by typing `boot2docker ip`. On my machine, the NameNode UI is accessible at `http://192.168.59.103:50070/`
+Each component provide its own web UI. Open you browser at one of the URLs below, where `dockerhost` is the name / IP of the host running the docker daemon. If using Linux, this is the IP of your linux box. If using OSX or Windows (via Boot2docker), you can find out your docker host by typing `boot2docker ip`. 
 
 | Component               | Port                                               |
 | ----------------------- | -------------------------------------------------- |
