@@ -145,7 +145,9 @@ In order to connect to Elasticsearch from Cerebro use hostname: elasticsearch an
 
 ### MySQL
 MySQL Server is listening at localhost:3306.
-You can connect to it with user: elastest and password elastest
+
+You can connect to it with user: elastest and password: elastest
+
 A database elastest is already created and you can use it for your schemas.
 
 ## Stop this component using docker-compose
