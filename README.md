@@ -24,6 +24,7 @@ The persistent services under the responsibility of EDM are the following:
 
 ### Clone the project
     # Clone the project to your system
+    # Alternatively, you can download the zip file from Github and unzip it
     git clone https://github.com/elastest/elastest-data-manager.git
 
     # Change working directory to main project folder
