@@ -38,7 +38,7 @@ You can use the following helper script to do that:
     # From main project folder
     
     # Run script
-    ./prepare-linux-host.sh
+    bin/prepare-linux-host.sh
     
 In order to change your system settings, the script will prompt you for your sudo password.
    
