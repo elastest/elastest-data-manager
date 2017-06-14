@@ -134,8 +134,11 @@ You can try the following examples:
 	curl -v -X POST http://localhost:39999/api/v1/paths//hdfs/LICENSE/delete
 
 ### Elasticsearch
-Elasticsearch is listening at localhost:9200 (if you want to access it with your own client interface).
-You can also connect to it and run queries through the provided Cerebro Web Interface. Cerebro can connect to Elasticsearch using hostname elasticsearch and port 9200
+Elasticsearch is listening at localhost:9200 if you want to access it with your own client interface. 
+For example you can install the Sense Chrome plugin https://chrome.google.com/webstore/detail/sense-beta/lhjgkmllcaadmopgmanpapmpjgmfcfig?hl=en).
+
+You can also connect to it and run queries through the provided Cerebro Web Interface. 
+In order to connect to Elasticsearch from Cerebro use hostname: elasticsearch and port: 9200
 
 ### MySQL
 MySQL Server is listening at localhost:3306.
