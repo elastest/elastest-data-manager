@@ -24,6 +24,7 @@ services:
         - elastest
 
   alluxio-master:
+    # Test automated build when git push
     # build: docker-alluxio-base
     image: sgioldasis/elastest-alluxio:1.5.0
     command: master
