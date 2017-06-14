@@ -41,7 +41,6 @@ services:
         - hdfs-namenode
     volumes:
       - ./underStorage:/underStorage
-      # - ./tmpfiles:/tmpfiles
     hostname: alluxio-master
     networks:
         - elastest
