@@ -158,7 +158,7 @@ services:
   cerebro:
     # container_name: cerebro
     image: sgioldasis/elastest-cerebro:0.6.5
-    build: cerebro/
+    # build: cerebro/
     volumes:
       - ./cerebro/config/conf:/opt/cerebro-0.6.5/conf
       - ./cerebro/logs:/opt/cerebro-0.6.5/logs
