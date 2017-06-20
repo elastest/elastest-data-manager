@@ -8,6 +8,7 @@ services:
     ports: 
         - "50070:50070"
         - "9000:9000"
+        - "8020:8020"
     hostname: hdfs-namenode
     networks:
         - elastest
@@ -82,7 +83,7 @@ services:
     ports:
       - 39999:39999
     links:
-      - alluxio-master
+      - alluxio-worker
     # volumes:
     #   - ./tmpfiles:/tmpfiles
     ## change to your DOCKER_HOST
