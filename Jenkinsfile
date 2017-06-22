@@ -44,6 +44,7 @@ node('docker'){
 
             stage "Run image"
             //    myimage.run()
+                sh 'bin/startup-linux.sh'
                 echo ("running..")
                 
             stage "publish"
