@@ -11,6 +11,12 @@
 
 FROM openjdk:7-jdk-alpine
 
+RUN apk add --update bash && \
+    # apk add --update git && \
+    # apk add --update mvn && \
+    rm -rf /var/cache/apk/*
+
+#ADD ${ALLUXIO_TARBALL} /opt/
 ENV ALLUXIO_VERSION=1.5.0
 ENV HADOOP_VERSION=2.7
 
@@ -21,14 +27,6 @@ RUN mkdir /opt && cd /opt \
 #	&& tar xvfz alluxio-1.5.0-hadoop-${HADOOP_VERSION}-bin.tar.gz \
 #	&& mv alluxio-1.5.0-hadoop-${HADOOP_VERSION} /opt/alluxio \
 #	&& rm alluxio-1.5.0-hadoop-${HADOOP_VERSION}-bin.tar.gz
-
-
-RUN apk add --update bash && \
-    # apk add --update git && \
-    # apk add --update mvn && \
-    rm -rf /var/cache/apk/*
-
-#ADD ${ALLUXIO_TARBALL} /opt/
 
 # RUN mkdir /opt && cd /opt && \
 # 	git clone git://github.com/alluxio/alluxio.git && \
