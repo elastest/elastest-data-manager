@@ -21,8 +21,8 @@ ENV ALLUXIO_VERSION=1.5.0
 ENV HADOOP_VERSION=2.7
 
 #ARG ALLUXIO_TARBALL=http://downloads.alluxio.org/downloads/files/${ALLUXIO_VERSION}/alluxio-${ALLUXIO_VERSION}-hadoop-2.8-bin.tar.gz
-RUN mkdir /opt && cd /opt \
-	&& wget http://alluxio.org/downloads/files/${ALLUXIO_VERSION}/alluxio-${ALLUXIO_VERSION}-hadoop-${HADOOP_VERSION}-bin.tar.gz 
+RUN wget http://alluxio.org/downloads/files/${ALLUXIO_VERSION}/alluxio-${ALLUXIO_VERSION}-hadoop-${HADOOP_VERSION}-bin.tar.gz 
+RUN mkdir /opt && mv alluxio-* /opt
 #	\
 #	&& tar xvfz alluxio-1.5.0-hadoop-${HADOOP_VERSION}-bin.tar.gz \
 #	&& mv alluxio-1.5.0-hadoop-${HADOOP_VERSION} /opt/alluxio \
