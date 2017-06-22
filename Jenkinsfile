@@ -44,7 +44,8 @@ node('docker'){
 
             stage "Run image"
             //    myimage.run()
-                sh 'chmod +x bin/startup-linux.sh && bin/startup-linux.sh'
+            //    sh 'chmod +x bin/startup-linux.sh && bin/startup-linux.sh'
+                docker-compose up -d
                 echo ("running..")
                 
             stage "publish"
