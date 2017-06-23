@@ -105,8 +105,11 @@ services:
   elasticsearch:
     # build: elasticsearch/
     image: sgioldasis/elastest-elasticsearch:5.4.1
+    # container_name: es-master
     volumes:
       - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+      - ./elasticsearch/backup:/backup
+      - ./elasticsearch/esdata1:/usr/share/elasticsearch/data
     ports:
       - "9200:9200"
       - "9300:9300"
@@ -123,8 +126,11 @@ services:
   esnode:
     # build: elasticsearch/
     image: sgioldasis/elastest-elasticsearch:5.4.1
+    # container_name: es-node
     volumes:
       - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+      - ./elasticsearch/backup:/backup
+      - ./elasticsearch/esdata2:/usr/share/elasticsearch/data
     ports:
       - "9200"
       - "9300"
@@ -133,6 +139,8 @@ services:
       # use internal Docker round-robin DNS for unicast discovery
       - discovery.type=zen
       - discovery.zen.ping.unicast.hosts=elasticsearch
+    depends_on:
+      - elasticsearch
     hostname: esnode
     networks:
       - elastest
@@ -153,7 +161,7 @@ services:
     networks:
       - elastest
     depends_on:
-      - elasticsearch
+      - esnode
 
 
   cerebro:

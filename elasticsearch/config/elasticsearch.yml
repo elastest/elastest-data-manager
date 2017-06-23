@@ -33,3 +33,9 @@ http.cors.allow-origin: "*"
 http.cors.allow-methods: OPTIONS, HEAD, GET, POST, PUT, DELETE
 http.cors.allow-headers: X-Requested-With,X-Auth-Token,Content-Type, Content-Length
 
+# Backup
+path.repo: ["/backup"]
+
+# Disable disk-based shard allocation
+cluster.routing.allocation.disk.threshold_enabled: false
+

@@ -1,7 +1,7 @@
 node('docker'){
     stage "Container Prep"
         echo("the node is up")
-        def mycontainer = docker.image('gtunon/docker-in-docker:latest')
+        def mycontainer = docker.image('sgioldasis/ci-docker-in-docker:latest')
         mycontainer.pull() // make sure we have the latest available from Docker Hub
         mycontainer.inside("-u jenkins -v /var/run/docker.sock:/var/run/docker.sock:rw") {
             git 'https://github.com/elastest/elastest-data-manager.git'
@@ -42,11 +42,12 @@ node('docker'){
                 //need to be corrected to the organization because at the moment elastestci can't create new repositories in the organization
                 def mysql_image = docker.build("sgioldasis/elastest-mysql:5.7","./mysql")
 
-            stage "Run image"
+            stage "Run docker-compose"
             //    myimage.run()
             //    sh 'chmod +x bin/startup-linux.sh && bin/startup-linux.sh'
-                docker-compose 'up -d'
-                echo ("running..")
+                sh 'pwd'
+                sh 'docker-compose up -d'
+                echo ("System is running..")
                 
             stage "publish"
                 echo ("publishing..")
