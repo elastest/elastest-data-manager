@@ -14,6 +14,7 @@ node('docker'){
                 
             stage "Build Alluxio image - Package"
                 echo ("building..")
+                sh 'chmod +x alluxio/entrypoint.sh'
                 //need to be corrected to the organization because at the moment elastestci can't create new repositories in the organization
                 def alluxio_image = docker.build("sgioldasis/elastest-alluxio:1.5.0","./alluxio")
 
@@ -46,7 +47,6 @@ node('docker'){
             //    myimage.run()
             //    sh 'chmod +x bin/startup-linux.sh && bin/startup-linux.sh'
                 sh 'pwd'
-                sh 'chmod +x alluxio/entrypoint.sh'
                 sh 'docker-compose up -d'
                 echo ("System is running..")
                 
