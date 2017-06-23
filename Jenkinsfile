@@ -46,6 +46,7 @@ node('docker'){
             //    myimage.run()
             //    sh 'chmod +x bin/startup-linux.sh && bin/startup-linux.sh'
                 sh 'pwd'
+                sh 'chmod +x alluxio/entrypoint.sh'
                 sh 'docker-compose up -d'
                 echo ("System is running..")
                 

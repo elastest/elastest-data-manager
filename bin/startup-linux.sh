@@ -4,6 +4,8 @@ OUTPUT2="$(sysctl vm.max_map_count)"
 echo "New ${OUTPUT2}"
 
 echo "Starting up using docker-compose"
+
+chmod +x alluxio/entrypoint.sh
 docker-compose up -d
 
 # docker-compose scale esnode=3
