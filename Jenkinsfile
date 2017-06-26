@@ -16,32 +16,32 @@ node('docker'){
                 echo ("building..")
                 sh 'chmod +x alluxio/entrypoint.sh'
                 //need to be corrected to the organization because at the moment elastestci can't create new repositories in the organization
-                def alluxio_image = docker.build("elastest/edm-alluxio:0.5.0","./alluxio")
+                def alluxio_image = docker.build("elastest/edm-alluxio","./alluxio")
 
             stage "Build Hadoop image - Package"
                 echo ("building..")
                 //need to be corrected to the organization because at the moment elastestci can't create new repositories in the organization
-                def hadoop_image = docker.build("elastest/edm-hadoop:0.5.0","./hadoop")
+                def hadoop_image = docker.build("elastest/edm-hadoop","./hadoop")
 
             stage "Build Elasticsearch image - Package"
                 echo ("building..")
                 //need to be corrected to the organization because at the moment elastestci can't create new repositories in the organization
-                def elasticsearch_image = docker.build("elastest/edm-elasticsearch:0.5.0","./elasticsearch")
+                def elasticsearch_image = docker.build("elastest/edm-elasticsearch","./elasticsearch")
 
             stage "Build Kibana image - Package"
                 echo ("building..")
                 //need to be corrected to the organization because at the moment elastestci can't create new repositories in the organization
-                def kibana_image = docker.build("elastest/edm-kibana:0.5.0","./kibana")
+                def kibana_image = docker.build("elastest/edm-kibana","./kibana")
 
             stage "Build Cerebro image - Package"
                 echo ("building..")
                 //need to be corrected to the organization because at the moment elastestci can't create new repositories in the organization
-                def cerebro_image = docker.build("elastest/edm-cerebro:0.5.0","./cerebro")
+                def cerebro_image = docker.build("elastest/edm-cerebro","./cerebro")
 
             stage "Build MySQL image - Package"
                 echo ("building..")
                 //need to be corrected to the organization because at the moment elastestci can't create new repositories in the organization
-                def mysql_image = docker.build("elastest/edm-mysql:0.5.0","./mysql")
+                def mysql_image = docker.build("elastest/edm-mysql","./mysql")
 
             stage "Run docker-compose"
             //    myimage.run()
