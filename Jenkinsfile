@@ -52,16 +52,21 @@ node('docker'){
                 
             stage "publish"
                 echo ("publishing..")
-            // //this is work arround as withDockerRegistry is not working properly 
-            withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'elastestci-dockerhub',
-                usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
-                sh 'docker login -u "$USERNAME" -p "$PASSWORD"'
-                alluxio_image.push()
-                hadoop_image.push()
-                elasticsearch_image.push()
-                kibana_image.push()
-                cerebro_image.push()
-                mysql_image.push()
-             }
+                withCredentials([[
+                    $class: 'UsernamePasswordMultiBinding', 
+                    credentialsId: 'elastestci-dockerhub',
+                    usernameVariable: 'USERNAME',
+                    passwordVariable: 'PASSWORD']]) {
+                        sh 'docker login -u "$USERNAME" -p "$PASSWORD"'
+                        //here your code 
+                        alluxio_image.push()
+                        hadoop_image.push()
+                        elasticsearch_image.push()
+                        kibana_image.push()
+                        cerebro_image.push()
+                        mysql_image.push()
+                    }
+
+
         }
 }
