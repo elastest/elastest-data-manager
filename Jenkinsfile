@@ -1,6 +1,8 @@
 node('docker'){
     stage "Container Prep"
         echo("the node is up")
+        sysctl -w vm.max_map_count=262144
+        sysctl vm.max_map_count
         def mycontainer = docker.image('sgioldasis/ci-docker-in-docker:latest')
         mycontainer.pull() // make sure we have the latest available from Docker Hub
         mycontainer.inside("-u jenkins -v /var/run/docker.sock:/var/run/docker.sock:rw") {
