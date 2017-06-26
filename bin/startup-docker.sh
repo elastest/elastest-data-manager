@@ -1,5 +1,5 @@
 #!/bin/bash
-OUTPUT="$(sysctl -w vm.max_map_count=262144)"
+OUTPUT="$(echo 262144 | sudo tee /proc/sys/vm/max_map_count)"
 OUTPUT2="$(sysctl vm.max_map_count)"
 echo "New ${OUTPUT2}"
 
