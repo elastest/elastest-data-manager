@@ -1,7 +1,7 @@
 node('docker'){
     stage "Container Prep"
         echo("the node is up")
-        sh 'echo 262144 | tee /proc/sys/vm/max_map_count'
+        sh 'echo 262144 | sudo tee /proc/sys/vm/max_map_count'
         //sysctl -w vm.max_map_count=262144
         //sysctl vm.max_map_count
         def mycontainer = docker.image('sgioldasis/ci-docker-in-docker:latest')
