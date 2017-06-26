@@ -16,32 +16,32 @@ node('docker'){
                 echo ("building..")
                 sh 'chmod +x alluxio/entrypoint.sh'
                 //need to be corrected to the organization because at the moment elastestci can't create new repositories in the organization
-                def alluxio_image = docker.build("sgioldasis/elastest-alluxio:1.5.0","./alluxio")
+                def alluxio_image = docker.build("elastest/alluxio:0.5.0","./alluxio")
 
             stage "Build Hadoop image - Package"
                 echo ("building..")
                 //need to be corrected to the organization because at the moment elastestci can't create new repositories in the organization
-                def hadoop_image = docker.build("sgioldasis/elastest-hadoop:2.8.0","./hadoop")
+                def hadoop_image = docker.build("elastest/hadoop:0.5.0","./hadoop")
 
             stage "Build Elasticsearch image - Package"
                 echo ("building..")
                 //need to be corrected to the organization because at the moment elastestci can't create new repositories in the organization
-                def elasticsearch_image = docker.build("sgioldasis/elastest-elasticsearch:5.4.1","./elasticsearch")
+                def elasticsearch_image = docker.build("elastest/elasticsearch:0.5.0","./elasticsearch")
 
             stage "Build Kibana image - Package"
                 echo ("building..")
                 //need to be corrected to the organization because at the moment elastestci can't create new repositories in the organization
-                def kibana_image = docker.build("sgioldasis/elastest-kibana:5.4.1","./kibana")
+                def kibana_image = docker.build("elastest/kibana:0.5.0","./kibana")
 
             stage "Build Cerebro image - Package"
                 echo ("building..")
                 //need to be corrected to the organization because at the moment elastestci can't create new repositories in the organization
-                def cerebro_image = docker.build("sgioldasis/elastest-cerebro:0.6.5","./cerebro")
+                def cerebro_image = docker.build("elastest/cerebro:0.5.0","./cerebro")
 
             stage "Build MySQL image - Package"
                 echo ("building..")
                 //need to be corrected to the organization because at the moment elastestci can't create new repositories in the organization
-                def mysql_image = docker.build("sgioldasis/elastest-mysql:5.7","./mysql")
+                def mysql_image = docker.build("elastest/mysql:0.5.0","./mysql")
 
             stage "Run docker-compose"
             //    myimage.run()
@@ -53,7 +53,7 @@ node('docker'){
             stage "publish"
                 echo ("publishing..")
             // //this is work arround as withDockerRegistry is not working properly 
-            withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'sgioldasis-dockerhub',
+            withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'elastestci-dockerhub',
                 usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
                 sh 'docker login -u "$USERNAME" -p "$PASSWORD"'
                 alluxio_image.push()

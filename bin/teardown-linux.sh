@@ -8,4 +8,7 @@ docker-compose down
 rm -rf underStorage
 mkdir underStorage
 
+rm -rf elasticsearch/esdata1/nodes
+rm -rf elasticsearch/esdata2/nodes
+
 docker volume prune -f

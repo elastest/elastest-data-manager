@@ -3,7 +3,8 @@ version: '2'
 services:
 
   hdfs-namenode:
-    image: sgioldasis/elastest-hadoop:2.8.0
+    image: elastest/hadoop:0.5.0
+    build: ./hadoop
     command: hdfs namenode
     ports: 
         - "50070:50070"
@@ -14,10 +15,12 @@ services:
         - elastest
 
   hdfs-datanode:
-    image: sgioldasis/elastest-hadoop:2.8.0
+    image: elastest/hadoop:0.5.0
+    build: ./hadoop
     command: hdfs datanode
+    # The host port is randomly assigned by Docker, 
+    # to allow scaling to multiple DataNodes on the same host
     ports:
-# The host port is randomly assigned by Docker, to allow scaling to multiple DataNodes on the same host
         - "50075"
     links:
         - hdfs-namenode
@@ -25,9 +28,8 @@ services:
         - elastest
 
   alluxio-master:
-    # Test automated build when git push
-    # build: docker-alluxio-base
-    image: sgioldasis/elastest-alluxio:1.5.0
+    image: elastest/alluxio:0.5.0
+    build: ./alluxio
     command: master
     ports:
       - 19999:19999
@@ -48,8 +50,8 @@ services:
         - elastest
 
   alluxio-worker:
-    # build: docker-alluxio-base
-    image: sgioldasis/elastest-alluxio:1.5.0
+    image: elastest/alluxio:0.5.0
+    build: ./alluxio
     command: worker
     ports:
       - "29998"
@@ -77,8 +79,8 @@ services:
 
 
   alluxio-proxy:
-    # build: docker-alluxio-base
-    image: sgioldasis/elastest-alluxio:1.5.0
+    image: elastest/alluxio:0.5.0
+    build: ./alluxio
     command: proxy
     ports:
       - 39999:39999
@@ -103,8 +105,8 @@ services:
 
 
   elasticsearch:
-    # build: elasticsearch/
-    image: sgioldasis/elastest-elasticsearch:5.4.1
+    image: elastest/elasticsearch:0.5.0
+    build: ./elasticsearch
     # container_name: es-master
     volumes:
       - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
@@ -124,8 +126,8 @@ services:
 
 
   esnode:
-    # build: elasticsearch/
-    image: sgioldasis/elastest-elasticsearch:5.4.1
+    image: elastest/elasticsearch:0.5.0
+    build: ./elasticsearch
     # container_name: es-node
     volumes:
       - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
@@ -147,8 +149,8 @@ services:
 
 
   kibana:
-    # build: kibana/
-    image: sgioldasis/elastest-kibana:5.4.1
+    image: elastest/kibana:0.5.0
+    build: ./kibana
     volumes:
       - ./kibana/config/:/usr/share/kibana/config
     ports:
@@ -166,8 +168,8 @@ services:
 
   cerebro:
     # container_name: cerebro
-    image: sgioldasis/elastest-cerebro:0.6.5
-    # build: cerebro/
+    image: elastest/cerebro:0.5.0
+    build: ./cerebro
     volumes:
       - ./cerebro/config/conf:/opt/cerebro-0.6.5/conf
       - ./cerebro/logs:/opt/cerebro-0.6.5/logs
@@ -184,7 +186,8 @@ services:
       - elasticsearch
 
   mysql:
-    image: sgioldasis/elastest-mysql:5.7
+    image: elastest/mysql:0.5.0
+    build: ./mysql
     ports:
       - "3306:3306"    
     # container_name: mysql-elastest
@@ -207,29 +210,3 @@ volumes:
 networks:
   elastest:
     driver: bridge
-
-
-
-
-## Run everything in one container
-#  alluxio-local:
-#    build: docker-alluxio-base
-#    command: /start.sh local
-#    ports:
-#      - 19999:19999
-#      - 19998:19998
-#      - 30000:30000
-#      - 29998:29998
-#      - 29999:29999
-#    ## change to your DOCKER_HOST
-#    hostname: 192.168.99.100
-#    #    privileged: true         ### enable to use ramfs with docker. otherwise it will use disk
-#    volumes:
-#      - data:/data
-#    environment:
-#      ALLUXIO_MASTER_ADDRESS: 192.168.99.100
-
-
-
-# volumes:
-#   data:
