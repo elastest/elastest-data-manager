@@ -49,7 +49,7 @@ node('docker'){
             stage "Run docker-compose"
             //    myimage.run()
             //    sh 'docker-compose up -d'
-                sh 'ls -l && chmod +x bin/startup-docker.sh && bin/startup-docker.sh'
+                sh 'ls -l && chmod +x bin/startup-linux.sh && bin/startup-linux.sh'
                 echo ("System is running..")
                 
             stage "publish"
@@ -68,7 +68,6 @@ node('docker'){
                         cerebro_image.push()
                         mysql_image.push()
                     }
-
 
         }
 }
