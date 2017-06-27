@@ -3,6 +3,7 @@ version: '2'
 services:
 
   hdfs-namenode:
+    container_name: hdfs-namenode
     image: elastest/edm-hadoop:0.5.0
     build: ./hadoop
     command: hdfs namenode
@@ -15,6 +16,7 @@ services:
         - elastest
 
   hdfs-datanode:
+    # container_name: hdfs-datanode
     image: elastest/edm-hadoop:0.5.0
     build: ./hadoop
     command: hdfs datanode
@@ -28,6 +30,7 @@ services:
         - elastest
 
   alluxio-master:
+    container_name: alluxio-master
     image: elastest/edm-alluxio:0.5.0
     build: ./alluxio
     command: master
@@ -50,6 +53,7 @@ services:
         - elastest
 
   alluxio-worker:
+    # container_name: alluxio-worker
     image: elastest/edm-alluxio:0.5.0
     build: ./alluxio
     command: worker
@@ -79,6 +83,7 @@ services:
 
 
   alluxio-proxy:
+    container_name: alluxio-proxy
     image: elastest/edm-alluxio:0.5.0
     build: ./alluxio
     command: proxy
@@ -105,9 +110,9 @@ services:
 
 
   elasticsearch:
+    container_name: elasticsearch
     image: elastest/edm-elasticsearch:0.5.0
     build: ./elasticsearch
-    # container_name: es-master
     volumes:
       - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
       - ./elasticsearch/backup:/backup
@@ -126,9 +131,9 @@ services:
 
 
   esnode:
+    # container_name: esnode
     image: elastest/edm-elasticsearch:0.5.0
     build: ./elasticsearch
-    # container_name: es-node
     volumes:
       - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
       - ./elasticsearch/backup:/backup
@@ -149,6 +154,7 @@ services:
 
 
   kibana:
+    container_name: kibana
     image: elastest/edm-kibana:0.5.0
     build: ./kibana
     volumes:
@@ -167,7 +173,7 @@ services:
 
 
   cerebro:
-    # container_name: cerebro
+    container_name: cerebro
     image: elastest/edm-cerebro:0.5.0
     build: ./cerebro
     volumes:
@@ -186,11 +192,11 @@ services:
       - elasticsearch
 
   mysql:
+    container_name: mysql
     image: elastest/edm-mysql:0.5.0
     build: ./mysql
     ports:
       - "3306:3306"    
-    # container_name: mysql-elastest
     environment:
       MYSQL_ROOT_PASSWORD: "elastestroot"
       MYSQL_DATABASE: "elastest"
