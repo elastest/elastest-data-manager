@@ -215,4 +215,5 @@ volumes:
 
 networks:
   elastest:
-    driver: bridge
+    external: true
+    # driver: bridge

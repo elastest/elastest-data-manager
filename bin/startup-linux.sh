@@ -5,6 +5,9 @@ echo "New ${OUTPUT2}"
 
 echo "Starting up using docker-compose"
 
+docker network rm elastest
+docker network create -d bridge elastest
+
 docker-compose up -d
 
 # docker-compose scale esnode=3
