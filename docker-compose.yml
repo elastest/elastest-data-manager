@@ -3,7 +3,7 @@ version: '2'
 services:
 
   hdfs-namenode:
-    container_name: hdfs-namenode
+    # container_name: hdfs-namenode
     image: elastest/edm-hadoop:0.5.0
     # build: ./hadoop
     command: hdfs namenode
@@ -30,7 +30,7 @@ services:
         - elastest
 
   alluxio-master:
-    container_name: alluxio-master
+    # container_name: alluxio-master
     image: elastest/edm-alluxio:0.5.0
     # build: ./alluxio
     command: master
@@ -83,7 +83,7 @@ services:
 
 
   alluxio-proxy:
-    container_name: alluxio-proxy
+    # container_name: alluxio-proxy
     image: elastest/edm-alluxio:0.5.0
     # build: ./alluxio
     command: proxy
@@ -110,7 +110,7 @@ services:
 
 
   elasticsearch:
-    container_name: elasticsearch
+    # container_name: elasticsearch
     image: elastest/edm-elasticsearch:0.5.0
     # build: ./elasticsearch
     volumes:
@@ -154,7 +154,7 @@ services:
 
 
   kibana:
-    container_name: kibana
+    # container_name: kibana
     image: elastest/edm-kibana:0.5.0
     # build: ./kibana
     volumes:
@@ -173,7 +173,7 @@ services:
 
 
   cerebro:
-    container_name: cerebro
+    # container_name: cerebro
     image: elastest/edm-cerebro:0.5.0
     # build: ./cerebro
     volumes:
@@ -192,7 +192,7 @@ services:
       - elasticsearch
 
   mysql:
-    container_name: mysql
+    # container_name: mysql
     image: elastest/edm-mysql:0.5.0
     # build: ./mysql
     ports:
@@ -203,7 +203,7 @@ services:
       MYSQL_USER: elastest
       MYSQL_PASSWORD: elastest
     volumes:
-      - elastest_mysql_data:/var/lib/mysql
+      - mysql_data:/var/lib/mysql
       - ./mysql/backup:/docker-entrypoint-initdb.d
     # restart: always
     networks:
@@ -211,7 +211,7 @@ services:
  
  
 volumes:
-  elastest_mysql_data:
+  mysql_data:
 
 networks:
   elastest:

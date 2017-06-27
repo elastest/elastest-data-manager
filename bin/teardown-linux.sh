@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "Tearing down using docker-compose"
-docker-compose down
+docker-compose  --project-name edm down
 #docker-compose kill
 #docker-compose rm -f
 
