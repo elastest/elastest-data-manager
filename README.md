@@ -31,17 +31,12 @@ The persistent services under the responsibility of EDM are the following:
     cd elastest-data-manager
 
 ### Prepare your environment
-If you are in a Linux host, you need to set vm.max_map_count to at least 262144  in order to run the Elasticsearch container. (more info at https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html#docker-cli-run-prod-mode).
-
-You can use the following helper script to do that:
 
     # From main project folder
     
-    # Run script
-    bin/prepare-linux-host.sh
-    
-In order to change your system settings, the script will prompt you for your sudo password.
-   
+    # Make scripts executable
+    chmod +x bin/* 
+       
 ## Start this component using docker-compose
 Note: your terminal need to be in the main project folder where the docker-compose.yml is located.
 
@@ -60,16 +55,18 @@ You have the possibility to scale the number of HDFS datanodes, Alluxio workers 
 
     # From main project folder
     
-    # Start component (in detached mode)
-    docker-compose up -d 
+    # Start component
+    bin/startup-linux.sh
     
     # View service status
-    docker-compose ps
+    docker-compose -p edm ps
     
     # View logs
-    docker-compose logs
+    docker-compose -p edm logs
 
 Please note that it will take some time (in the order of several seconds - depending on your system) for all the services to be fully available. 
+
+Also note that if you are in a Linux host, you need to set vm.max_map_count of the host to at least 262144  in order to run the Elasticsearch container. (more info at https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html#docker-cli-run-prod-mode). If you use the above startup-linux.sh script you don't have to do anything extra since it already contains code to do this. However, in order to be able to change your system settings, the script will prompt you for your sudo password.
 
 ### Accessing the web interfaces
 Each component provide its own web UI. Open you browser at one of the URLs below, where `dockerhost` is the name / IP of the host running the docker daemon. If using Linux, this is the IP of your linux box. If using OSX or Windows (via Boot2docker), you can find out your docker host by typing `boot2docker ip`. 
@@ -84,22 +81,18 @@ Each component provide its own web UI. Open you browser at one of the URLs below
 ### Scaling the number of instances
 If you want to increase the number of HDFS datanodes in your cluster
 
-    docker-compose scale hdfs-datanode=<number of instances>
+   docker-compose -p edm scale hdfs-datanode=<number of instances>
 
 If you want to increase the number of Alluxio workers in your cluster
 
-    docker-compose scale alluxio-worker=<number of instances>
-
-If you want to increase the number of Elasticsearch nodes in your cluster
-
-    docker-compose scale esnode=<number of instances>
-    
+    docker-compose -p edm scale alluxio-worker=<number of instances>
+   
 ### Finding the port for web access of scalable containers
 To allow worker instances (such as the hdfs-datanode, the alluxio-worker or the esnode) to scale, we need to let docker decide the port used on the host machine. 
 
 For example, to find the port for the hdfs-datanode:
 
-    docker-compose port hdfs-datanode 50075
+    docker-compose -p edm port hdfs-datanode 50075
 
 With this port, you can access the web interfaces of the datanode.
 
@@ -154,14 +147,9 @@ A database elastest is already created and you can use it for your schemas.
 
     # From main project folder
     
-    # Stop containers
-    docker-compose kill
+    # Teardown component
+    bin/teardown-linux.sh
     
-    # Remove containers
-    docker-compose rm -f
-    
-    # Remove MySQL Data Volume (Optional)
-    docker volume rm elastestdatamanager_elastest_mysql_data
    
 What is ElasTest
 -----------------
