@@ -46,11 +46,9 @@ node('docker'){
                 //need to be corrected to the organization because at the moment elastestci can't create new repositories in the organization
                 def mysql_image = docker.build("elastest/edm-mysql:0.5.0","./mysql")
 
-            stage "Run docker-compose"
-            //    myimage.run()
-            //    sh 'docker-compose up -d'
-                sh 'ls -l && chmod +x bin/startup-linux.sh && bin/startup-linux.sh'
-                echo ("System is running..")
+            stage "Run EDM docker-compose"
+                sh 'chmod +x bin/* && bin/teardown-linux.sh && bin/startup-linux.sh'
+                echo ("EDM System is running..")
                 
             stage "publish"
                 echo ("publishing..")
