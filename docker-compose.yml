@@ -180,7 +180,7 @@ services:
       - ./cerebro/config/conf:/opt/cerebro-0.6.5/conf
       - ./cerebro/logs:/opt/cerebro-0.6.5/logs
     depends_on:
-      - elasticsearch
+      - esnode
     ports:
       - 9400:9000
     environment:
