@@ -169,7 +169,7 @@ services:
     networks:
       - elastest
     depends_on:
-      - esnode
+      - elasticsearch
 
 
   cerebro:
