@@ -199,9 +199,8 @@ services:
     networks:
       - elastest
  
- 
-volumes:
-  mysql_data:
+# volumes:
+#   mysql_data:
 
 networks:
   elastest:
