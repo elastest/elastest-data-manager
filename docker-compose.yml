@@ -37,17 +37,14 @@ services:
     ports:
       - 19999:19999
       - 19998:19998
-    #   - 30000:30000
-    # volumes:
-    #   - data:/data
+    volumes:
+      - ./alluxio/data:/underStorage
     environment:
       - ALLUXIO_MASTER_HOSTNAME=alluxio-master
       - ALLUXIO_UNDERFS_ADDRESS=/underStorage
       # - ALLUXIO_UNDERFS_ADDRESS=hdfs://hdfs-namenode:9000
     links:
         - hdfs-namenode
-    volumes:
-      - ./underStorage:/underStorage
     hostname: alluxio-master
     networks:
         - elastest
@@ -60,14 +57,11 @@ services:
     ports:
       - "29998"
       - "29999"
+    volumes:
+      - ./alluxio/data:/underStorage
     links:
       - hdfs-namenode
       - alluxio-master
-    # volumes:
-    #   - ./tmpfiles:/tmpfiles
-    ## change to your DOCKER_HOST
-    # hostname: 192.168.99.100
-
     #    privileged: true         ### enable to use ramfs with docker. otherwise it will use disk
     environment:
       - ALLUXIO_MASTER_HOSTNAME=alluxio-master
@@ -75,9 +69,6 @@ services:
       - ALLUXIO_WORKER_MEMORY_SIZE=1GB
       - ALLUXIO_UNDERFS_ADDRESS=/underStorage
       # - ALLUXIO_UNDERFS_ADDRESS=hdfs://hdfs-namenode:9000
-    volumes:
-      - ./underStorage:/underStorage
-      # - ./tmpfiles:/tmpfiles
     networks:
         - elastest
 
@@ -89,22 +80,16 @@ services:
     command: proxy
     ports:
       - 39999:39999
+    volumes:
+      - ./alluxio/data:/underStorage
     links:
       - alluxio-worker
-    # volumes:
-    #   - ./tmpfiles:/tmpfiles
-    ## change to your DOCKER_HOST
-    # hostname: 192.168.99.100
-
     #    privileged: true         ### enable to use ramfs with docker. otherwise it will use disk
     environment:
       - ALLUXIO_MASTER_HOSTNAME=alluxio-master
       # - ALLUXIO_RAM_FOLDER=/mnt/ramdisk
       # - ALLUXIO_WORKER_MEMORY_SIZE=1GB
       # - ALLUXIO_UNDERFS_ADDRESS=hdfs://hdfs-namenode:9000
-    volumes:
-      - ./underStorage:/underStorage
-      # - ./tmpfiles:/tmpfiles
     networks:
         - elastest
 
@@ -121,10 +106,11 @@ services:
       - "9200:9200"
       - "9300:9300"
     environment:
-      - ES_JAVA_OPTS=-Xmx256m -Xms256m
+      - ES_JAVA_OPTS=-Xmx2g -Xms2g
       - discovery.type=zen
       # use internal Docker round-robin DNS for unicast discovery
       - discovery.zen.ping.unicast.hosts=elasticsearch
+      - discovery.zen.minimum_master_nodes=2
     hostname: elasticsearch
     networks:
       - elastest
@@ -142,10 +128,11 @@ services:
       - "9200"
       - "9300"
     environment:
-      - ES_JAVA_OPTS=-Xmx256m -Xms256m
+      - ES_JAVA_OPTS=-Xmx2g -Xms2g
       # use internal Docker round-robin DNS for unicast discovery
       - discovery.type=zen
       - discovery.zen.ping.unicast.hosts=elasticsearch
+      - discovery.zen.minimum_master_nodes=2
     depends_on:
       - elasticsearch
     hostname: esnode
@@ -198,12 +185,14 @@ services:
     ports:
       - "3306:3306"    
     environment:
-      MYSQL_ROOT_PASSWORD: "elastestroot"
+      # MYSQL_ROOT_PASSWORD: "elastestroot"
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
       MYSQL_DATABASE: "elastest"
       MYSQL_USER: elastest
       MYSQL_PASSWORD: elastest
     volumes:
-      - mysql_data:/var/lib/mysql
+      # - mysql_data:/var/lib/mysql
+      - ./mysql/data:/var/lib/mysql
       - ./mysql/backup:/docker-entrypoint-initdb.d
     # restart: always
     networks:
