@@ -46,7 +46,7 @@ Also you have to make sure that Docker has enough memory available to it. In Doc
 
 **Notes for Windows users:**
 
-If using windows you should run commands/scripts below from Windows PowerShell.
+If using Windows you should run commands/scripts below from Windows PowerShell.
 
 Also you have to make sure that Docker has enough memory available to it. In Docker for Windows, you can increase memory by going to Preferences -> Advanced and move the Memory slider up.
 
