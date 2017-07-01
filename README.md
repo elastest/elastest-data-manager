@@ -21,6 +21,7 @@ The persistent services under the responsibility of EDM are the following:
 ## Prerequisites
 - Install Docker Compose: https://docs.docker.com/compose/install/
 - Install Git: https://www.atlassian.com/git/tutorials/install-git
+- Install curl: https://curl.haxx.se/ (Optional - in order to follow some of the examples)
 
 ### Clone the project
     # Clone the project to your system
@@ -33,18 +34,22 @@ The persistent services under the responsibility of EDM are the following:
 ### Prepare your environment
 
     # From main project folder
-    
-    # Make scripts executable
-    chmod +x bin/* 
 
-**Extra steps for OSX:** 
+    # Make scripts executable (Linux, OSX)
+    chmod +x bin/*
 
-You have to follow the instructions at [https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html#docker-cli-run-prod-mode](https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html#docker-cli-run-prod-mode) to increase vm.max_map_count to 262144.
+**Notes for OSX users:**
+
+First, you have to follow the instructions at [https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html#docker-cli-run-prod-mode](https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html#docker-cli-run-prod-mode) to increase vm.max_map_count to 262144.
 
 Also you have to make sure that Docker has enough memory available to it. In Docker for Mac, you can increase memory by going to Preferences -> Advanced and move the Memory slider up.
 
+**Notes for Windows users:**
 
-       
+If using windows you should run commands/scripts below from Windows PowerShell.
+
+Also you have to make sure that Docker has enough memory available to it. In Docker for Windows, you can increase memory by going to Preferences -> Advanced and move the Memory slider up.
+
 ## Start this component using docker-compose
 Note: your terminal need to be in the main project folder where the docker-compose.yml is located.
 
@@ -62,22 +67,25 @@ You can start this image using docker-compose. It will start the following:
 You have the possibility to scale the number of HDFS datanodes, Alluxio workers and Elasticsearch nodes.
 
     # From main project folder
-    
+
     # Start component (Linux, OSX)
     bin/startup-linux.sh
-    
+
+    # Start component (Windows)
+    bin/startup-windows.ps1
+
     # View service status
     docker-compose -p edm ps
-    
+
     # View logs
     docker-compose -p edm logs
 
-Please note that it will take some time (in the order of several seconds - depending on your system) for all the services to be fully available. 
+Please note that it will take some time (in the order of several seconds - depending on your system) for all the services to be fully available.
 
 Also note that if you are in a Linux host, you need to set vm.max_map_count of the host to at least 262144  in order to run the Elasticsearch container. (more info at https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html#docker-cli-run-prod-mode). If you use the above startup-linux.sh script you don't have to do anything extra since it already contains code to do this. However, in order to be able to change your system settings, the script will prompt you for your sudo password.
 
 ### Accessing the web interfaces
-Each component provide its own web UI. Open you browser at one of the URLs below, where `dockerhost` is the name / IP of the host running the docker daemon. If using Linux, this is the IP of your linux box. If using OSX or Windows (via Boot2docker), you can find out your docker host by typing `boot2docker ip`. 
+Each component provide its own web UI. Open you browser at one of the URLs below, where `dockerhost` is the name / IP of the host running the docker daemon. If using Linux, this is the IP of your linux box. If using OSX or Windows (via Boot2docker), you can find out your docker host by typing `boot2docker ip`.
 
 | Component               	| Port                                               |
 | ----------------------- 	| -------------------------------------------------- |
@@ -94,9 +102,9 @@ If you want to increase the number of HDFS datanodes in your cluster
 If you want to increase the number of Alluxio workers in your cluster
 
     docker-compose -p edm scale alluxio-worker=<number of instances>
-   
+
 ### Finding the port for web access of scalable containers
-To allow worker instances (such as the hdfs-datanode, the alluxio-worker or the esnode) to scale, we need to let docker decide the port used on the host machine. 
+To allow worker instances (such as the hdfs-datanode, the alluxio-worker or the esnode) to scale, we need to let docker decide the port used on the host machine.
 
 For example, to find the port for the hdfs-datanode:
 
@@ -110,7 +118,7 @@ The Alluxio REST API is available at http://localhost:39999
 You can try the following examples:
 
 	# From main project folder
-	
+
 	# Upload file (local)
 	curl -v -X POST http://localhost:39999/api/v1/paths//LICENSE/create-file
 	curl -v -X POST http://localhost:39999/api/v1/streams/1/write --data-binary @LICENSE -H "Content-Type: application/octet-stream"
@@ -125,7 +133,7 @@ You can try the following examples:
 	curl -v -X POST http://localhost:39999/api/v1/paths//LICENSE/open-file
 	curl -v -X POST http://localhost:39999/api/v1/streams/3/read
 	curl -v -X POST http://localhost:39999/api/v1/streams/3/close
-	
+
 	# Read file (HDFS)
 	curl -v -X POST http://localhost:39999/api/v1/paths//hdfs/LICENSE/open-file
 	curl -v -X POST http://localhost:39999/api/v1/streams/4/read
@@ -138,10 +146,10 @@ You can try the following examples:
 	curl -v -X POST http://localhost:39999/api/v1/paths//hdfs/LICENSE/delete
 
 ### Elasticsearch
-Elasticsearch is listening at localhost:9200 if you want to access it with your own client interface. 
+Elasticsearch is listening at localhost:9200 if you want to access it with your own client interface.
 For example you can install the Sense Chrome plugin https://chrome.google.com/webstore/detail/sense-beta/lhjgkmllcaadmopgmanpapmpjgmfcfig?hl=en).
 
-You can also connect to it and run queries through the provided Cerebro Web Interface. 
+You can also connect to it and run queries through the provided Cerebro Web Interface.
 In order to connect to Elasticsearch from Cerebro use hostname: elasticsearch and port: 9200
 
 ### MySQL
@@ -154,11 +162,13 @@ A database elastest is already created and you can use it for your schemas.
 ## Stop this component using docker-compose
 
     # From main project folder
-    
-    # Teardown component
+
+    # Teardown component (Linux, OSX)
     bin/teardown-linux.sh
-    
-   
+
+    # Teardown component (Windows)
+    bin/teardown-windows.ps1
+
 What is ElasTest
 -----------------
 
