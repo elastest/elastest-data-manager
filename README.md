@@ -36,6 +36,14 @@ The persistent services under the responsibility of EDM are the following:
     
     # Make scripts executable
     chmod +x bin/* 
+
+**Extra steps for OSX:** 
+
+You have to follow the instructions at [https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html#docker-cli-run-prod-mode](https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html#docker-cli-run-prod-mode) to increase vm.max_map_count to 262144.
+
+Also you have to make sure that Docker has enough memory available to it. In Docker for Mac, you can increase memory by going to Preferences -> Advanced and move the Memory slider up.
+
+
        
 ## Start this component using docker-compose
 Note: your terminal need to be in the main project folder where the docker-compose.yml is located.
@@ -55,7 +63,7 @@ You have the possibility to scale the number of HDFS datanodes, Alluxio workers 
 
     # From main project folder
     
-    # Start component
+    # Start component (Linux, OSX)
     bin/startup-linux.sh
     
     # View service status
@@ -71,12 +79,12 @@ Also note that if you are in a Linux host, you need to set vm.max_map_count of t
 ### Accessing the web interfaces
 Each component provide its own web UI. Open you browser at one of the URLs below, where `dockerhost` is the name / IP of the host running the docker daemon. If using Linux, this is the IP of your linux box. If using OSX or Windows (via Boot2docker), you can find out your docker host by typing `boot2docker ip`. 
 
-| Component               | Port                                               |
-| ----------------------- | -------------------------------------------------- |
-| HDFS NameNode           | [http://localhost:50070](http://localhost:50070) |
-| Alluxio Web Interface| [http://localhost:19999](http://localhost:19999) |
-| Kibana Web Interface| [http://localhost:5601](http://localhost:5601) |
-| Cerebro Web Interface| [http://localhost:9400/#/overview?host=http:%2F%2Felasticsearch:9200](http://localhost:9400/#/overview?host=http:%2F%2Felasticsearch:9200) |
+| Component               	| Port                                               |
+| ----------------------- 	| -------------------------------------------------- |
+| HDFS NameNode           	| [http://localhost:50070](http://localhost:50070) |
+| Alluxio Web Interface		| [http://localhost:19999](http://localhost:19999) |
+| Kibana Web Interface		| [http://localhost:5601](http://localhost:5601) |
+| Cerebro Web Interface		| [http://localhost:9400/#/overview?host=http:%2F%2Felasticsearch:9200](http://localhost:9400/#/overview?host=http:%2F%2Felasticsearch:9200) |
 
 ### Scaling the number of instances
 If you want to increase the number of HDFS datanodes in your cluster
