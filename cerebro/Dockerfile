@@ -43,8 +43,9 @@ RUN cd /opt/ \
     && tar zxvf cerebro-${CEREBRO_VERSION}.tgz \
     && rm cerebro-${CEREBRO_VERSION}.tgz \
     && mkdir cerebro-${CEREBRO_VERSION}/logs \
-    && mv cerebro-${CEREBRO_VERSION} cerebro \
-	&& apt-get purge -y --auto-remove ca-certificates wget
+    && mv cerebro-${CEREBRO_VERSION} cerebro 
+ #    \
+	# && apt-get purge -y --auto-remove ca-certificates wget
 
 WORKDIR /opt/cerebro
 EXPOSE 9000
