@@ -15,6 +15,11 @@ node('docker'){
             //     echo ("No tests yet, but these would be integration at least")
             //     sh 'which docker'
                 
+            stage "Build Rest API image - Package"
+                echo ("building..")
+                //need to be corrected to the organization because at the moment elastestci can't create new repositories in the organization
+                def rest_api_image = docker.build("elastest/edm-rest-api:0.5.0","./rest")
+
             stage "Build Alluxio image - Package"
                 echo ("building..")
                 sh 'chmod +x alluxio/entrypoint.sh'
@@ -59,6 +64,7 @@ node('docker'){
                     passwordVariable: 'PASSWORD']]) {
                         sh 'docker login -u "$USERNAME" -p "$PASSWORD"'
                         //here your code 
+                        rest_api_image.push()
                         alluxio_image.push()
                         hadoop_image.push()
                         elasticsearch_image.push()

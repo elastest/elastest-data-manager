@@ -39,6 +39,7 @@ services:
       - 19998:19998
     volumes:
       - ./alluxio/data:/underStorage
+      # - ./rest/scripts:/scripts
     environment:
       - ALLUXIO_MASTER_HOSTNAME=alluxio-master
       - ALLUXIO_UNDERFS_ADDRESS=/underStorage
@@ -72,6 +73,22 @@ services:
     networks:
         - elastest
 
+  rest-api:
+    build: ./rest  # path is relative to docker-compose.yml location
+    image: elastest/edm-rest-api:0.5.0
+    volumes:
+      - ./rest/rest_api_project:/usr/src/app # mount point
+      - ./rest/alluxio_conf:/opt/alluxio/conf
+      - ./rest/scripts:/scripts
+      - ./backup:/backup
+    links:
+      - alluxio-master
+      - elasticsearch
+      - mysql
+    ports:
+      - 8000:8000  # host:container
+    networks:
+        - elastest
 
   alluxio-proxy:
     # container_name: alluxio-proxy
@@ -100,7 +117,7 @@ services:
     # build: ./elasticsearch
     volumes:
       - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
-      - ./elasticsearch/backup:/backup
+      - ./backup/elasticsearch:/backup
       - ./elasticsearch/esdata1:/usr/share/elasticsearch/data
     ports:
       - "9200:9200"
@@ -122,7 +139,7 @@ services:
     # build: ./elasticsearch
     volumes:
       - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
-      - ./elasticsearch/backup:/backup
+      - ./backup/elasticsearch:/backup
       - ./elasticsearch/esdata2:/usr/share/elasticsearch/data
     ports:
       - "9200"
@@ -193,7 +210,7 @@ services:
     volumes:
       # - mysql_data:/var/lib/mysql
       - ./mysql/data:/var/lib/mysql
-      - ./mysql/backup:/docker-entrypoint-initdb.d
+      # - ./mysql/backup:/docker-entrypoint-initdb.d
       - ./mysql/config:/etc/mysql/conf.d
     # restart: always
     networks:
