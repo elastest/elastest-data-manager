@@ -13,3 +13,4 @@ rm -rf elasticsearch/esdata2/nodes
 
 docker volume prune -f
 
+sudo find . -name "__pycache__"  -type d -exec rm -rf {} +

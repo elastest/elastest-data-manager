@@ -3,7 +3,7 @@ import logging
 from flask import request
 from flask_restplus import Resource
 from rest_api_app.api.edm.business import create_edm_backup, update_edm_backup, delete_edm_backup
-from rest_api_app.api.edm.serializers import edm_backup, page_of_edm_backups, edm_backup_resp
+from rest_api_app.api.edm.serializers import edm_backup, page_of_edm_backups, edm_backup_resp, edm_backup_title
 from rest_api_app.api.edm.parsers import pagination_arguments
 from rest_api_app.api.restplus import api
 from rest_api_app.database.models import Backup
@@ -31,7 +31,7 @@ class backupsCollection(Resource):
 
         return backups_page
 
-    @api.expect(edm_backup)
+    @api.expect(edm_backup_title)
     @api.marshal_with(edm_backup_resp)
     def post(self):
         """
@@ -53,11 +53,11 @@ class backupItem(Resource):
         """
         return Backup.query.filter(Backup.id == id).one()
 
-    @api.expect(edm_backup)
+    @api.expect(edm_backup_title)
     @api.response(204, 'backup successfully updated.')
     def put(self, id):
         """
-        Updates a specified EDM backup.
+        Updates the details of a specified EDM backup.
         """
         data = request.json
         update_edm_backup(id, data)

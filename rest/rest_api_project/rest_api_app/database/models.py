@@ -10,13 +10,11 @@ from rest_api_app.database import db
 class Backup(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(80))
-    filepath = db.Column(db.Text)
     start_date = db.Column(db.DateTime)
     status = db.Column(db.String(80))
 
-    def __init__(self, title, filepath, status, start_date=None):
+    def __init__(self, title, status, start_date=None):
         self.title = title
-        self.filepath = filepath
         if start_date is None:
             start_date = datetime.utcnow()
         self.start_date = start_date
@@ -28,10 +26,12 @@ class Backup(db.Model):
 
 class Restore(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(50))
+    title = db.Column(db.String(50))
+    backup_id = db.Column(db.Integer)
 
-    def __init__(self, name):
-        self.name = name
+    def __init__(self, title, backup_id):
+        self.title = title
+        self.backup_id = backup_id
 
     def __repr__(self):
-        return '<Restore %r>' % self.name
+        return '<Restore %r>' % self.title

@@ -6,9 +6,8 @@ import sys, os, subprocess, tarfile
 
 def create_edm_backup(data):
     title = data.get('title')
-    filepath = data.get('filepath')
     status = 'INITIATED'
-    backup = Backup(title, filepath, status)
+    backup = Backup(title, status)
     db.session.add(backup)
     db.session.commit()
     print("=============> Starting Backup - backup_id = "+str(backup.id))
@@ -40,7 +39,6 @@ def create_edm_backup(data):
 def update_edm_backup(backup_id, data):
     backup = Backup.query.filter(Backup.id == backup_id).one()
     backup.title = data.get('title')
-    backup.filepath = data.get('filepath')
     backup.status = 'UPDATED'
     # backup.restore = Restore.query.filter(Restore.id == restore_id).one()
     db.session.add(backup)
@@ -54,11 +52,11 @@ def delete_edm_backup(backup_id):
 
 
 def create_restore(data):
-    name = data.get('name')
+    restore_title = data.get('title')
     restore_id = data.get('id')
     backup_id = data.get('backup_id')
 
-    restore = Restore(name)
+    restore = Restore(restore_title, backup_id)
     if restore_id:
         restore.id = restore_id
 
@@ -89,7 +87,7 @@ def create_restore(data):
 
 def update_restore(restore_id, data):
     restore = Restore.query.filter(Restore.id == restore_id).one()
-    restore.name = data.get('name')
+    restore.title = data.get('title')
     db.session.add(restore)
     db.session.commit()
 

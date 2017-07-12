@@ -2,5 +2,5 @@
 
 echo "Running all tests !!!"
 
-docker-compose -p edm exec rest-api nose2 -v
-
+#docker-compose -p edm exec rest-api nose2 --with-coverage --verbose
+docker-compose -p edm exec rest-api nose2 --verbose

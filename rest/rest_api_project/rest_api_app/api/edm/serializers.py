@@ -8,9 +8,11 @@ edm_backup_resp = api.model('EDM backup response', {
 edm_backup = api.model('edm backup', {
     'id': fields.Integer(readOnly=True, description='The unique identifier of an EDM backup'),
     'title': fields.String(required=True, description='EDM backup title'),
-    'filepath': fields.String(required=True, description='EDM backup file path'),
     'start_date': fields.DateTime,
-    # 'status': fields.String(attribute='restore.id'),
+})
+
+edm_backup_title = api.model('edm backup title', {
+    'title': fields.String(required=True, description='EDM backup title')
 })
 
 pagination = api.model('A page of results', {
@@ -26,8 +28,17 @@ page_of_edm_backups = api.inherit('Page of edm backups', pagination, {
 
 restore = api.model('edm restore', {
     'id': fields.Integer(readOnly=True, description='The unique identifier of a edm restore'),
-    'name': fields.String(required=True, description='Restore name'),
+    'title': fields.String(required=True, description='Restore title'),
     'backup_id': fields.Integer(required=True, description='Backup id')
+})
+
+restore_create = api.model('edm restore create', {
+    'title': fields.String(required=True, description='Restore title'),
+    'backup_id': fields.Integer(required=True, description='Id of Backup to be restored')
+})
+
+restore_update = api.model('edm restore update', {
+    'title': fields.String(required=True, description='Restore title')
 })
 
 restore_with_backups = api.inherit('edm restore with backups', restore, {
