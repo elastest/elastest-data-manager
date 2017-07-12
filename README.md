@@ -84,6 +84,33 @@ Please note that it will take some time (in the order of several seconds - depen
 
 Also note that if you are in a Linux host, you need to set vm.max_map_count of the host to at least 262144  in order to run the Elasticsearch container. (more info at https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html#docker-cli-run-prod-mode). If you use the above startup-linux.sh script you don't have to do anything extra since it already contains code to do this. However, in order to be able to change your system settings, the script will prompt you for your sudo password.
 
+## Run the tests (optional)
+The tests can be run as follows:
+
+    # From main project folder
+
+    # Run the tests
+    bin/run-tests.sh
+ 
+ The output should be a list of tests with status ok.
+ 
+ 
+## Load test data (optional)
+The following Linux scripts load some test data in the system:
+
+    # From main project folder
+
+    # Load test data to MySQL
+    bin/load-mysql-test.sh
+
+    # Load test data to Elasticsearch
+    bin/load-es-test.sh
+
+    # Load test data to Alluxio
+    bin/load-alluxio-test.sh
+ 
+ You can verify the data is loaded using the web or client interfaces of each system.
+ 
 ### Accessing the web interfaces
 Each component provide its own web UI. Open you browser at one of the URLs below, where `dockerhost` is the name / IP of the host running the docker daemon. If using Linux, this is the IP of your linux box. If using OSX or Windows (via Boot2docker), you can find out your docker host by typing `boot2docker ip`.
 
@@ -93,6 +120,7 @@ Each component provide its own web UI. Open you browser at one of the URLs below
 | Alluxio Web Interface		| [http://localhost:19999](http://localhost:19999) |
 | Kibana Web Interface		| [http://localhost:5601](http://localhost:5601) |
 | Cerebro Web Interface		| [http://localhost:9400/#/overview?host=http:%2F%2Felasticsearch:9200](http://localhost:9400/#/overview?host=http:%2F%2Felasticsearch:9200) |
+| REST API Swagger UII		| [http://localhost:8000/api/](http://localhost:8000/api/) |
 
 ### Scaling the number of instances
 If you want to increase the number of HDFS datanodes in your cluster
