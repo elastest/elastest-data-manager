@@ -52,7 +52,7 @@ node('docker'){
                 def mysql_image = docker.build("elastest/edm-mysql:0.5.0","./mysql")
 
             stage "Run EDM docker-compose"
-                sh 'chmod +x bin/* && bin/teardown-linux.sh && bin/startup-linux.sh'
+                sh 'chmod +x bin/* && bin/teardown-ci.sh && bin/startup-ci.sh'
                 echo ("EDM System is running..")
                 
             stage "publish"
