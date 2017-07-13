@@ -184,7 +184,8 @@ services:
       - ./cerebro/config/conf:/opt/cerebro-0.6.5/conf
       - ./cerebro/logs:/opt/cerebro-0.6.5/logs
     depends_on:
-      - esnode
+      # - esnode
+      - elasticsearch
     ports:
       - 9400:9000
     environment:
@@ -192,8 +193,6 @@ services:
     tty: true
     networks:
       - elastest
-    depends_on:
-      - elasticsearch
 
   mysql:
     # container_name: mysql
