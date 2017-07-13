@@ -3,7 +3,7 @@
 echo "Tearing down using docker-compose"
 docker-compose  --project-name edm down
 
-rm -rf alluxio/data
+sudo rm -rf alluxio/data
 mkdir alluxio/data
 
 sudo rm -rf mysql/data/*
