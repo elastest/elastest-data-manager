@@ -16,3 +16,11 @@ From inside container
 Test Alluxio Client				: alluxio fs ls /
 Test MySQL Client				: mysql -u root -h mysql elastest
 Check Java version				: java -version
+
+
+
+-------------------
+Add warfile article
+-------------------
+
+https://stackoverflow.com/questions/27818856/docker-add-warfile-to-official-tomcat-image
