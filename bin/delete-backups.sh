@@ -12,3 +12,6 @@ sudo rm -rf backup/hdfs/*
 touch backup/hdfs/.gitkeep
 
 sudo rm rest/rest_api_project/rest_api_app/db.sqlite
+sudo rm rest/rest_api_project/tests/db.sqlite
+sudo rm rest/rest_api_project/.coverage
+
