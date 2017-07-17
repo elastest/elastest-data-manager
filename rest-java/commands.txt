@@ -1,0 +1,18 @@
+----------------------
+From outside container
+----------------------
+
+Access Tomcat					: http://localhost:8001/
+Access Container logs			: docker-compose -p edm logs rest-java
+Build Container					: docker-compose build rest-java
+Get a bash prompt into Container: docker-compose -p edm exec rest-java bash
+
+
+
+---------------------
+From inside container
+---------------------
+
+Test Alluxio Client				: alluxio fs ls /
+Test MySQL Client				: mysql -u root -h mysql elastest
+Check Java version				: java -version
