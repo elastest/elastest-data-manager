@@ -6,13 +6,14 @@ from rest_api_app.api.edm.endpoints.backups import ns as edm_backups_namespace
 from rest_api_app.api.edm.endpoints.restores import ns as edm_restores_namespace
 from rest_api_app.api.restplus import api
 from rest_api_app.database import db
+from flask import json
 
 app = Flask(__name__)
 logging.config.fileConfig('logging.conf')
 log = logging.getLogger(__name__)
 
 def configure_app(flask_app):
-    # flask_app.config['SERVER_NAME'] = settings.FLASK_SERVER_NAME
+    flask_app.config['SERVER_NAME'] = settings.FLASK_SERVER_NAME
     flask_app.config['SERVER_HOST'] = settings.FLASK_SERVER_HOST
     flask_app.config['SERVER_PORT'] = settings.FLASK_SERVER_PORT
     flask_app.config['SQLALCHEMY_DATABASE_URI'] = settings.SQLALCHEMY_DATABASE_URI
@@ -39,6 +40,12 @@ def main():
     initialize_app(app)
     with app.app_context():
         db.create_all()
+        log.info('>>>>> Started Exporting Swagger Api to file swagger-api.json')
+        file = open("swagger-api.json","w") 
+        file.write(json.dumps(api.__schema__)) 
+        file.close() 
+        log.info('>>>>> Finished Exporting Swagger Api to file swagger-api.json')
+
     log.info('>>>>> Starting development server at http://%s:%d/api/ <<<<<', settings.FLASK_SERVER_HOST, settings.FLASK_SERVER_PORT)
     app.run(host=settings.FLASK_SERVER_HOST, port=settings.FLASK_SERVER_PORT, debug=settings.FLASK_DEBUG)
 
