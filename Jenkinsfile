@@ -62,9 +62,9 @@ node('docker'){
                 step([$class: 'JUnitResultArchiver', testResults: '**/rest/rest_api_project/nosetests.xml'])
 
             stage "Cobertura"
-                sh 'bin/run-tests.sh'
-                sh('cd . && git rev-parse HEAD > GIT_COMMIT')
-                    git_commit=readFile('./GIT_COMMIT')
+                //sh 'bin/run-tests.sh'
+                sh('cd rest/rest_api_project && git rev-parse HEAD > GIT_COMMIT')
+                    git_commit=readFile('rest/rest_api_project/GIT_COMMIT')
                     
                 sh 'export GIT_COMMIT=$git_commit'
               
