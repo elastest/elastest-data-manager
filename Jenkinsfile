@@ -8,7 +8,7 @@ node('docker'){
         mycontainer.pull() // make sure we have the latest available from Docker Hub
         mycontainer.inside("-u jenkins -v /var/run/docker.sock:/var/run/docker.sock:rw") {
             git 'https://github.com/elastest/elastest-data-manager.git'
-            
+
             // stage "Test"
             //     sh 'ls -la'
             //     echo ("Starting maven tests")
@@ -55,6 +55,11 @@ node('docker'){
                 sh 'chmod +x bin/* && bin/teardown-ci.sh && bin/startup-ci.sh'
                 echo ("EDM System is running..")
                 
+            stage "Unit tests"
+                echo ("Starting unit tests...")
+                sh 'docker-compose -p edm exec rest-api tox'
+                step([$class: 'JUnitResultArchiver', testResults: '**/rest/rest_api_project/nosetests.xml'])
+
             stage "publish"
                 echo ("publishing..")
                 withCredentials([[
