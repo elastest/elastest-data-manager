@@ -61,6 +61,17 @@ node('docker'){
                 sh 'bin/run-tests.sh'
                 step([$class: 'JUnitResultArchiver', testResults: '**/rest/rest_api_project/nosetests.xml'])
 
+            stage "Cobertura"
+                echo "$COB_EDM_TOKEN"
+                
+                def exitCode = sh(
+                    returnStatus: true,
+                    //script: "curl -s https://raw.githubusercontent.com/codecov/codecov-bash/master/codecov | bash -s - $codecovArgs")
+                    script: " pip install --user codecov && codecov -v -t $COB_EDM_TOKEN")
+                    if (exitCode != 0) {
+                        echo( exitCode +': Failed to upload code coverage to codecov')
+                    }
+
             stage "publish"
                 echo ("publishing..")
                 withCredentials([[
