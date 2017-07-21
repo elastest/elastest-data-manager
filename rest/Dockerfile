@@ -51,6 +51,7 @@ WORKDIR /usr/src/app
 COPY rest_api_project /usr/src/app
 #COPY ./rest_api_project/requirements.txt /usr/src/app/
 RUN pip install --no-cache-dir -r /usr/src/app/requirements.txt
+RUN pip install --no-cache-dir -r /usr/src/app/test-requirements.txt
 
 #COPY ./rest_api_project/ /usr/src/app
 

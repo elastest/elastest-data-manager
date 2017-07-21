@@ -13,6 +13,10 @@ chmod a+rwx -R mysql/data
 # docker-compose --project-name edm   up -d  --remove-orphans --force-recreate
 docker-compose --project-name edm   up -d 
 
+
+echo "Sleeping to give time for service startup ..."
+sleep 30
+
 # docker-compose scale esnode=3
 #docker volume create --driver local --opt o=size=20G,uid=1000 esdata1
 #docker volume create --driver local --opt o=size=20G,uid=1000 esdata2

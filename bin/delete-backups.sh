@@ -15,5 +15,7 @@ sudo rm rest/rest_api_project/rest_api_app/db.sqlite
 sudo rm rest/rest_api_project/tests/db.sqlite
 sudo rm rest/rest_api_project/.coverage
 
-sudo rm rest/rest_api_project/.tox
+sudo rm -rf rest/rest_api_project/.tox
+sudo rm -rf rest/rest_api_project/edm.egg-info
+sudo rm rest/rest_api_project/nosetests.xml
 

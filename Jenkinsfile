@@ -57,7 +57,7 @@ node('docker'){
                 
             stage "Unit tests"
                 echo ("Starting unit tests...")
-                sh 'docker-compose -p edm exec rest-api tox'
+                sh 'bin/run-tests.sh'
                 step([$class: 'JUnitResultArchiver', testResults: '**/rest/rest_api_project/nosetests.xml'])
 
             stage "publish"
