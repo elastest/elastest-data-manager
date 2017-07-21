@@ -16,17 +16,6 @@ node('docker'){
             //     echo ("No tests yet, but these would be integration at least")
             //     sh 'which docker'
 
-            stage "Cobertura"
-                echo "$COB_EDM_TOKEN"
-                
-                def exitCode = sh(
-                    returnStatus: true,
-                    //script: "curl -s https://raw.githubusercontent.com/codecov/codecov-bash/master/codecov | bash -s - $codecovArgs")
-                    script: " pip install --user codecov && codecov -v -t $COB_EDM_TOKEN")
-                    if (exitCode != 0) {
-                        echo( exitCode +': Failed to upload code coverage to codecov')
-                    }
-                
             stage "Build Rest API image - Package"
                 echo ("building..")
                 //need to be corrected to the organization because at the moment elastestci can't create new repositories in the organization
@@ -71,6 +60,26 @@ node('docker'){
                 echo ("Starting unit tests...")
                 sh 'bin/run-tests.sh'
                 step([$class: 'JUnitResultArchiver', testResults: '**/rest/rest_api_project/nosetests.xml'])
+
+            stage "Cobertura"
+                //sh 'bin/run-tests.sh'
+                sh('cd rest/rest_api_project && git rev-parse HEAD > GIT_COMMIT')
+                    git_commit=readFile('rest/rest_api_project/GIT_COMMIT')
+                    
+                sh 'export GIT_COMMIT=$git_commit'
+              
+                sh 'export GIT_BRANCH=master'
+                def codecovArgs = "-v -t $COB_EDM_TOKEN"
+                        
+                echo "$codecovArgs"
+                
+                def exitCode = sh(
+                    returnStatus: true,
+                    script: "curl -s https://raw.githubusercontent.com/codecov/codecov-bash/master/codecov | bash -s - $codecovArgs")
+                    //script: " pip install --user codecov && codecov -v -t $COB_EDM_TOKEN")
+                    if (exitCode != 0) {
+                        echo( exitCode +': Failed to upload code coverage to codecov')
+                    }
 
             stage "publish"
                 echo ("publishing..")
