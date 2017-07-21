@@ -94,7 +94,8 @@ services:
     build: ./rest-java  # path is relative to docker-compose.yml location
     # image: elastest/edm-rest-api:0.5.0
     volumes:
-      - ./rest-java/rest_api_project:/usr/local/tomcat/webapps
+      - ./rest-java/rest_api_project/deployment:/usr/local/tomcat/webapps
+      - ./rest-java/rest_api_project/edm-rest:/usr/src/edm-rest
       - ./rest-java/alluxio_conf:/opt/alluxio/conf
       # - ./rest-java/scripts:/scripts
       - ./backup:/backup
