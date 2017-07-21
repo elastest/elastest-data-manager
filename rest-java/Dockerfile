@@ -10,8 +10,9 @@ CMD ["catalina.sh", "run"]
 # #### Environmental Variables
 ENV HADOOP_VERSION      2.7
 ENV ALLUXIO_VERSION     1.5.0
-ENV ALLUXIO_HOME         /opt/alluxio
-ENV PATH          $PATH:$ALLUXIO_HOME/bin
+ENV ALLUXIO_HOME        /opt/alluxio
+ENV PATH                $PATH:$ALLUXIO_HOME/bin
+ENV JAVA_HOME           /usr/lib/jvm/java-8-oracle
 
 # add webupd8 repository
 RUN \
