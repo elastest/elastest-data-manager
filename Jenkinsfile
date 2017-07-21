@@ -15,6 +15,17 @@ node('docker'){
             //     echo ("Starting maven tests")
             //     echo ("No tests yet, but these would be integration at least")
             //     sh 'which docker'
+
+            stage "Cobertura"
+                echo "$COB_EDM_TOKEN"
+                
+                def exitCode = sh(
+                    returnStatus: true,
+                    //script: "curl -s https://raw.githubusercontent.com/codecov/codecov-bash/master/codecov | bash -s - $codecovArgs")
+                    script: " pip install --user codecov && codecov -v -t $COB_EDM_TOKEN")
+                    if (exitCode != 0) {
+                        echo( exitCode +': Failed to upload code coverage to codecov')
+                    }
                 
             stage "Build Rest API image - Package"
                 echo ("building..")
@@ -60,17 +71,6 @@ node('docker'){
                 echo ("Starting unit tests...")
                 sh 'bin/run-tests.sh'
                 step([$class: 'JUnitResultArchiver', testResults: '**/rest/rest_api_project/nosetests.xml'])
-
-            stage "Cobertura"
-                echo "$COB_EDM_TOKEN"
-                
-                def exitCode = sh(
-                    returnStatus: true,
-                    //script: "curl -s https://raw.githubusercontent.com/codecov/codecov-bash/master/codecov | bash -s - $codecovArgs")
-                    script: " pip install --user codecov && codecov -v -t $COB_EDM_TOKEN")
-                    if (exitCode != 0) {
-                        echo( exitCode +': Failed to upload code coverage to codecov')
-                    }
 
             stage "publish"
                 echo ("publishing..")
