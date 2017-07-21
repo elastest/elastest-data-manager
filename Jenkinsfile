@@ -55,10 +55,10 @@ node('docker'){
                 sh 'chmod +x bin/* && bin/teardown-ci.sh && bin/startup-ci.sh'
                 echo ("EDM System is running..")
                 
-            stage "Unit tests"
-                echo ("Starting unit tests...")
-                sh 'bin/run-tests.sh'
-                step([$class: 'JUnitResultArchiver', testResults: '**/rest/rest_api_project/nosetests.xml'])
+            //stage "Unit tests"
+            //    echo ("Starting unit tests...")
+            //    sh 'bin/run-tests.sh'
+            //    step([$class: 'JUnitResultArchiver', testResults: '**/rest/rest_api_project/nosetests.xml'])
 
             stage "publish"
                 echo ("publishing..")
