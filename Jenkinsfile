@@ -10,47 +10,34 @@ node('docker'){
         mycontainer.inside("-u jenkins -v /var/run/docker.sock:/var/run/docker.sock:rw") {
             git 'https://github.com/elastest/elastest-data-manager.git'
 
-            // stage "Test"
-            //     sh 'ls -la'
-            //     echo ("Starting maven tests")
-            //     echo ("No tests yet, but these would be integration at least")
-            //     sh 'which docker'
-
             stage "Build Rest API image - Package"
                 echo ("building..")
-                //need to be corrected to the organization because at the moment elastestci can't create new repositories in the organization
                 def rest_api_image = docker.build("elastest/edm-rest-api:0.5.0","./rest")
 
             stage "Build Alluxio image - Package"
                 echo ("building..")
                 sh 'chmod +x alluxio/entrypoint.sh'
-                //need to be corrected to the organization because at the moment elastestci can't create new repositories in the organization
                 def alluxio_image = docker.build("elastest/edm-alluxio:0.5.0","./alluxio")
 
             stage "Build Hadoop image - Package"
                 echo ("building..")
-                //need to be corrected to the organization because at the moment elastestci can't create new repositories in the organization
                 def hadoop_image = docker.build("elastest/edm-hadoop:0.5.0","./hadoop")
 
             stage "Build Elasticsearch image - Package"
                 echo ("building..")
-                //need to be corrected to the organization because at the moment elastestci can't create new repositories in the organization
                 def elasticsearch_image = docker.build("elastest/edm-elasticsearch:0.5.0","./elasticsearch")
 
             stage "Build Kibana image - Package"
                 echo ("building..")
-                //need to be corrected to the organization because at the moment elastestci can't create new repositories in the organization
                 def kibana_image = docker.build("elastest/edm-kibana:0.5.0","./kibana")
 
             stage "Build Cerebro image - Package"
                 echo ("building..")
-                //need to be corrected to the organization because at the moment elastestci can't create new repositories in the organization
                 def cerebro_image = docker.build("elastest/edm-cerebro:0.5.0","./cerebro")
 
-            stage "Build MySQL image - Package"
-                echo ("building..")
-                //need to be corrected to the organization because at the moment elastestci can't create new repositories in the organization
-                def mysql_image = docker.build("elastest/edm-mysql:0.5.0","./mysql")
+            //stage "Build MySQL image - Package"
+            //    echo ("building..")
+            //    def mysql_image = docker.build("elastest/edm-mysql:0.5.0","./mysql")
 
             stage "Run EDM docker-compose"
                 sh 'chmod +x bin/* && bin/teardown-ci.sh && bin/startup-ci.sh'
