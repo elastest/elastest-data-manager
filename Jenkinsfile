@@ -84,7 +84,7 @@ node('docker'){
                         elasticsearch_image.push()
                         kibana_image.push()
                         cerebro_image.push()
-                        mysql_image.push()
+                        //mysql_image.push()
                     }
 
         }
