@@ -139,12 +139,12 @@ services:
       - ./elasticsearch/esdata1:/usr/share/elasticsearch/data
     ports:
       - "9201:9200"
-      # - "9301:9300"
+      - "9301:9300"
     environment:
       - ES_JAVA_OPTS=-Xmx512m -Xms512m
       - discovery.type=zen
       # use internal Docker round-robin DNS for unicast discovery
-      - discovery.zen.ping.unicast.hosts=elasticsearch
+      - discovery.zen.ping.unicast.hosts=elasticsearch:9301
       - discovery.zen.minimum_master_nodes=2
     hostname: elasticsearch
     networks:
@@ -166,9 +166,9 @@ services:
       - ES_JAVA_OPTS=-Xmx512m -Xms512m
       # use internal Docker round-robin DNS for unicast discovery
       - discovery.type=zen
-      - discovery.zen.ping.unicast.hosts=elasticsearch
+      - discovery.zen.ping.unicast.hosts=elasticsearch:9301
       - discovery.zen.minimum_master_nodes=2
-      - UNICAST_HOSTS=elasticsearch
+      # - UNICAST_HOSTS=elasticsearch:9301
     depends_on:
       - elasticsearch
     hostname: esnode
@@ -188,7 +188,7 @@ services:
       - ES_JAVA_OPTS=-Xmx256m -Xms256m
       # use internal Docker round-robin DNS for unicast discovery
       - discovery.type=zen
-      - discovery.zen.ping.unicast.hosts=elasticsearch
+      - discovery.zen.ping.unicast.hosts=elasticsearch:9301
     networks:
       - elastest
     depends_on:
