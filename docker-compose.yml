@@ -138,8 +138,8 @@ services:
       - ./backup/elasticsearch:/backup
       - ./elasticsearch/esdata1:/usr/share/elasticsearch/data
     ports:
-      - "9201:9201"
-      - "9301:9301"
+      - "9201:9200"
+      - "9301:9300"
     environment:
       - ES_JAVA_OPTS=-Xmx512m -Xms512m
       - discovery.type=zen
