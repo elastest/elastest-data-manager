@@ -4,7 +4,8 @@ node('docker'){
         sh 'echo 262144 | sudo tee /proc/sys/vm/max_map_count'
         //sysctl -w vm.max_map_count=262144
         //sysctl vm.max_map_count
-        def mycontainer = docker.image('sgioldasis/ci-docker-in-docker:latest')
+        // def mycontainer = docker.image('sgioldasis/ci-docker-in-docker:latest')
+        def mycontainer = docker.image('elastest/ci-docker-compose-siblings')
         //def mycontainer = docker.image('elastest/docker-siblings:latest')
         mycontainer.pull() // make sure we have the latest available from Docker Hub
         mycontainer.inside("-u jenkins -v /var/run/docker.sock:/var/run/docker.sock:rw") {
