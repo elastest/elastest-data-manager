@@ -108,8 +108,7 @@ def restore_indices_from_fs_to_dest(config, backup_id):
 
     try:
         # specify all 3 dest ES nodes in the connection string
-        # dest_es = Elasticsearch([dest_seed1, dest_seed2, dest_seed3], sniff_on_start=True,
-        dest_es = Elasticsearch([dest_seed1], sniff_on_start=True, 
+        dest_es = Elasticsearch([dest_seed1, dest_seed2, dest_seed3], sniff_on_start=True, 
             sniff_on_connection_fail=True, sniffer_timeout=60)
 
         dest_es.snapshot.create_repository(repository=es_fs_repo,
