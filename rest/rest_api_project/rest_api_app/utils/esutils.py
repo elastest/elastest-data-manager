@@ -43,7 +43,6 @@ def snapshot_indices_from_src_to_fs(config, backup_id):
     try:
         src_es = Elasticsearch([src_seed1, src_seed2, src_seed3],
         sniff_on_start=False, sniff_on_connection_fail=False, sniffer_timeout=0)
-        # sniff_on_start=True, sniff_on_connection_fail=True, sniffer_timeout=60)
 
         print("\n[INFO] Connected to src ES cluster: %s" %(src_es.info()))
 
@@ -109,8 +108,8 @@ def restore_indices_from_fs_to_dest(config, backup_id):
 
     try:
         # specify all 3 dest ES nodes in the connection string
-        dest_es = Elasticsearch([dest_seed1, dest_seed2, dest_seed3], sniff_on_start=True,
-            sniff_on_connection_fail=True, sniffer_timeout=60)
+        dest_es = Elasticsearch([dest_seed1, dest_seed2, dest_seed3], sniff_on_start=False,
+            sniff_on_connection_fail=False, sniffer_timeout=0)
 
         dest_es.snapshot.create_repository(repository=es_fs_repo,
             body={
