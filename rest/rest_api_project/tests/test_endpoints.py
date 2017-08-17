@@ -119,54 +119,54 @@ class EdmRestApiTest(unittest.TestCase):
     #### Restore tests ####
     #######################
 
-    # def test_51_post_restores(self):
-    #     url = 'http://localhost:8000/api/edm/restores/'
-    #     testheaders = { 'Content-Type': 'application/json', 'Accept': 'application/json'}
-    #     testdata = { "backup_id": 1, "title": "Test Restore 1" }
-    #     # response = requests.post(url, headers=testheaders, data=json.dumps(testdata))
-    #     # self.assertEqual(response.status_code, 201)
-    #     response = self.app.post('/api/edm/restores/', headers=testheaders, data=json.dumps(testdata))
-    #     self.assertEqual(response.status_code, 201)
-    #
-    # def test_52_get_restores(self):
-    #     # url = 'http://localhost:8000/api/edm/restores/'
-    #     # response = requests.get(url)
-    #     # self.assertEqual(response.status_code, 200)
-    #     response = self.app.get('/api/edm/restores/', follow_redirects=True)
-    #     # print(response.data)
-    #     self.assertEqual(response.status_code, 200)
-    #
-    # def test_53_get_restores_pagination(self):
-    #     url = 'http://localhost:8000/api/edm/restores/?page=1&per_page=10'
-    #     response = requests.get(url)
-    #     self.assertEqual(response.status_code, 200)
-    #
-    # def test_54_get_specific_restore(self):
-    #     # url = 'http://localhost:8000/api/edm/restores/1'
-    #     # response = requests.get(url)
-    #     # self.assertEqual(response.status_code, 200)
-    #     response = self.app.get('/api/edm/restores/1', follow_redirects=True)
-    #     # print(response.data)
-    #     self.assertEqual(response.status_code, 200)
-    #
-    # def test_55_put_specific_restore(self):
-    #     url = 'http://localhost:8000/api/edm/restores/1'
-    #     testheaders = { 'Content-Type': 'application/json', 'Accept': 'application/json'}
-    #     testdata = { "title": "Test Updated Restore 1" }
-    #     # response = requests.put(url, headers=testheaders, data=json.dumps(testdata))
-    #     # self.assertEqual(response.status_code, 204)
-    #     response = self.app.put('/api/edm/restores/1', headers=testheaders, data=json.dumps(testdata))
-    #     self.assertEqual(response.status_code, 204)
+    def test_51_post_restores(self):
+        url = 'http://localhost:8000/api/edm/restores/'
+        testheaders = { 'Content-Type': 'application/json', 'Accept': 'application/json'}
+        testdata = { "backup_id": 1, "title": "Test Restore 1" }
+        # response = requests.post(url, headers=testheaders, data=json.dumps(testdata))
+        # self.assertEqual(response.status_code, 201)
+        response = self.app.post('/api/edm/restores/', headers=testheaders, data=json.dumps(testdata))
+        self.assertEqual(response.status_code, 201)
+
+    def test_52_get_restores(self):
+        # url = 'http://localhost:8000/api/edm/restores/'
+        # response = requests.get(url)
+        # self.assertEqual(response.status_code, 200)
+        response = self.app.get('/api/edm/restores/', follow_redirects=True)
+        # print(response.data)
+        self.assertEqual(response.status_code, 200)
+
+    def test_53_get_restores_pagination(self):
+        url = 'http://localhost:8000/api/edm/restores/?page=1&per_page=10'
+        response = requests.get(url)
+        self.assertEqual(response.status_code, 200)
+
+    def test_54_get_specific_restore(self):
+        # url = 'http://localhost:8000/api/edm/restores/1'
+        # response = requests.get(url)
+        # self.assertEqual(response.status_code, 200)
+        response = self.app.get('/api/edm/restores/1', follow_redirects=True)
+        # print(response.data)
+        self.assertEqual(response.status_code, 200)
+
+    def test_55_put_specific_restore(self):
+        url = 'http://localhost:8000/api/edm/restores/1'
+        testheaders = { 'Content-Type': 'application/json', 'Accept': 'application/json'}
+        testdata = { "title": "Test Updated Restore 1" }
+        # response = requests.put(url, headers=testheaders, data=json.dumps(testdata))
+        # self.assertEqual(response.status_code, 204)
+        response = self.app.put('/api/edm/restores/1', headers=testheaders, data=json.dumps(testdata))
+        self.assertEqual(response.status_code, 204)
 
 
 
-    # def test_91_delete_specific_backup(self):
-    #     response = self.app.delete('/api/edm/backups/1', follow_redirects=True)
-    #     self.assertEqual(response.status_code, 204)
-    #
-    # def test_92_delete_specific_restore(self):
-    #     response = self.app.delete('/api/edm/restores/1', follow_redirects=True)
-    #     self.assertEqual(response.status_code, 204)
+    def test_91_delete_specific_backup(self):
+        response = self.app.delete('/api/edm/backups/1', follow_redirects=True)
+        self.assertEqual(response.status_code, 204)
+
+    def test_92_delete_specific_restore(self):
+        response = self.app.delete('/api/edm/restores/1', follow_redirects=True)
+        self.assertEqual(response.status_code, 204)
 
 if __name__ == '__main__':
     unittest.main()
