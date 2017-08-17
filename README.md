@@ -122,7 +122,7 @@ Each component provide its own web UI. Open you browser at one of the URLs below
 | HDFS NameNode           	| [http://localhost:50070](http://localhost:50070) |
 | Alluxio Web Interface		| [http://localhost:19999](http://localhost:19999) |
 | Kibana Web Interface		| [http://localhost:5601](http://localhost:5601) |
-| Cerebro Web Interface		| [http://localhost:9400/#/overview?host=http:%2F%2Felasticsearch:9201](http://localhost:9400/#/overview?host=http:%2F%2Felasticsearch:9201) |
+| Cerebro Web Interface		| [http://localhost:9400/#/overview?host=http:%2F%2Felasticsearch:9200](http://localhost:9400/#/overview?host=http:%2F%2Felasticsearch:9200) |
 | REST API Swagger UII		| [http://localhost:8000/api/](http://localhost:8000/api/) |
 
 ### Scaling the number of instances
@@ -177,11 +177,11 @@ You can try the following examples:
 	curl -v -X POST http://localhost:39999/api/v1/paths//hdfs/LICENSE/delete
 
 ### Elasticsearch
-Elasticsearch is listening at localhost:9201 if you want to access it with your own client interface.
+Elasticsearch is listening at localhost:9200 if you want to access it with your own client interface.
 For example you can install the Sense Chrome plugin https://chrome.google.com/webstore/detail/sense-beta/lhjgkmllcaadmopgmanpapmpjgmfcfig?hl=en).
 
 You can also connect to it and run queries through the provided Cerebro Web Interface.
-In order to connect to Elasticsearch from Cerebro use hostname: elasticsearch and port: 9201
+In order to connect to Elasticsearch from Cerebro use hostname: elasticsearch and port: 9200
 
 ### MySQL
 MySQL Server is listening at localhost:3306.

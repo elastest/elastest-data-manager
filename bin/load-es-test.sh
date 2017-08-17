@@ -16,7 +16,7 @@ fi
 
 echo "Creating Elasticsearch Mappings for log data ..."
 
-curl -XPUT 'localhost:9201/logstash-2015.05.18?pretty' -H 'Content-Type: application/json' -d'
+curl -XPUT 'localhost:9200/logstash-2015.05.18?pretty' -H 'Content-Type: application/json' -d'
 {
   "mappings": {
     "log": {
@@ -34,7 +34,7 @@ curl -XPUT 'localhost:9201/logstash-2015.05.18?pretty' -H 'Content-Type: applica
 }
 '
 
-curl -XPUT 'localhost:9201/logstash-2015.05.19?pretty' -H 'Content-Type: application/json' -d'
+curl -XPUT 'localhost:9200/logstash-2015.05.19?pretty' -H 'Content-Type: application/json' -d'
 {
   "mappings": {
     "log": {
@@ -52,7 +52,7 @@ curl -XPUT 'localhost:9201/logstash-2015.05.19?pretty' -H 'Content-Type: applica
 }
 '
 
-curl -XPUT 'localhost:9201/logstash-2015.05.20?pretty' -H 'Content-Type: application/json' -d'
+curl -XPUT 'localhost:9200/logstash-2015.05.20?pretty' -H 'Content-Type: application/json' -d'
 {
   "mappings": {
     "log": {
@@ -74,7 +74,7 @@ curl -XPUT 'localhost:9201/logstash-2015.05.20?pretty' -H 'Content-Type: applica
 
 echo "Loading log data to Elasticsearch"
 
-curl -H 'Content-Type: application/x-ndjson' -XPOST 'localhost:9201/_bulk?pretty' --data-binary @logs.jsonl
+curl -H 'Content-Type: application/x-ndjson' -XPOST 'localhost:9200/_bulk?pretty' --data-binary @logs.jsonl
 
 
 echo "Log data has loaded ..."
