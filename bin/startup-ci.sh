@@ -11,7 +11,8 @@ docker network create -d bridge elastest
 chmod a+rwx -R mysql/data
 
 # docker-compose --project-name edm   up -d  --remove-orphans --force-recreate
-docker-compose --project-name edm   up -d 
+set -e
+docker-compose --project-name edm   up -d
 
 
 echo "Sleeping to give time for service startup ..."
