@@ -12,7 +12,6 @@ docker network create -d bridge elastest
 sudo chmod a+rwx -R mysql/data
 
 # docker-compose --project-name edm   up -d  --remove-orphans --force-recreate
-set -e
 docker-compose --project-name edm   up -d 
 
 # docker-compose scale esnode=3
