@@ -1,11 +1,11 @@
 # make sure ES is up and running
 import requests
-res = requests.get('http://localhost:9200')
+res = requests.get('http://localhost:9201')
 print(res.content)
 
 #connect to our cluster
 from elasticsearch import Elasticsearch
-es = Elasticsearch([{'host': 'localhost', 'port': 9200}])
+es = Elasticsearch([{'host': 'localhost', 'port': 9201}])
 
 #index some test data
 es.index(index='python-test-index', doc_type='test', id=1, body={'test': 'test'})

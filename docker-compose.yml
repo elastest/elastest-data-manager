@@ -138,9 +138,8 @@ services:
       - ./backup/elasticsearch:/backup
       - ./elasticsearch/esdata1:/usr/share/elasticsearch/data
     ports:
-      - "9200:9200"
-      - "9300"
-      # - "9300:9300"
+      - "9201:9201"
+      - "9301:9301"
     environment:
       - ES_JAVA_OPTS=-Xmx512m -Xms512m
       - discovery.type=zen
@@ -161,8 +160,8 @@ services:
       - ./backup/elasticsearch:/backup
       - ./elasticsearch/esdata2:/usr/share/elasticsearch/data
     ports:
-      - "9200"
-      - "9300"
+      - "9201"
+      - "9301"
     environment:
       - ES_JAVA_OPTS=-Xmx512m -Xms512m
       # use internal Docker round-robin DNS for unicast discovery
@@ -208,7 +207,7 @@ services:
     ports:
       - 9400:9000
     environment:
-      - ELASTICSEARCH_HOST=http://elasticsearch:9200
+      - ELASTICSEARCH_HOST=http://elasticsearch:9201
     tty: true
     networks:
       - elastest
