@@ -160,13 +160,13 @@ class EdmRestApiTest(unittest.TestCase):
 
 
 
-    def test_91_delete_specific_backup(self):
-        response = self.app.delete('/api/edm/backups/1', follow_redirects=True)
-        self.assertEqual(response.status_code, 204)
-
-    def test_92_delete_specific_restore(self):
-        response = self.app.delete('/api/edm/restores/1', follow_redirects=True)
-        self.assertEqual(response.status_code, 204)
+    # def test_91_delete_specific_backup(self):
+    #     response = self.app.delete('/api/edm/backups/1', follow_redirects=True)
+    #     self.assertEqual(response.status_code, 204)
+    #
+    # def test_92_delete_specific_restore(self):
+    #     response = self.app.delete('/api/edm/restores/1', follow_redirects=True)
+    #     self.assertEqual(response.status_code, 204)
 
 if __name__ == '__main__':
     unittest.main()
