@@ -40,6 +40,24 @@ node('docker'){
             //    echo ("building..")
             //    def mysql_image = docker.build("elastest/edm-mysql:0.1","./mysql")
 
+            stage "publish"
+                echo ("publishing..")
+                withCredentials([[
+                    $class: 'UsernamePasswordMultiBinding',
+                    credentialsId: 'elastestci-dockerhub',
+                    usernameVariable: 'USERNAME',
+                    passwordVariable: 'PASSWORD']]) {
+                        sh 'docker login -u "$USERNAME" -p "$PASSWORD"'
+                        //here your code
+                        rest_api_image.push()
+                        alluxio_image.push()
+                        hadoop_image.push()
+                        elasticsearch_image.push()
+                        kibana_image.push()
+                        cerebro_image.push()
+                        // mysql_image.push()
+                    }
+
             stage "Run EDM docker-compose"
                 sh 'chmod +x bin/* && bin/teardown-ci.sh && bin/startup-ci.sh'
                 echo ("EDM System is running..")
@@ -70,23 +88,6 @@ node('docker'){
                         echo( exitCode +': Failed to upload code coverage to codecov')
                     }
 
-            stage "publish"
-                echo ("publishing..")
-                withCredentials([[
-                    $class: 'UsernamePasswordMultiBinding',
-                    credentialsId: 'elastestci-dockerhub',
-                    usernameVariable: 'USERNAME',
-                    passwordVariable: 'PASSWORD']]) {
-                        sh 'docker login -u "$USERNAME" -p "$PASSWORD"'
-                        //here your code
-                        rest_api_image.push()
-                        alluxio_image.push()
-                        hadoop_image.push()
-                        elasticsearch_image.push()
-                        kibana_image.push()
-                        cerebro_image.push()
-                        // mysql_image.push()
-                    }
 
         }
 }
