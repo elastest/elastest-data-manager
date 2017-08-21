@@ -201,7 +201,7 @@ A database elastest is already created and you can use it for your schemas.
 
 The following diagram depicts the architecture of the EDM and its interaction with other components of the Elastest platform:
 
-![](/media/DATA/Dropbox/projects/elastest/prod/elastest-data-manager/docs/images/edm_architecture_diagram.png) 
+![](images/edm_architecture_diagram.png) 
 
 - **Kibana**: An open source data visualization plugin for Elasticsearch. It provides visualization capabilities on top of the content indexed on an Elasticsearch cluster. Users can create bar, line and scatter plots, or pie charts and maps on top of large volumes of data.
 
