@@ -13,7 +13,7 @@ node('docker'){
 
             stage "Build Rest API image - Package"
                 echo ("building..")
-                def rest_api_image = docker.build("elastest/edm-rest-api:0.1","./rest")
+                def rest_api_image = docker.build("elastest/edm:0.1","./rest")
 
             stage "Build Alluxio image - Package"
                 echo ("building..")

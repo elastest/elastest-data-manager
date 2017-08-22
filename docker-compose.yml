@@ -75,7 +75,7 @@ services:
 
   rest-api:
     # build: ./rest  # path is relative to docker-compose.yml location
-    image: elastest/edm-rest-api:0.1
+    image: elastest/edm:0.1
     volumes:
       - ./rest/rest_api_project:/usr/src/app # mount point
       - ./rest/alluxio_conf:/opt/alluxio/conf
@@ -92,7 +92,7 @@ services:
 
   # rest-java:
   #   # build: ./rest-java  # path is relative to docker-compose.yml location
-  #   image: elastest/edm-rest-api:0.1
+  #   image: elastest/edm:0.1
   #   volumes:
   #     - ./rest-java/rest_api_project/deployment:/usr/local/tomcat/webapps
   #     - ./rest-java/rest_api_project/edm-rest:/usr/src/edm-rest
