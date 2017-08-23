@@ -1,0 +1,424 @@
+basePath: /api
+consumes:
+  - application/json
+definitions:
+  A page of results:
+    properties:
+      page:
+        description: Number of this page of results
+        type: integer
+      pages:
+        description: Total number of pages of results
+        type: integer
+      per_page:
+        description: Number of items per page of results
+        type: integer
+      total:
+        description: Total number of results
+        type: integer
+    type: object
+  EDM backup response:
+    properties:
+      backup_id:
+        description: The unique identifier of an EDM backup
+        type: integer
+    type: object
+  Page of edm backups:
+    allOf:
+      - $ref: '#/definitions/A page of results'
+      - properties:
+          items:
+            items:
+              $ref: '#/definitions/edm backup'
+            type: array
+        type: object
+  edm backup:
+    properties:
+      id:
+        description: The unique identifier of an EDM backup
+        type: integer
+      start_date:
+        format: date-time
+        type: string
+      title:
+        description: EDM backup title
+        type: string
+    required:
+      - title
+    type: object
+  edm backup title:
+    properties:
+      title:
+        description: EDM backup title
+        type: string
+    required:
+      - title
+    type: object
+  edm restore:
+    properties:
+      backup_id:
+        description: Backup id
+        type: integer
+      id:
+        description: The unique identifier of a edm restore
+        type: integer
+      title:
+        description: Restore title
+        type: string
+    required:
+      - backup_id
+      - title
+    type: object
+  edm restore create:
+    properties:
+      backup_id:
+        description: Id of Backup to be restored
+        type: integer
+      title:
+        description: Restore title
+        type: string
+    required:
+      - backup_id
+      - title
+    type: object
+  edm restore update:
+    properties:
+      title:
+        description: Restore title
+        type: string
+    required:
+      - title
+    type: object
+host: localhost
+info:
+  description: The REST API for Elastest Data Manager component
+  title: Elastest Data Manager API
+  version: '1.0'
+paths:
+  /edm/backups/:
+    get:
+      operationId: get_backups_collection
+      parameters:
+        - default: 1
+          description: Page number
+          in: query
+          name: page
+          type: integer
+        - default: 1
+          description: Page number
+          in: query
+          name: bool
+          type: boolean
+        - collectionFormat: multi
+          default: 10
+          description: 'Results per page {error_msg}'
+          enum:
+            - 2
+            - 10
+            - 20
+            - 30
+            - 40
+            - 50
+          in: query
+          name: per_page
+          type: integer
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/Page of edm backups'
+      summary: Returns a list of existing EDM backups
+      tags:
+        - edm/backups
+    post:
+      operationId: post_backups_collection
+      parameters:
+        - in: body
+          name: payload
+          required: true
+          schema:
+            $ref: '#/definitions/edm backup title'
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/EDM backup response'
+      summary: Creates a new EDM backup
+      tags:
+        - edm/backups
+  '/edm/backups/archive/{year}/':
+    get:
+      operationId: get_backups_archive_collection_year
+      parameters:
+        - default: 1
+          description: Page number
+          in: query
+          name: page
+          type: integer
+        - default: 1
+          description: Page number
+          in: query
+          name: bool
+          type: boolean
+        - collectionFormat: multi
+          default: 10
+          description: 'Results per page {error_msg}'
+          enum:
+            - 2
+            - 10
+            - 20
+            - 30
+            - 40
+            - 50
+          in: query
+          name: per_page
+          type: integer
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/Page of edm backups'
+      summary: Returns list of existing EDM backups from a specified time period
+      tags:
+        - edm/backups
+    parameters:
+      - in: path
+        name: year
+        required: true
+        type: integer
+  '/edm/backups/archive/{year}/{month}/':
+    get:
+      operationId: get_backups_archive_collection
+      parameters:
+        - default: 1
+          description: Page number
+          in: query
+          name: page
+          type: integer
+        - default: 1
+          description: Page number
+          in: query
+          name: bool
+          type: boolean
+        - collectionFormat: multi
+          default: 10
+          description: 'Results per page {error_msg}'
+          enum:
+            - 2
+            - 10
+            - 20
+            - 30
+            - 40
+            - 50
+          in: query
+          name: per_page
+          type: integer
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/Page of edm backups'
+      summary: Returns list of existing EDM backups from a specified time period
+      tags:
+        - edm/backups
+    parameters:
+      - in: path
+        name: year
+        required: true
+        type: integer
+      - in: path
+        name: month
+        required: true
+        type: integer
+  '/edm/backups/archive/{year}/{month}/{day}/':
+    get:
+      operationId: get_backups_archive_collection_day
+      parameters:
+        - default: 1
+          description: Page number
+          in: query
+          name: page
+          type: integer
+        - default: 1
+          description: Page number
+          in: query
+          name: bool
+          type: boolean
+        - collectionFormat: multi
+          default: 10
+          description: 'Results per page {error_msg}'
+          enum:
+            - 2
+            - 10
+            - 20
+            - 30
+            - 40
+            - 50
+          in: query
+          name: per_page
+          type: integer
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/Page of edm backups'
+      summary: Returns list of existing EDM backups from a specified time period
+      tags:
+        - edm/backups
+    parameters:
+      - in: path
+        name: year
+        required: true
+        type: integer
+      - in: path
+        name: month
+        required: true
+        type: integer
+      - in: path
+        name: day
+        required: true
+        type: integer
+  '/edm/backups/{id}':
+    delete:
+      operationId: delete_backup_item
+      responses:
+        '204':
+          description: backup successfully deleted.
+        '404':
+          description: backup not found.
+      summary: Deletes a specified EDM backup
+      tags:
+        - edm/backups
+    get:
+      operationId: get_backup_item
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/edm backup'
+        '404':
+          description: backup not found.
+      summary: Returns the details of a specified EDM backup
+      tags:
+        - edm/backups
+    parameters:
+      - in: path
+        name: id
+        required: true
+        type: integer
+    put:
+      operationId: put_backup_item
+      parameters:
+        - in: body
+          name: payload
+          required: true
+          schema:
+            $ref: '#/definitions/edm backup title'
+      responses:
+        '204':
+          description: backup successfully updated.
+        '404':
+          description: backup not found.
+      summary: Updates the details of a specified EDM backup
+      tags:
+        - edm/backups
+  /edm/restores/:
+    get:
+      operationId: get_restore_collection
+      responses:
+        '200':
+          description: Success
+          schema:
+            items:
+              $ref: '#/definitions/edm restore'
+            type: array
+      summary: Returns a list of existing EDM restores
+      tags:
+        - edm/restores
+    post:
+      operationId: post_restore_collection
+      parameters:
+        - in: body
+          name: payload
+          required: true
+          schema:
+            $ref: '#/definitions/edm restore create'
+      responses:
+        '201':
+          description: Restore successfully created.
+      summary: Creates a new EDM restore
+      tags:
+        - edm/restores
+  '/edm/restores/{id}':
+    delete:
+      operationId: delete_restore_item
+      responses:
+        '204':
+          description: Restore successfully deleted.
+        '404':
+          description: Restore not found.
+      summary: Deletes a specified EDM restore
+      tags:
+        - edm/restores
+    get:
+      operationId: get_restore_item
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/edm restore'
+        '404':
+          description: Restore not found.
+      summary: Returns the details of a specified EDM restore
+      tags:
+        - edm/restores
+    parameters:
+      - in: path
+        name: id
+        required: true
+        type: integer
+    put:
+      description: |-
+        Use this method to change the title of a edm restore.
+
+        * Send a JSON object with the new title in the request body.
+
+        ```
+        {
+          "title": "New Restore Title"
+        }
+        ```
+
+        * Specify the ID of the restore to modify in the request URL path.
+      operationId: put_restore_item
+      parameters:
+        - in: body
+          name: payload
+          required: true
+          schema:
+            $ref: '#/definitions/edm restore update'
+      responses:
+        '204':
+          description: Restore successfully updated.
+        '404':
+          description: Restore not found.
+      summary: Updates the details of a specified EDM restore
+      tags:
+        - edm/restores
+produces:
+  - application/json
+responses:
+  MaskError:
+    description: When any error occurs on mask
+  NoResultFound:
+    description: When no result is found
+  ParseError:
+    description: When a mask can't be parsed
+swagger: '2.0'
+tags:
+  - description: Default namespace
+    name: default
+  - description: Operations related to EDM backups
+    name: edm/backups
+  - description: Operations related to edm restores
+    name: edm/restores
