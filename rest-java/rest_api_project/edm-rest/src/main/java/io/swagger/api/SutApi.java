@@ -27,7 +27,7 @@ public interface SutApi {
         @ApiResponse(code = 200, message = "Successful", response = InlineResponse200.class),
         @ApiResponse(code = 400, message = "Invalid SuT supplied or SuT not found", response = InlineResponse200.class),
         @ApiResponse(code = 405, message = "Invalid input", response = InlineResponse200.class),
-        @ApiResponse(code = 200, message = "unexpected error", response = InlineResponse200.class) })
+        @ApiResponse(code = 520, message = "unexpected error", response = InlineResponse200.class) })
     @RequestMapping(value = "/sut/{sut}",
         produces = { "application/json" }, 
         consumes = { "application/json" },
@@ -38,7 +38,7 @@ public interface SutApi {
     @ApiOperation(value = "Declare as SuT as unecessary and start the cleansing procedure. All SuT data will be erased.", notes = "Declare a SuT as deleted and starting the asynchronous purging procedure.", response = Void.class, tags={ "DataIO", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "Successful", response = Void.class),
-        @ApiResponse(code = 200, message = "unexpected error", response = Void.class) })
+        @ApiResponse(code = 520, message = "unexpected error", response = Void.class) })
     @RequestMapping(value = "/sut/{sut}",
         produces = { "application/json" }, 
         consumes = { "application/json" },
@@ -50,7 +50,7 @@ public interface SutApi {
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "Successful Post", response = Void.class),
         @ApiResponse(code = 405, message = "Invalid input", response = Void.class),
-        @ApiResponse(code = 200, message = "unexpected error", response = Void.class) })
+        @ApiResponse(code = 520, message = "unexpected error", response = Void.class) })
     @RequestMapping(value = "/sut/{sut}",
         produces = { "application/json" }, 
         consumes = { "application/json" },
@@ -61,7 +61,7 @@ public interface SutApi {
     @ApiOperation(value = "Retrieve a list with installed SuTs on EDM", notes = "Retrieve a list with Systems Under Test, installed on the EDM. This call will return all SuTs that have been created on the persistence layer", response = String.class, responseContainer = "List", tags={ "DataIO", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "OK", response = String.class),
-        @ApiResponse(code = 200, message = "unexpected error", response = String.class) })
+        @ApiResponse(code = 520, message = "unexpected error", response = String.class) })
     @RequestMapping(value = "/sut",
         produces = { "application/json" }, 
         consumes = { "application/json" },
