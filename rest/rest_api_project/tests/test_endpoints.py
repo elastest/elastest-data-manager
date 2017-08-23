@@ -46,7 +46,7 @@ class EdmRestApiTest(unittest.TestCase):
         self.assertEquals(tapp.debug, False)
 
 
- 
+
     # executed after each test
     def tearDown(self):
         pass
@@ -54,7 +54,7 @@ class EdmRestApiTest(unittest.TestCase):
 	######################
 	#### Backup tests ####
 	######################
- 
+
     def test_01_post_backups(self):
         url = 'http://localhost:8000/api/edm/backups/'
         testheaders = { 'Content-Type': 'application/json', 'Accept': 'application/json'}
@@ -118,7 +118,7 @@ class EdmRestApiTest(unittest.TestCase):
     #######################
     #### Restore tests ####
     #######################
- 
+
     def test_51_post_restores(self):
         url = 'http://localhost:8000/api/edm/restores/'
         testheaders = { 'Content-Type': 'application/json', 'Accept': 'application/json'}

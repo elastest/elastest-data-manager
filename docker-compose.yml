@@ -4,10 +4,10 @@ services:
 
   hdfs-namenode:
     # container_name: hdfs-namenode
-    image: elastest/edm-hadoop:0.5.0
+    image: elastest/edm-hadoop:0.1
     # build: ./hadoop
     command: hdfs namenode
-    ports: 
+    ports:
         - "50070:50070"
         - "9000:9000"
         - "8020:8020"
@@ -17,10 +17,10 @@ services:
 
   hdfs-datanode:
     # container_name: hdfs-datanode
-    image: elastest/edm-hadoop:0.5.0
+    image: elastest/edm-hadoop:0.1
     # build: ./hadoop
     command: hdfs datanode
-    # The host port is randomly assigned by Docker, 
+    # The host port is randomly assigned by Docker,
     # to allow scaling to multiple DataNodes on the same host
     ports:
         - "50075"
@@ -31,7 +31,7 @@ services:
 
   alluxio-master:
     # container_name: alluxio-master
-    image: elastest/edm-alluxio:0.5.0
+    image: elastest/edm-alluxio:0.1
     # build: ./alluxio
     command: master
     ports:
@@ -52,7 +52,7 @@ services:
 
   alluxio-worker:
     # container_name: alluxio-worker
-    image: elastest/edm-alluxio:0.5.0
+    image: elastest/edm-alluxio:0.1
     # build: ./alluxio
     command: worker
     ports:
@@ -75,7 +75,7 @@ services:
 
   rest-api:
     # build: ./rest  # path is relative to docker-compose.yml location
-    image: elastest/edm-rest-api:0.5.0
+    image: elastest/edm:0.1
     volumes:
       - ./rest/rest_api_project:/usr/src/app # mount point
       - ./rest/alluxio_conf:/opt/alluxio/conf
@@ -90,27 +90,27 @@ services:
     networks:
         - elastest
 
-#  rest-java:
-#    build: ./rest-java  # path is relative to docker-compose.yml location
-#    # image: elastest/edm-rest-api:0.5.0
-#    volumes:
-#      - ./rest-java/rest_api_project/deployment:/usr/local/tomcat/webapps
-#      - ./rest-java/rest_api_project/edm-rest:/usr/src/edm-rest
-#      - ./rest-java/alluxio_conf:/opt/alluxio/conf
-#      # - ./rest-java/scripts:/scripts
-#      - ./backup:/backup
-#    links:
-#      - alluxio-master
-#      - elasticsearch
-#      - mysql
-#    ports:
-#      - 8001:8080  # host:container
-#    networks:
-#      - elastest
+ rest-java:
+   # build: ./rest-java  # path is relative to docker-compose.yml location
+   image: elastest/edm:0.1
+   volumes:
+     - ./rest-java/rest_api_project/deployment:/usr/local/tomcat/webapps
+     - ./rest-java/rest_api_project/edm-rest:/usr/src/edm-rest
+     - ./rest-java/alluxio_conf:/opt/alluxio/conf
+     # - ./rest-java/scripts:/scripts
+     - ./backup:/backup
+   links:
+     - alluxio-master
+     - elasticsearch
+     - mysql
+   ports:
+     - 8001:8080  # host:container
+   networks:
+       - elastest
 
   alluxio-proxy:
     # container_name: alluxio-proxy
-    image: elastest/edm-alluxio:0.5.0
+    image: elastest/edm-alluxio:0.1
     # build: ./alluxio
     command: proxy
     ports:
@@ -131,7 +131,7 @@ services:
 
   elasticsearch:
     # container_name: elasticsearch
-    image: elastest/edm-elasticsearch:0.5.0
+    image: elastest/edm-elasticsearch:0.1
     # build: ./elasticsearch
     volumes:
       - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
@@ -153,7 +153,7 @@ services:
 
   esnode:
     # container_name: esnode
-    image: elastest/edm-elasticsearch:0.5.0
+    image: elastest/edm-elasticsearch:0.1
     # build: ./elasticsearch
     volumes:
       - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
@@ -177,7 +177,7 @@ services:
 
   kibana:
     # container_name: kibana
-    image: elastest/edm-kibana:0.5.0
+    image: elastest/edm-kibana:0.1
     # build: ./kibana
     volumes:
       - ./kibana/config/:/usr/share/kibana/config
@@ -196,7 +196,7 @@ services:
 
   cerebro:
     # container_name: cerebro
-    image: elastest/edm-cerebro:0.5.0
+    image: elastest/edm-cerebro:0.1
     # build: ./cerebro
     volumes:
       - ./cerebro/config/conf:/opt/cerebro-0.6.5/conf
@@ -214,11 +214,11 @@ services:
 
   mysql:
     # container_name: mysql
-    # image: elastest/edm-mysql:0.5.0
+    # image: elastest/edm-mysql:0.1
     image: mysql:5.7
     # build: ./mysql
     ports:
-      - "3306:3306"    
+      - "3306:3306"
     environment:
       # MYSQL_ROOT_PASSWORD: "elastestroot"
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
@@ -233,7 +233,7 @@ services:
     # restart: always
     networks:
       - elastest
- 
+
 # volumes:
 #   mysql_data:
 

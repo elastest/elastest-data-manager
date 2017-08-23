@@ -24,12 +24,12 @@ def snapshot_indices_from_src_to_fs(config, backup_id):
 
     The specified indices are backed up from the ElasticSearch Node on which backup is initiated
     and are stored at the filesystem location specified in the config file.
-    
+
     Parameters:
-        config: dictionary storing the configuration details 
-        
+        config: dictionary storing the configuration details
+
     """
-    
+
     src_seed1 = config['elasticsearch_config']['es_src_seed1']
     es_fs_repo = config['elasticsearch_config']['es_repository_name']
 
@@ -41,8 +41,9 @@ def snapshot_indices_from_src_to_fs(config, backup_id):
         src_seed2 = src_seed3 = src_seed1
 
     try:
-        src_es = Elasticsearch([src_seed1, src_seed2, src_seed3], sniff_on_start=True, 
-            sniff_on_connection_fail=True, sniffer_timeout=60)
+        src_es = Elasticsearch([src_seed1, src_seed2, src_seed3],
+        # sniff_on_start=False, sniff_on_connection_fail=False, sniffer_timeout=0)
+        sniff_on_start=True, sniff_on_connection_fail=True, sniffer_timeout=60)
 
         print("\n[INFO] Connected to src ES cluster: %s" %(src_es.info()))
 
@@ -63,18 +64,18 @@ def snapshot_indices_from_src_to_fs(config, backup_id):
 
         print("\n[INFO] Looking for snapshot ["+snapshot_name+"] ...\n")
         try:
-            snapshot_get = src_es.snapshot.get(repository=es_fs_repo, 
+            snapshot_get = src_es.snapshot.get(repository=es_fs_repo,
                 snapshot=snapshot_name)
             print("\n[INFO] Deleting snapshot ["+snapshot_name+"] ...\n")
-            src_es.snapshot.delete(repository=es_fs_repo, 
+            src_es.snapshot.delete(repository=es_fs_repo,
                 snapshot=snapshot_name)
         except Exception as e:
             print("\n\n[INFO] Snapshot ["+snapshot_name+"] does not exist. Proceeding ...\n")
 
 
         print("\n[INFO] Snapshotting ES cluster to ["+snapshot_name+"] ...\n")
-        src_es.snapshot.create(repository=es_fs_repo, 
-            snapshot=snapshot_name, 
+        src_es.snapshot.create(repository=es_fs_repo,
+            snapshot=snapshot_name,
             wait_for_completion=False)
 
     except Exception as e:
@@ -87,13 +88,13 @@ def restore_indices_from_fs_to_dest(config, backup_id):
     Restore the specified indices from the snapshot specified in the config file.
 
     The indices are restored at the specified 'dest' ElasticSearch Node.
-    ElasticSearch automatically replicates the indices across the ES cluster after the restore. 
-    
+    ElasticSearch automatically replicates the indices across the ES cluster after the restore.
+
     Parameters:
         config: dictionary storing the configuration details
-        
+
     """
-    
+
     dest_seed1 = config['elasticsearch_config']['es_dest_seed1']
     es_fs_repo = config['elasticsearch_config']['es_repository_name']
     index_list = config['elasticsearch_config']['index_names'].split(',')
@@ -108,8 +109,9 @@ def restore_indices_from_fs_to_dest(config, backup_id):
 
     try:
         # specify all 3 dest ES nodes in the connection string
-        dest_es = Elasticsearch([dest_seed1, dest_seed2, dest_seed3], sniff_on_start=True, 
-            sniff_on_connection_fail=True, sniffer_timeout=60)
+        dest_es = Elasticsearch([dest_seed1, dest_seed2, dest_seed3],
+        # sniff_on_start=False, sniff_on_connection_fail=False, sniffer_timeout=0)
+        sniff_on_start=True, sniff_on_connection_fail=True, sniffer_timeout=60)
 
         dest_es.snapshot.create_repository(repository=es_fs_repo,
             body={
@@ -156,9 +158,9 @@ def restore_indices_from_fs_to_dest(config, backup_id):
         print("\n[INFO] Restoring ES cluster from snapshot ["+snapshot_name+"] ...\n")
         # print "\n[INFO] Restoring ES indices: '%s' from filesystem snapshot...\n" %(config['elasticsearch_config']['index_names'])
 
-        dest_es.snapshot.restore(repository=es_fs_repo, 
-            snapshot=snapshot_name, 
-            # body={"indices": config['elasticsearch_config']['index_names']}, 
+        dest_es.snapshot.restore(repository=es_fs_repo,
+            snapshot=snapshot_name,
+            # body={"indices": config['elasticsearch_config']['index_names']},
             wait_for_completion=False)
 
         reopen_indices(dest_es)
@@ -175,13 +177,13 @@ def restore_indices_from_fs_to_dest(config, backup_id):
 
 def reopen_indices(es):
     """
-    Re-open indices 
+    Re-open indices
     (used to ensure indices are re-opened after any restore operation)
-    
+
     Parameters:
         es         : ElasticSearch connection object
         index_list : List of ElasticSearch indices that needs to be open
-    """        
+    """
 
     try:
         print("[INFO] reopen_indices(): Opening all indexes")
@@ -195,9 +197,9 @@ def reopen_indices(es):
 
 def read_config():
     """
-    Parse the config file. Return a dictionary object containing the config. 
+    Parse the config file. Return a dictionary object containing the config.
     """
-    
+
     cfg = configparser.ConfigParser()
     cfg.read(CONFIG_FILE)
 
@@ -214,9 +216,9 @@ def main():
         description='Push specified Elasticsearch indices from SOURCE to DESTINATION as per config in the `es-fs-snapshot.conf` file.')
 
     requiredNamed = parser.add_argument_group('required named arguments')
-    requiredNamed.add_argument('-m', '--mode', 
+    requiredNamed.add_argument('-m', '--mode',
         help="Mode of operation. Choose 'backup' on your SOURCE cluster. \
-            Choose 'restore' on your DESTINATION cluster", 
+            Choose 'restore' on your DESTINATION cluster",
         choices=['backup','restore'], required=True)
 
     args = parser.parse_args()
@@ -231,10 +233,10 @@ def main():
 
     backup_id = 1
 
-    if args.mode == 'backup': 
+    if args.mode == 'backup':
         snapshot_indices_from_src_to_fs(config, backup_id)
 
-    if args.mode == 'restore': 
+    if args.mode == 'restore':
         restore_indices_from_fs_to_dest(config, backup_id)
 
     print('\n\n[All done!]')
