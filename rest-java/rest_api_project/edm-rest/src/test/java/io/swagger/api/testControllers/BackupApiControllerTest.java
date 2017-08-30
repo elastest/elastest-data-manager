@@ -24,6 +24,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -43,7 +44,7 @@ import org.springframework.web.context.WebApplicationContext;
 		Swagger2SpringBoot.class, 
 		BackupApiController.class})
 @WebAppConfiguration
-//@TestPropertySource(properties = { "scriptfile.path = C:/Users/ykarav/Desktop/giannis2.bat" })
+//@TestPropertySource(properties = { "scriptfile.path = C:/Users/agourg/Desktop/akis1.bat" })
 public class BackupApiControllerTest {
 	
 	private MockMvc mockMvc;
@@ -71,6 +72,8 @@ public class BackupApiControllerTest {
 		this.mockMvc = null;
 	}
 	
+	@Value("${scriptfile.path}")
+	private String filepath;
 	
 	//-------------------- Backup Create --------------------//
 	
@@ -113,6 +116,8 @@ public class BackupApiControllerTest {
 	public void createBackup_GET_200_FileExists_NotDirectory() throws Exception {
 		ReflectionTestUtils.setField(bac, "filepath", "../backup.sh");
 
+		System.out.println("------------ " + filepath);
+		
 		Mockito.doCallRealMethod().when(bac).createBackup();
 		
 		File file = new File("../backup.sh");

@@ -26,17 +26,17 @@ public class SutApiController implements SutApi {
 
 
 
-    public ResponseEntity<InlineResponse200> backupSutWithId(@ApiParam(value = "The id code of the SuT",required=true ) @PathVariable("sut") String sut) {
+    public ResponseEntity<InlineResponse200> backupSutWithId(@ApiParam(value = "The id code of the SuT", required=true ) @PathVariable("sut") String sut) {
     	System.out.println("Inside: SUT -> backupSutWithId");
         return new ResponseEntity<InlineResponse200>(HttpStatus.OK);
     }
 
-    public ResponseEntity<Void> deleteSutWithId(@ApiParam(value = "The id code of the SuT",required=true ) @PathVariable("sut") String sut) {
+    public ResponseEntity<Void> deleteSutWithId(@ApiParam(value = "The id code of the SuT", required=true ) @PathVariable("sut") String sut) {
     	System.out.println("Inside: SUT -> deleteSutWithId");
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
-    public ResponseEntity<Void> restoreSutWithId(@ApiParam(value = "Information about compressed tarball, containing the sut data" ,required=true ) @RequestBody Body1 body) {
+    public ResponseEntity<Void> restoreSutWithId(@ApiParam(value = "Information about compressed tarball, containing the sut data", required=true ) @RequestBody Body1 body) {
     	System.out.println("Inside: SUT -> restoreSutWithId");
         return new ResponseEntity<Void>(HttpStatus.OK);
     }

@@ -23,7 +23,7 @@
     	<finalName>edm</finalName>
         <sourceDirectory>src/main/java</sourceDirectory>
         <plugins>
-            <plugin>
+<!--             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <executions>
@@ -33,8 +33,7 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
-
+            </plugin> -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
@@ -48,7 +47,7 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
+            </plugin> 
             
             <plugin>
 			    <groupId>org.codehaus.mojo</groupId>
@@ -59,8 +58,8 @@
 			            <format>html</format>
 			            <format>xml</format>
 			        </formats>
-			        <instrumentation>
 			        
+			        <instrumentation>
 			        	<!-- Ignore Setters, Getters, Super() -->
 			        	<ignoreTrivial>true</ignoreTrivial>
 			        
@@ -72,7 +71,6 @@
 			        	
 			        	<!-- Exclude from Cobertura final report and % Coverage -->
 			            <excludes>
-			            
 			            	<!-- Do NOT exclude io/swagger -->
 			                <exclude>io/swagger/**/RFC*.class</exclude>
 			                <exclude>io/swagger/**/Swagger*.class</exclude>
