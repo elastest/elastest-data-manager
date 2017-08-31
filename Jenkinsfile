@@ -14,7 +14,8 @@ node('docker'){
             stage "Building Java API"
                 echo ("Starting to build Java API...")
                 sh 'chmod +x bin/* && bin/run-build-test-java.sh'
-                step([$class: 'JUnitResultArchiver', testResults: '**/rest-java/rest_api_project/edm-rest/target/site/cobertura/coverage.xml'])
+                sh 'pwd'
+                step([$class: 'JUnitResultArchiver', testResults: '*/rest-java/rest_api_project/edm-rest/target/site/cobertura/coverage.xml'])
 
                 stage "Cobertura"
                     //sh 'bin/run-tests.sh'
