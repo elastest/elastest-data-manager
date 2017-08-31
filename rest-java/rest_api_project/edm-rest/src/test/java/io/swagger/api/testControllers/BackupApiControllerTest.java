@@ -114,13 +114,11 @@ public class BackupApiControllerTest {
 	
 	@Test
 	public void createBackup_GET_200_FileExists_NotDirectory() throws Exception {
-		ReflectionTestUtils.setField(bac, "filepath", "../backup.sh");
-
-		System.out.println("------------ " + filepath);
-		
+		ReflectionTestUtils.setField(bac, "filepath", filepath);
+	
 		Mockito.doCallRealMethod().when(bac).createBackup();
 		
-		File file = new File("../backup.sh");
+		File file = new File(filepath);
 		assertTrue(file.exists());
 		assertTrue(!file.isDirectory());
 
