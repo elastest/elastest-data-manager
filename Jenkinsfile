@@ -15,13 +15,13 @@ node('docker'){
                 echo ("Starting to build Java API...")
                 sh 'chmod +x bin/* && bin/run-build-test-java.sh'
                 sh 'pwd'
-                // step([$class: 'JUnitResultArchiver', testResults: '**/rest-java/rest_api_project/edm-rest/target/surefire-reports/*.xml'])
-                step([$class: 'JUnitResultArchiver', testResults: '**/rest-java/rest_api_project/edm-rest/target/site/cobertura/coverage.xml'])
+                step([$class: 'JUnitResultArchiver', testResults: '**/rest-java/rest_api_project/edm-rest/target/surefire-reports/*.xml'])
+                // step([$class: 'JUnitResultArchiver', testResults: '**/rest-java/rest_api_project/edm-rest/target/site/cobertura/coverage.xml'])
 
                 stage "Cobertura"
                     //sh 'bin/run-tests.sh'
-                    sh('cd rest-java/rest_api_project/edm-rest && git rev-parse HEAD > GIT_COMMIT')
-                        git_commit=readFile('rest-java/rest_api_project/edm-rest/GIT_COMMIT')
+                    sh('cd rest-java/rest_api_project/edm-rest/target/site/cobertura && git rev-parse HEAD > GIT_COMMIT')
+                        git_commit=readFile('rest-java/rest_api_project/edm-rest/target/site/cobertura/GIT_COMMIT')
 
                     sh 'export GIT_COMMIT=$git_commit'
 
