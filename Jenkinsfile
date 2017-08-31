@@ -17,23 +17,27 @@ node('docker'){
                 sh 'pwd'
                 step([$class: 'JUnitResultArchiver', testResults: '**/rest-java/rest_api_project/edm-rest/target/surefire-reports/*.xml'])
 
-                stage "Cobertura Java API"
-                    sh('cd rest-java/rest_api_project/edm-rest/target/site/cobertura && git rev-parse HEAD > GIT_COMMIT')
-                        git_commit=readFile('rest-java/rest_api_project/edm-rest/target/site/cobertura/GIT_COMMIT')
-                    sh 'export GIT_COMMIT=$git_commit'
-                    sh 'export GIT_BRANCH=master'
-                    def codecovArgs = "-v -t $COB_EDM_TOKEN"
-                    // echo "$codecovArgs"
-                    def exitCode = sh(
-                        returnStatus: true,
-                        script: "curl -s https://codecov.io/bash | bash -s - $codecovArgs")
-                        if (exitCode != 0) {
-                            echo( exitCode +': Failed to upload code coverage to codecov')
-                        }
+            stage "Cobertura Java API"
+                sh('cd rest-java/rest_api_project/edm-rest/target/site/cobertura && git rev-parse HEAD > GIT_COMMIT')
+                    git_commit=readFile('rest-java/rest_api_project/edm-rest/target/site/cobertura/GIT_COMMIT')
+                sh 'export GIT_COMMIT=$git_commit'
+                sh 'export GIT_BRANCH=master'
+                def codecovArgs = "-v -t $COB_EDM_TOKEN"
+                // echo "$codecovArgs"
+                def exitCode = sh(
+                    returnStatus: true,
+                    script: "curl -s https://codecov.io/bash | bash -s - $codecovArgs")
+                    if (exitCode != 0) {
+                        echo( exitCode +': Failed to upload code coverage to codecov')
+                    }
 
-            stage "Build Rest API image - Package"
+            stage "Build Rest Java API image - Package"
                 echo ("building..")
-                def rest_api_image = docker.build("elastest/edm:0.1","./rest")
+                def rest_api_image = docker.build("elastest/edm:0.5","./rest-java")
+
+            // stage "Build Rest API image - Package"
+            //     echo ("building..")
+            //     def rest_api_image = docker.build("elastest/edm:0.1","./rest")
 
             stage "Build Alluxio image - Package"
                 echo ("building..")
@@ -60,9 +64,9 @@ node('docker'){
             //    echo ("building..")
             //    def mysql_image = docker.build("elastest/edm-mysql:0.1","./mysql")
 
-            stage "Run EDM docker-compose"
-                sh 'chmod +x bin/* && bin/teardown-ci.sh && bin/startup-ci.sh'
-                echo ("EDM System is running..")
+            // stage "Run EDM docker-compose"
+            //     sh 'chmod +x bin/* && bin/teardown-ci.sh && bin/startup-ci.sh'
+            //     echo ("EDM System is running..")
 
             // stage "Unit tests"
             //     echo ("Starting unit tests...")
@@ -90,6 +94,7 @@ node('docker'){
             //             echo( exitCode +': Failed to upload code coverage to codecov')
             //         }
             //
+            
             stage "publish"
                 echo ("publishing..")
                 withCredentials([[
