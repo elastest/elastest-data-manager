@@ -11,6 +11,11 @@ node('docker'){
         mycontainer.inside("-u jenkins -v /var/run/docker.sock:/var/run/docker.sock:rw") {
             git 'https://github.com/elastest/elastest-data-manager.git'
 
+            stage "Building Java API"
+                echo ("Starting to build Java API...")
+                sh 'bin/run-build-test-java.sh'
+                // step([$class: 'JUnitResultArchiver', testResults: '**/rest/rest_api_project/nosetests.xml'])
+
             stage "Build Rest API image - Package"
                 echo ("building..")
                 def rest_api_image = docker.build("elastest/edm:0.1","./rest")
@@ -44,10 +49,10 @@ node('docker'){
                 sh 'chmod +x bin/* && bin/teardown-ci.sh && bin/startup-ci.sh'
                 echo ("EDM System is running..")
 
-            stage "Unit tests"
-                echo ("Starting unit tests...")
-                sh 'bin/run-tests.sh'
-                step([$class: 'JUnitResultArchiver', testResults: '**/rest/rest_api_project/nosetests.xml'])
+            // stage "Unit tests"
+            //     echo ("Starting unit tests...")
+            //     sh 'bin/run-tests.sh'
+            //     step([$class: 'JUnitResultArchiver', testResults: '**/rest/rest_api_project/nosetests.xml'])
 
             stage "Cobertura"
                 //sh 'bin/run-tests.sh'
