@@ -134,9 +134,8 @@ services:
     image: elastest/edm-elasticsearch:0.1
     # build: ./elasticsearch
     volumes:
-      - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
-      - ./backup/elasticsearch:/backup
-      - ./elasticsearch/esdata1:/usr/share/elasticsearch/data
+      - esbackup:/backup
+      - esdata1:/usr/share/elasticsearch/data
     ports:
       - "9200:9200"
       - "9300:9300"
@@ -156,9 +155,8 @@ services:
     image: elastest/edm-elasticsearch:0.1
     # build: ./elasticsearch
     volumes:
-      - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
-      - ./backup/elasticsearch:/backup
-      - ./elasticsearch/esdata2:/usr/share/elasticsearch/data
+      - esbackup:/backup
+      - esdata2:/usr/share/elasticsearch/data
     ports:
       - "9200"
       - "9300"
@@ -236,6 +234,14 @@ services:
 
 # volumes:
 #   mysql_data:
+
+volumes:
+    esdata1:
+      driver: local
+    esdata2:
+      driver: local
+    esbackup:
+      driver: local
 
 networks:
   elastest:
