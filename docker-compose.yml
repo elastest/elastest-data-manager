@@ -199,7 +199,7 @@ services:
     image: elastest/edm-cerebro:0.1
     # build: ./cerebro
     volumes:
-      - ./cerebro/config/conf:/opt/cerebro-0.6.5/conf
+      - ./cerebro/config:/opt/cerebro-0.6.5/conf
       - ./cerebro/logs:/opt/cerebro-0.6.5/logs
     depends_on:
       # - esnode
