@@ -94,10 +94,10 @@ The tests can be run as follows:
 
     # Run the tests
     bin/run-tests.sh
- 
+
  The output should be a list of tests with status ok.
- 
- 
+
+
 ## Load test data (optional)
 The following Linux scripts load some test data in the system:
 
@@ -111,9 +111,9 @@ The following Linux scripts load some test data in the system:
 
     # Load test data to Alluxio
     bin/load-alluxio-test.sh
- 
+
  You can verify the data is loaded using the web or client interfaces of each system.
- 
+
 ### Accessing the web interfaces
 Each component provide its own web UI. Open you browser at one of the URLs below, where `dockerhost` is the name / IP of the host running the docker daemon. If using Linux, this is the IP of your linux box. If using OSX or Windows (via Boot2docker), you can find out your docker host by typing `boot2docker ip`.
 
@@ -123,7 +123,7 @@ Each component provide its own web UI. Open you browser at one of the URLs below
 | Alluxio Web Interface		| [http://localhost:19999](http://localhost:19999) |
 | Kibana Web Interface		| [http://localhost:5601](http://localhost:5601) |
 | Cerebro Web Interface		| [http://localhost:9400/#/overview?host=http:%2F%2Felasticsearch:9200](http://localhost:9400/#/overview?host=http:%2F%2Felasticsearch:9200) |
-| REST API Swagger UII		| [http://localhost:8000/api/](http://localhost:8000/api/) |
+| REST API Swagger UI		| [http://localhost:8000/edm](http://localhost:8000/edm) |
 
 ### Scaling the number of instances
 If you want to increase the number of HDFS datanodes in your cluster
