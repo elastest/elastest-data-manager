@@ -3,12 +3,9 @@ rest-akis/
 rest-java/rest_api_project/.gitignore
 rest-java/rest_api_project/RemoteSystemsTempFiles/
 rest-java/rest_api_project/backup.sh
-rest-java/rest_api_project/deployment/edm.war
 rest-java/rest_api_project/edm-rest/.classpath
 rest-java/rest_api_project/edm-rest/.project
 rest-java/rest_api_project/edm-rest/.settings/
 rest-java/rest_api_project/edm-rest/.swagger-codegen-ignore
 rest-java/rest_api_project/edm-rest/README.md
 rest-java/rest_api_project/edm-rest/target/
-
-
