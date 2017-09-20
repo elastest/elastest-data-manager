@@ -1,11 +1,7 @@
 version: '3'
-
 services:
-
   edm-hdfs-namenode:
-    # container_name: hdfs-namenode
     image: elastest/edm-hadoop:latest
-    # build: ./hadoop
     command: hdfs namenode
     ports:
         - "50070:50070"
@@ -16,9 +12,7 @@ services:
         - elastest
 
   edm-hdfs-datanode:
-    # container_name: hdfs-datanode
     image: elastest/edm-hadoop:latest
-    # build: ./hadoop
     command: hdfs datanode
     # The host port is randomly assigned by Docker,
     # to allow scaling to multiple DataNodes on the same host
@@ -30,20 +24,16 @@ services:
         - elastest
 
   edm-alluxio-master:
-    # container_name: alluxio-master
     image: elastest/edm-alluxio:latest
-    # build: ./alluxio
     command: master
     ports:
       - 19999:19999
       - 19998:19998
     volumes:
       - ./alluxio/data:/underStorage
-      # - ./rest/scripts:/scripts
     environment:
       - ALLUXIO_MASTER_HOSTNAME=edm-alluxio-master
       - ALLUXIO_UNDERFS_ADDRESS=/underStorage
-      # - ALLUXIO_UNDERFS_ADDRESS=hdfs://edm-hdfs-namenode:9000
     links:
         - edm-hdfs-namenode
     hostname: edm-alluxio-master
@@ -63,41 +53,19 @@ services:
     links:
       - edm-hdfs-namenode
       - edm-alluxio-master
-    #    privileged: true         ### enable to use ramfs with docker. otherwise it will use disk
     environment:
       - ALLUXIO_MASTER_HOSTNAME=edm-alluxio-master
       - ALLUXIO_RAM_FOLDER=/mnt/ramdisk
       - ALLUXIO_WORKER_MEMORY_SIZE=1GB
       - ALLUXIO_UNDERFS_ADDRESS=/underStorage
-      # - ALLUXIO_UNDERFS_ADDRESS=hdfs://edm-hdfs-namenode:9000
     networks:
         - elastest
 
-  # rest-api:
-  #   # build: ./rest  # path is relative to docker-compose.yml location
-  #   image: elastest/edm:0.1
-  #   volumes:
-  #     - ./rest/rest_api_project:/usr/src/app # mount point
-  #     - ./rest/alluxio_conf:/opt/alluxio/conf
-  #     - ./rest/scripts:/scripts
-  #     - ./backup:/backup
-  #   links:
-  #     - edm-alluxio-master
-  #     - edm-elasticsearch
-  #     - edm-mysql
-  #   ports:
-  #     - 37003:8000  # host:container
-  #   networks:
-  #       - elastest
-
   edm:
-    # build: ./rest-java  # path is relative to docker-compose.yml location
     image: elastest/edm:latest
     volumes:
       - ./rest-java/rest_api_project/deployment:/usr/local/tomcat/webapps
-      # - ./rest-java/rest_api_project/edm-rest:/usr/src/edm-rest
       - ./rest-java/alluxio_conf:/opt/alluxio/conf
-      # - ./rest-java/scripts:/scripts
       - ./backup:/backup
     environment:
       - ET_EDM_ALLUXIO_API=http://edm-alluxio-master:19999/
@@ -128,9 +96,7 @@ services:
         - elastest
 
   edm-alluxio-proxy:
-    # container_name: alluxio-proxy
     image: elastest/edm-alluxio:latest
-    # build: ./alluxio
     command: proxy
     ports:
       - 39999:39999
@@ -138,20 +104,14 @@ services:
       - ./alluxio/data:/underStorage
     links:
       - edm-alluxio-worker
-    #    privileged: true         ### enable to use ramfs with docker. otherwise it will use disk
     environment:
       - ALLUXIO_MASTER_HOSTNAME=edm-alluxio-master
-      # - ALLUXIO_RAM_FOLDER=/mnt/ramdisk
-      # - ALLUXIO_WORKER_MEMORY_SIZE=1GB
-      # - ALLUXIO_UNDERFS_ADDRESS=hdfs://edm-hdfs-namenode:9000
     networks:
         - elastest
 
 
   edm-elasticsearch:
-    # container_name: elasticsearch
     image: elastest/edm-elasticsearch:latest
-    # build: ./elasticsearch
     volumes:
       - esbackup:/backup
       - esdata1:/usr/share/elasticsearch/data
@@ -170,9 +130,7 @@ services:
 
 
   esnode:
-    # container_name: esnode
     image: elastest/edm-elasticsearch:latest
-    # build: ./elasticsearch
     volumes:
       - esbackup:/backup
       - esdata2:/usr/share/elasticsearch/data
@@ -193,9 +151,7 @@ services:
 
 
   edm_kibana:
-    # container_name: kibana
     image: elastest/edm-kibana:latest
-    # build: ./kibana
     volumes:
       - ./kibana/config/:/usr/share/kibana/config
     ports:
@@ -212,14 +168,11 @@ services:
 
 
   edm-cerebro:
-    # container_name: cerebro
     image: elastest/edm-cerebro:latest
-    # build: ./cerebro
     volumes:
       - ./cerebro/config:/opt/cerebro-0.6.5/conf
       - ./cerebro/logs:/opt/cerebro-0.6.5/logs
     depends_on:
-      # - esnode
       - edm-elasticsearch
     ports:
       - 9400:9000
@@ -230,36 +183,29 @@ services:
       - elastest
 
   edm-mysql:
-    # container_name: mysql
-    # image: elastest/edm-mysql:0.1
     image: mysql:5.7
-    # build: ./mysql
     ports:
       - "3306:3306"
     environment:
-      # MYSQL_ROOT_PASSWORD: "elastestroot"
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
       MYSQL_DATABASE: "elastest"
       MYSQL_USER: elastest
       MYSQL_PASSWORD: elastest
     volumes:
-      # - mysql_data:/var/lib/mysql
-      - ./mysql/data:/var/lib/mysql
+      - edm-mysql:/var/lib/mysql
       - ./mysql/init:/docker-entrypoint-initdb.d
       - ./mysql/config:/etc/mysql/conf.d
     # restart: always
     networks:
       - elastest
-
-# volumes:
-#   mysql_data:
-
 volumes:
     esdata1:
       driver: local
     esdata2:
       driver: local
     esbackup:
+      driver: local
+    edm-mysql:
       driver: local
 
 networks:
