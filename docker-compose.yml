@@ -214,7 +214,7 @@ services:
 
   mysql:
     # container_name: mysql
-    image: elastest/edm-mysql:0.1
+    image: elastest/edm-mysql:latest
     # image: mysql:5.7
     # build: ./mysql
     ports:
