@@ -193,7 +193,6 @@ services:
       MYSQL_PASSWORD: elastest
     volumes:
       - edm-mysql:/var/lib/mysql
-      - ./mysql/config:/etc/mysql/conf.d
     # restart: always
     networks:
       - elastest
