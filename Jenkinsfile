@@ -66,9 +66,9 @@ node('docker'){
                 // def cerebro_image = docker.build("elastest/edm-cerebro:0.1","./cerebro")
                 def cerebro_image = docker.build("elastest/edm-cerebro:latest","./cerebro")
 
-            // stage "Build MySQL image - Package"
-            //    echo ("building..")
-            //    def mysql_image = docker.build("elastest/edm-mysql:0.1","./mysql")
+            stage "Build MySQL image - Package"
+               echo ("building..")
+               def mysql_image = docker.build("elastest/edm-mysql:latest","./mysql")
 
             // stage "Run EDM docker-compose"
             //     sh 'chmod +x bin/* && bin/teardown-ci.sh && bin/startup-ci.sh'
@@ -116,7 +116,7 @@ node('docker'){
                         elasticsearch_image.push()
                         kibana_image.push()
                         cerebro_image.push()
-                        // mysql_image.push()
+                        mysql_image.push()
                     }
 
         }
