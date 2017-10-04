@@ -2,12 +2,8 @@ node('docker'){
     stage "Container Prep"
         echo("the node is up")
         sh 'echo 262144 | sudo tee /proc/sys/vm/max_map_count'
-        //sysctl -w vm.max_map_count=262144
-        //sysctl vm.max_map_count
-        def mycontainer = docker.image('sgioldasis/ci-docker-in-docker:latest')
-        // def mycontainer = docker.image('elastest/ci-docker-compose-siblings')
-        //def mycontainer = docker.image('elastest/docker-siblings:latest')
-        mycontainer.pull() // make sure we have the latest available from Docker Hub
+        def mycontainer = docker.image('sgioldasis/ci-docker-in-docker')
+        mycontainer.pull() 
         mycontainer.inside("-u jenkins -v /var/run/docker.sock:/var/run/docker.sock:rw") {
             git 'https://github.com/elastest/elastest-data-manager.git'
 
@@ -34,7 +30,7 @@ node('docker'){
             stage "Build Rest Java API image - Package"
                 echo ("building..")
                 // def rest_api_image = docker.build("elastest/edm:0.5","./rest-java")
-                def rest_api_image = docker.build("elastest/edm:latest","./rest-java")
+                def rest_api_image = docker.build("elastest/edm:0.5.0-alpha1","./rest-java")
 
             // stage "Build Rest API image - Package"
             //     echo ("building..")
@@ -44,31 +40,31 @@ node('docker'){
                 echo ("building..")
                 sh 'chmod +x alluxio/entrypoint.sh'
                 // def alluxio_image = docker.build("elastest/edm-alluxio:0.1","./alluxio")
-                def alluxio_image = docker.build("elastest/edm-alluxio:latest","./alluxio")
+                def alluxio_image = docker.build("elastest/edm-alluxio:0.5.0-alpha1","./alluxio")
 
             stage "Build Hadoop image - Package"
                 echo ("building..")
                 // def hadoop_image = docker.build("elastest/edm-hadoop:0.1","./hadoop")
-                def hadoop_image = docker.build("elastest/edm-hadoop:latest","./hadoop")
+                def hadoop_image = docker.build("elastest/edm-hadoop:0.5.0-alpha1","./hadoop")
 
             stage "Build Elasticsearch image - Package"
                 echo ("building..")
                 // def elasticsearch_image = docker.build("elastest/edm-elasticsearch:0.1","./elasticsearch")
-                def elasticsearch_image = docker.build("elastest/edm-elasticsearch:latest","./elasticsearch")
+                def elasticsearch_image = docker.build("elastest/edm-elasticsearch:0.5.0-alpha1","./elasticsearch")
 
             stage "Build Kibana image - Package"
                 echo ("building..")
                 // def kibana_image = docker.build("elastest/edm-kibana:0.1","./kibana")
-                def kibana_image = docker.build("elastest/edm-kibana:latest","./kibana")
+                def kibana_image = docker.build("elastest/edm-kibana:0.5.0-alpha1","./kibana")
 
             stage "Build Cerebro image - Package"
                 echo ("building..")
                 // def cerebro_image = docker.build("elastest/edm-cerebro:0.1","./cerebro")
-                def cerebro_image = docker.build("elastest/edm-cerebro:latest","./cerebro")
+                def cerebro_image = docker.build("elastest/edm-cerebro:0.5.0-alpha1","./cerebro")
 
             stage "Build MySQL image - Package"
                echo ("building..")
-               def mysql_image = docker.build("elastest/edm-mysql:latest","./mysql")
+               def mysql_image = docker.build("elastest/edm-mysql:0.5.0-alpha1","./mysql")
 
             // stage "Run EDM docker-compose"
             //     sh 'chmod +x bin/* && bin/teardown-ci.sh && bin/startup-ci.sh'
