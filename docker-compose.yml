@@ -2,8 +2,8 @@ version: '2.1'
 
 services:
 
-  hdfs-namenode:
-    # container_name: hdfs-namenode
+  edm-hdfs-namenode:
+    # container_name: edm-hdfs-namenode
     image: elastest/edm-hadoop:latest
     # build: ./hadoop
     command: hdfs namenode
@@ -11,7 +11,7 @@ services:
         - "50070:50070"
         - "9000:9000"
         - "8020:8020"
-    hostname: hdfs-namenode
+    hostname: edm-hdfs-namenode
     networks:
         - elastest
 
@@ -25,7 +25,7 @@ services:
     ports:
         - "50075"
     links:
-        - hdfs-namenode
+        - edm-hdfs-namenode
     networks:
         - elastest
 
@@ -43,9 +43,9 @@ services:
     environment:
       - ALLUXIO_MASTER_HOSTNAME=alluxio-master
       - ALLUXIO_UNDERFS_ADDRESS=/underStorage
-      # - ALLUXIO_UNDERFS_ADDRESS=hdfs://hdfs-namenode:9000
+      # - ALLUXIO_UNDERFS_ADDRESS=hdfs://edm-hdfs-namenode:9000
     links:
-        - hdfs-namenode
+        - edm-hdfs-namenode
     hostname: alluxio-master
     networks:
         - elastest
@@ -61,7 +61,7 @@ services:
     volumes:
       - ./alluxio/data:/underStorage
     links:
-      - hdfs-namenode
+      - edm-hdfs-namenode
       - alluxio-master
     #    privileged: true         ### enable to use ramfs with docker. otherwise it will use disk
     environment:
@@ -69,7 +69,7 @@ services:
       - ALLUXIO_RAM_FOLDER=/mnt/ramdisk
       - ALLUXIO_WORKER_MEMORY_SIZE=1GB
       - ALLUXIO_UNDERFS_ADDRESS=/underStorage
-      # - ALLUXIO_UNDERFS_ADDRESS=hdfs://hdfs-namenode:9000
+      # - ALLUXIO_UNDERFS_ADDRESS=hdfs://edm-hdfs-namenode:9000
     networks:
         - elastest
 
@@ -124,7 +124,7 @@ services:
       - ALLUXIO_MASTER_HOSTNAME=alluxio-master
       # - ALLUXIO_RAM_FOLDER=/mnt/ramdisk
       # - ALLUXIO_WORKER_MEMORY_SIZE=1GB
-      # - ALLUXIO_UNDERFS_ADDRESS=hdfs://hdfs-namenode:9000
+      # - ALLUXIO_UNDERFS_ADDRESS=hdfs://edm-hdfs-namenode:9000
     networks:
         - elastest
 
