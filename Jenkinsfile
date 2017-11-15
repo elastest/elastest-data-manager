@@ -30,7 +30,7 @@ node('docker'){
             stage "Build Rest Java API image - Package"
                 echo ("building..")
                 // def rest_api_image = docker.build("elastest/edm:0.5","./rest-java")
-                def rest_api_image = docker.build("elastest/edm:0.5.0-beta","./rest-java")
+                def rest_api_image = docker.build("elastest/edm:latest","./rest-java")
 
             // stage "Build Rest API image - Package"
             //     echo ("building..")
@@ -40,31 +40,31 @@ node('docker'){
                 echo ("building..")
                 sh 'chmod +x alluxio/entrypoint.sh'
                 // def alluxio_image = docker.build("elastest/edm-alluxio:0.1","./alluxio")
-                def alluxio_image = docker.build("elastest/edm-alluxio:0.5.0-beta","./alluxio")
+                def alluxio_image = docker.build("elastest/edm-alluxio:latest","./alluxio")
 
             stage "Build Hadoop image - Package"
                 echo ("building..")
                 // def hadoop_image = docker.build("elastest/edm-hadoop:0.1","./hadoop")
-                def hadoop_image = docker.build("elastest/edm-hadoop:0.5.0-beta","./hadoop")
+                def hadoop_image = docker.build("elastest/edm-hadoop:latest","./hadoop")
 
             stage "Build Elasticsearch image - Package"
                 echo ("building..")
                 // def elasticsearch_image = docker.build("elastest/edm-elasticsearch:0.1","./elasticsearch")
-                def elasticsearch_image = docker.build("elastest/edm-elasticsearch:0.5.0-beta","./elasticsearch")
+                def elasticsearch_image = docker.build("elastest/edm-elasticsearch:latest","./elasticsearch")
 
             stage "Build Kibana image - Package"
                 echo ("building..")
                 // def kibana_image = docker.build("elastest/edm-kibana:0.1","./kibana")
-                def kibana_image = docker.build("elastest/edm-kibana:0.5.0-beta","./kibana")
+                def kibana_image = docker.build("elastest/edm-kibana:latest","./kibana")
 
             stage "Build Cerebro image - Package"
                 echo ("building..")
                 // def cerebro_image = docker.build("elastest/edm-cerebro:0.1","./cerebro")
-                def cerebro_image = docker.build("elastest/edm-cerebro:0.5.0-beta","./cerebro")
+                def cerebro_image = docker.build("elastest/edm-cerebro:latest","./cerebro")
 
             stage "Build MySQL image - Package"
                echo ("building..")
-               def mysql_image = docker.build("elastest/edm-mysql:0.5.0-beta","./mysql")
+               def mysql_image = docker.build("elastest/edm-mysql:latest","./mysql")
 
             // stage "Run EDM docker-compose"
             //     sh 'chmod +x bin/* && bin/teardown-ci.sh && bin/startup-ci.sh'
