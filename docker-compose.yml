@@ -97,7 +97,6 @@ services:
       - ./rest-java/rest_api_project/deployment:/usr/local/tomcat/webapps
       - ./rest-java/rest_api_project/edm-rest:/usr/src/edm-rest
       - ./rest-java/alluxio_conf:/opt/alluxio/conf
-      # - ./rest-java/scripts:/scripts
       - ./backup:/backup
     links:
       - alluxio-master
