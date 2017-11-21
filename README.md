@@ -178,7 +178,7 @@ You can try the following examples:
 
 ### Elasticsearch
 Elasticsearch is listening at localhost:9200 if you want to access it with your own client interface.
-For example you can install the Sense Chrome plugin https://chrome.google.com/webstore/detail/sense-beta/lhjgkmllcaadmopgmanpapmpjgmfcfig?hl=en).
+For example you can install the ElasticSearch Toolbox Chrome plugin https://chrome.google.com/webstore/detail/elasticsearch-toolbox/focdbmjgdonlpdknobfghplhmafpgfbp).
 
 You can also connect to it and run queries through the provided Cerebro Web Interface.
 In order to connect to Elasticsearch from Cerebro use hostname: elasticsearch and port: 9200
