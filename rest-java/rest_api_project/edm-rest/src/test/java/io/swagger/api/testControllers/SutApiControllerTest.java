@@ -45,7 +45,6 @@ public class SutApiControllerTest {
 	
 	
 	//-------------------- Sut backupSutWithId --------------------//
-	// 200, 400, 405, 520
 	
 	@Test
 	public void backupSutWithId_GET_415_No_MediaType() throws Exception {

@@ -21,7 +21,8 @@ public interface RestoreApi {
 
 	@ApiOperation(value = "Restore all data for the platform based on backup id", notes = "Download and restore the gzipped tarball with all data for the platform. All existing will be overrided.", response = MessageResponse.class, tags = {
 			"DataIO", })
-	@ApiResponses(value = { @ApiResponse(code = 200, message = "Restore Successful", response = MessageResponse.class),
+	@ApiResponses(value = { 
+			@ApiResponse(code = 200, message = "Restore Successful", response = MessageResponse.class),
 			@ApiResponse(code = 404, message = "Invalid backupId", response = Void.class),
 			@ApiResponse(code = 405, message = "Invalid input data", response = Void.class),
 			@ApiResponse(code = 200, message = "unexpected error", response = Error.class) })

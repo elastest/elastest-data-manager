@@ -20,7 +20,7 @@ import javax.validation.Valid;
 @Controller
 public class RestoreApiController implements RestoreApi {
 
-	@Value("${scriptfile.restore.path}")
+	@Value("${scriptfile.restore.file}")
 	private String restoreFilePath;
 
 
@@ -28,10 +28,12 @@ public class RestoreApiController implements RestoreApi {
         @ApiParam(value = "Information about compressed tarball, containing backup data", required=true )  @Valid @RequestBody FileObject body) throws IOException, InterruptedException {
 
     	File file = new File( restoreFilePath );
+    	
     	if(file.exists() && !file.isDirectory()) { 
     		runScript( restoreFilePath );
     		return new ResponseEntity<MessageResponse>(HttpStatus.OK);
     	}
+    	
     	return new ResponseEntity<MessageResponse>(HttpStatus.EXPECTATION_FAILED);
     	
     }
