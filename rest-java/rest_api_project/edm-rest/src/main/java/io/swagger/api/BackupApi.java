@@ -15,14 +15,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public interface BackupApi {
 
 
-	@ApiOperation(value = "Backup all data from EDM module", notes = "Backup and create a gzipped tarball with all data for EDM module. Please, notice that EDM module contains all platforms data.", response = MessageResponse.class, tags = {
-			"DataIO", })
+	@ApiOperation(value = "Backup all data from EDM module", notes = "Backup and create a gzipped tarball with all data for EDM module. Please, notice that EDM module contains all platforms data.", 
+			response = MessageResponse.class, 
+			tags = {"DataIO", })
 	@ApiResponses(value = { 
 			@ApiResponse(code = 200, message = "Backup Successful", response = MessageResponse.class),
-			@ApiResponse(code = 405, message = "Invalid input", response = Void.class),
-			@ApiResponse(code = 200, message = "unexpected error", response = Error.class) })
+			@ApiResponse(code = 405, message = "Invalid input", response = MessageResponse.class),
+			@ApiResponse(code = 417, message = "Unexpected error", response = MessageResponse.class) })
 
-	@RequestMapping(value = "/backup", produces = { "application/json" }, consumes = {
-			"application/json" }, method = RequestMethod.POST)
+	@RequestMapping(value = "/backup", 
+		produces = { "application/json" }, 
+		consumes = { "application/json" }, 
+		method = RequestMethod.POST)
 	ResponseEntity<MessageResponse> createBackup() throws IOException, InterruptedException ;
 }
