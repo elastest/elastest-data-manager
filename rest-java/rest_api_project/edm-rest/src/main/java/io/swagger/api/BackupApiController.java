@@ -41,10 +41,11 @@ public class BackupApiController implements BackupApi {
 	}
 
 	private void runScript(String filepath) throws IOException, InterruptedException {
+		
 		Runtime rt = Runtime.getRuntime();
-		Process proc = rt.exec(filepath);
+		Process proc = rt.exec("python " + filepath);
 		proc.waitFor();
-
+	
 		StringBuffer output = new StringBuffer();
 		BufferedReader reader = new BufferedReader(new InputStreamReader(proc.getInputStream()));
 		String line = "";

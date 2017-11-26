@@ -44,10 +44,26 @@ public class RestoreApiController implements RestoreApi {
 
 	}
 
-	private void runScript(String filepath) throws IOException, InterruptedException {
-		Runtime rt = Runtime.getRuntime();
-		Process proc = rt.exec(filepath);
-		proc.waitFor();
+	/**
+	 * @param filepath
+	 * @return -1 if error occurred, else 0 if completed successfully
+	 */
+	private int runScript(String filepath)  {
+		
+		int x = -1;
+		
+		try {
+			Runtime rt = Runtime.getRuntime();
+			Process proc = rt.exec("python " + filepath);
+			proc.waitFor();
+			x = proc.exitValue();
+		
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+		
+		return x;
 	}
 
 }
