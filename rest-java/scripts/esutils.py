@@ -8,7 +8,7 @@ import configparser
 import argparse
 
 # Note: You MUST at least enter valid AWS API Keys in this file:
-CONFIG_FILE = 'es-fs-snapshot.conf'
+CONFIG_FILE = '/scripts/es-fs-snapshot.conf'
 
 # Usage/Setup:
 # 1. Put your AWS creds in the CONFIG_FILE file located in the same subdirectory as this file

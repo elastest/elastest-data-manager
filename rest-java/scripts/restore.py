@@ -13,10 +13,12 @@ optional arguments:
 import os
 # import hashlib
 # import argparse
-import esutils
 import sys
 import subprocess
 import tarfile
+
+sys.path.insert(0, '/scripts')
+import esutils
 
 
 def do_restore():
@@ -30,7 +32,7 @@ def do_restore():
     subprocess.check_output([cmd], shell=True)
     print("=============> Restoring - MySQL ...")
     bfile = 'elastest_mysql.sql'
-    cnf = 'mysqlbackup.cnf'
+    cnf = '/scripts/mysqlbackup.cnf'
     dumpdir = "/backup/mysql/"+str(backup_id)
     print("=============> dumpdir = "+dumpdir)
     dumpfilepath = dumpdir + '/' + bfile

@@ -15,6 +15,7 @@ ENV PATH                $PATH:$ALLUXIO_HOME/bin
 ENV JAVA_HOME           /usr/lib/jvm/java-8-oracle
 
 #####adding conf files [to be used by alluxio, hadoop, spark]
+ENV PATH                /scripts:$PATH
 ADD scripts/* /scripts/
 
 # add webupd8 repository
