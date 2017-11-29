@@ -15,6 +15,7 @@ rest-java/rest_api_project/edm-rest/EDM-API-initial.yaml
 rest-java/rest_api_project/edm-rest/Readme.txt
 rest/rest_api_project/rest_api_app/db.sqlite
 .cache/
+.vscode/
 rest/rest_api_project/tests/__pycache__/
 
 
