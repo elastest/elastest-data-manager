@@ -1,5 +1,14 @@
 FROM openjdk:8-jre
 
+# Set Image Labels
+ARG GIT_COMMIT=unspecified
+LABEL git_commit=$GIT_COMMIT
+
+ARG COMMIT_DATE=unspecified
+LABEL commit_date=$COMMIT_DATE
+
+ARG VERSION=unspecified
+LABEL version=$VERSION 
 # grab gosu for easy step-down from root
 # ENV GOSU_VERSION 1.7
 # RUN set -x \

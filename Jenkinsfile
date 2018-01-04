@@ -30,7 +30,9 @@ node('docker'){
             stage "Build Rest Java API image - Package"
                 echo ("building..")
                 // def rest_api_image = docker.build("elastest/edm:0.5","./rest-java")
-                def rest_api_image = docker.build("elastest/edm:latest","./rest-java")
+                //def rest_api_image = docker.build("elastest/edm:latest","./rest-java")
+                sh 'cd rest-java; docker build --build-arg GIT_COMMIT=$(git rev-parse HEAD) --build-arg COMMIT_DATE=$(git log -1 --format=%cd --date=format:%Y-%m-%dT%H:%M:%S) . -t elastest/edm:latest'
+                def rest_api_image = docker.image('elastest/edm:latest')
 
             // stage "Build Rest API image - Package"
             //     echo ("building..")
@@ -40,31 +42,43 @@ node('docker'){
                 echo ("building..")
                 sh 'chmod +x alluxio/entrypoint.sh'
                 // def alluxio_image = docker.build("elastest/edm-alluxio:0.1","./alluxio")
-                def alluxio_image = docker.build("elastest/edm-alluxio:latest","./alluxio")
+                //def alluxio_image = docker.build("elastest/edm-alluxio:latest","./alluxio")
+                sh 'cd alluxio; docker build --build-arg GIT_COMMIT=$(git rev-parse HEAD) --build-arg COMMIT_DATE=$(git log -1 --format=%cd --date=format:%Y-%m-%dT%H:%M:%S) . -t elastest/edm-alluxio:latest'
+                def alluxio_image = docker.image('elastest/edm-alluxio:latest')
 
             stage "Build Hadoop image - Package"
                 echo ("building..")
                 // def hadoop_image = docker.build("elastest/edm-hadoop:0.1","./hadoop")
-                def hadoop_image = docker.build("elastest/edm-hadoop:latest","./hadoop")
+                // def hadoop_image = docker.build("elastest/edm-hadoop:latest","./hadoop")
+                sh 'cd hadoop; docker build --build-arg GIT_COMMIT=$(git rev-parse HEAD) --build-arg COMMIT_DATE=$(git log -1 --format=%cd --date=format:%Y-%m-%dT%H:%M:%S) . -t elastest/edm-hadoop:latest'
+                def hadoop_image = docker.image('elastest/edm-hadoop:latest')
 
             stage "Build Elasticsearch image - Package"
                 echo ("building..")
                 // def elasticsearch_image = docker.build("elastest/edm-elasticsearch:0.1","./elasticsearch")
-                def elasticsearch_image = docker.build("elastest/edm-elasticsearch:latest","./elasticsearch")
+                //def elasticsearch_image = docker.build("elastest/edm-elasticsearch:latest","./elasticsearch")
+                sh 'cd elasticsearch; docker build --build-arg GIT_COMMIT=$(git rev-parse HEAD) --build-arg COMMIT_DATE=$(git log -1 --format=%cd --date=format:%Y-%m-%dT%H:%M:%S) . -t elastest/edm-elasticsearch:latest'
+                def elasticsearch_image = docker.image('elastest/edm-elasticsearch:latest')
 
             stage "Build Kibana image - Package"
                 echo ("building..")
                 // def kibana_image = docker.build("elastest/edm-kibana:0.1","./kibana")
-                def kibana_image = docker.build("elastest/edm-kibana:latest","./kibana")
+                //def kibana_image = docker.build("elastest/edm-kibana:latest","./kibana")
+                sh 'cd kibana; docker build --build-arg GIT_COMMIT=$(git rev-parse HEAD) --build-arg COMMIT_DATE=$(git log -1 --format=%cd --date=format:%Y-%m-%dT%H:%M:%S) . -t elastest/edm-kibana:latest'
+                def kibana_image = docker.image('elastest/edm-kibana:latest')
 
             stage "Build Cerebro image - Package"
                 echo ("building..")
                 // def cerebro_image = docker.build("elastest/edm-cerebro:0.1","./cerebro")
-                def cerebro_image = docker.build("elastest/edm-cerebro:latest","./cerebro")
+                //def cerebro_image = docker.build("elastest/edm-cerebro:latest","./cerebro")
+                sh 'cd cerebro; docker build --build-arg GIT_COMMIT=$(git rev-parse HEAD) --build-arg COMMIT_DATE=$(git log -1 --format=%cd --date=format:%Y-%m-%dT%H:%M:%S) . -t elastest/edm-cerebro:latest'
+                def cerebro_image = docker.image('elastest/edm-cerebro:latest')
 
             stage "Build MySQL image - Package"
-               echo ("building..")
-               def mysql_image = docker.build("elastest/edm-mysql:latest","./mysql")
+                echo ("building..")
+                //def mysql_image = docker.build("elastest/edm-mysql:latest","./mysql")
+                sh 'cd mysql; docker build --build-arg GIT_COMMIT=$(git rev-parse HEAD) --build-arg COMMIT_DATE=$(git log -1 --format=%cd --date=format:%Y-%m-%dT%H:%M:%S) . -t elastest/edm-mysql:latest'
+                def mysql_image = docker.image('elastest/edm-mysql:latest')
 
             // stage "Run EDM docker-compose"
             //     sh 'chmod +x bin/* && bin/teardown-ci.sh && bin/startup-ci.sh'
