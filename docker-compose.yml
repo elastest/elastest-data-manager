@@ -7,6 +7,7 @@ services:
     image: elastest/edm-hadoop:latest
     # build: ./hadoop
     command: [ "sh", "-c", "hdfs namenode" ]
+    privileged: true
     ports:
         - "50070:50070"
         - "9000:9000"
