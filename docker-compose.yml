@@ -6,7 +6,7 @@ services:
     # container_name: edm-hdfs-namenode
     image: elastest/edm-hadoop:latest
     # build: ./hadoop
-    command: hdfs namenode
+    command: [ "sh", "-c", "hdfs namenode" ]
     ports:
         - "50070:50070"
         - "9000:9000"
@@ -19,7 +19,7 @@ services:
     # container_name: hdfs-datanode
     image: elastest/edm-hadoop:latest
     # build: ./hadoop
-    command: hdfs datanode
+    command: [ "sh", "-c", "hdfs datanode" ]
     # The host port is randomly assigned by Docker,
     # to allow scaling to multiple DataNodes on the same host
     ports:
