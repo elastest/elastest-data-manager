@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # This is a wrapper script, to start the namenode together with the NFS sharing service. 
-# 
+# Author: Nick Gavalas
 
 
 /opt/hadoop/sbin/hadoop-daemon.sh --script hdfs namenode
