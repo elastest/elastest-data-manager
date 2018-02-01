@@ -36,6 +36,8 @@ RUN apt-get
 # Overwrite default HADOOP configuration files with our config files
 COPY conf  $HADOOP_HOME/etc/hadoop/
 COPY initconf/rpcbind.override /etc/init/rpcbind.override
+COPY initconf/namenode.sh /namenode.sh
+RUN chmod +x /namenode.sh
 
 # Formatting HDFS
 RUN mkdir -p /data/dfs/data /data/dfs/name /data/dfs/namesecondary && \
