@@ -30,8 +30,18 @@ RUN apt-get update && \
     rm /hadoop-$HADOOP_VERSION.tar.gz && \
     mv hadoop-$HADOOP_VERSION /usr/local/hadoop && \
     mkdir -p /usr/local/hadoop/logs
-
 RUN apt-get 
+
+
+####################
+# CloudCommander
+####################
+RUN apt-get update && apt-get install -y curl
+RUN curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+RUN apt-get install -y nodejs
+RUN npm i cloudcmd -g
+COPY initconf/cloudcmd.json /cloudcmd.json
+COPY initconf/cloudcmd.json /root/.cloudcmd.json
 
 # Overwrite default HADOOP configuration files with our config files
 COPY conf  $HADOOP_HOME/etc/hadoop/

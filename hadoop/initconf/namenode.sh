@@ -12,10 +12,11 @@ service.
 # sleep for some time, to allow services to start. Unfortunately this is 
 sleep 20
 mount -t nfs -o vers=3,proto=tcp,nolock,noacl,sync 127.0.0.1:/ /mnt
-
+sleep 2
+cloudcmd --show-config --config /cloudcmd.json
 
 # all the above detach, so stay alive to keep the container running.
-while [ 1 ] ; do
-   sleep 1d
-done
+# while [ 1 ] ; do
+#    sleep 1d
+# done
 
