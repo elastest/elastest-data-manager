@@ -4,13 +4,16 @@ services:
 
   edm-hdfs-namenode:
     # container_name: edm-hdfs-namenode
-    image: elastest/edm-hadoop:latest
+    image: elastest/edm-hadoop:localtests3
+    # image: elastest/edm-hadoop:latest
     # build: ./hadoop
-    command: [ "sh", "-c", "hdfs namenode" ]
+    command: [ "sh", "-c", "/namenode.sh" ]
+    privileged: true
     ports:
         - "50070:50070"
         - "9000:9000"
         - "8020:8020"
+        - "8001:8001"
     hostname: edm-hdfs-namenode
     networks:
         - elastest
