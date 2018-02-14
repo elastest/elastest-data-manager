@@ -38,7 +38,7 @@ The following diagram depicts the architecture of the EDM and its interaction wi
 
 ### Prepare development environment
 
-####Prerequisites
+#### Prerequisites
 
 For developing the REST API, you will need to first follow the instructions above in order to start the ElasTest Data Manager (EDM) component using docker-compose. 
 
