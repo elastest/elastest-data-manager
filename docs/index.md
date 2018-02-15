@@ -12,7 +12,7 @@ The persistent services under the responsibility of EDM are the following:
 
 ## How to run
 
-Elastest Data MAnager (EDM) is integrated in ElasTest TORM. To execute EUS follow the [instructions to execute ElasTest](https://github.com/elastest/elastest-torm/blob/master/docs/index.md).
+Elastest Data Manager (EDM) is integrated in ElasTest TORM. To execute EDM follow the [instructions to execute ElasTest](https://github.com/elastest/elastest-torm/blob/master/docs/index.md).
 
 
 ## Development documentation
