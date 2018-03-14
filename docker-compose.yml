@@ -4,8 +4,7 @@ services:
 
   edm-hdfs-namenode:
     # container_name: edm-hdfs-namenode
-    image: elastest/edm-hadoop:localtests3
-    # image: elastest/edm-hadoop:latest
+    image: elastest/edm-hadoop:latest
     # build: ./hadoop
     command: [ "sh", "-c", "/namenode.sh" ]
     privileged: true
