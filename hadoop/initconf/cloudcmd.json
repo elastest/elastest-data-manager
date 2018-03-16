@@ -18,7 +18,7 @@
     "port": 8001,
     "ip": null,
     "root": "/mnt/",
-    "prefix": "",
+    "prefix": "/commander",
     "progress": true,
     "htmlDialogs": true,
     "contact": false,
