@@ -3,7 +3,7 @@ services:
   edm-hdfs-namenode:
     image: elastest/edm-hadoop:latest
     command: [ "sh", "-c", "/namenode.sh" ]
-#    command: hdfs namenode
+    privileged: true
     ports:
         - "50070:50070"
         - "9000:9000"
