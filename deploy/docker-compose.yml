@@ -4,33 +4,37 @@ services:
     image: elastest/edm-hadoop:latest
     command: [ "sh", "-c", "/namenode.sh" ]
     privileged: true
-    ports:
-        - "50070:50070"
-        - "9000:9000"
-        - "8020:8020"
-        - "8001:8001"
+    expose:
+        - 50070
+        - 9000
+        - 8020
+        - 8001
     hostname: edm-hdfs-namenode
     networks:
         - elastest
+    labels:
+        - io.elastest.type=core
 
   edm-hdfs-datanode:
     image: elastest/edm-hadoop:latest
     command: hdfs datanode
     # The host port is randomly assigned by Docker,
     # to allow scaling to multiple DataNodes on the same host
-    ports:
-        - "50075"
+    expose:
+        - 50075
     links:
         - edm-hdfs-namenode
     networks:
         - elastest
+    labels:
+        - io.elastest.type=core
 
   edm-alluxio-master:
     image: elastest/edm-alluxio:latest
     command: master
-    ports:
-      - 19999:19999
-      - 19998:19998
+    expose:
+      - 19999
+      - 19998
     volumes:
       - ./alluxio/data:/underStorage
     environment:
@@ -41,15 +45,17 @@ services:
     hostname: edm-alluxio-master
     networks:
         - elastest
+    labels:
+        - io.elastest.type=core
 
   edm-alluxio-worker:
     # container_name: alluxio-worker
     image: elastest/edm-alluxio:latest
     # build: ./alluxio
     command: worker
-    ports:
-      - "29998"
-      - "29999"
+    expose:
+      - 29998
+      - 29999
     volumes:
       - ./alluxio/data:/underStorage
     links:
@@ -62,6 +68,8 @@ services:
       - ALLUXIO_UNDERFS_ADDRESS=/underStorage
     networks:
         - elastest
+    labels:
+        - io.elastest.type=core
 
   edm:
     image: elastest/edm:latest
@@ -96,12 +104,14 @@ services:
       - 37003:8080  # host:container
     networks:
         - elastest
+    labels:
+        - io.elastest.type=core
 
   edm-alluxio-proxy:
     image: elastest/edm-alluxio:latest
     command: proxy
-    ports:
-      - 39999:39999
+    expose:
+      - 39999
     volumes:
       - ./alluxio/data:/underStorage
     links:
@@ -110,16 +120,17 @@ services:
       - ALLUXIO_MASTER_HOSTNAME=edm-alluxio-master
     networks:
         - elastest
-
+    labels:
+        - io.elastest.type=core
 
   edm-elasticsearch:
     image: elastest/edm-elasticsearch:latest
     volumes:
       - esbackup:/backup
       - esdata1:/usr/share/elasticsearch/data
-    ports:
-      - "9200:9200"
-      - "9300:9300"
+    expose:
+      - 9200
+      - 9300
     environment:
       - ES_JAVA_OPTS=-Xmx2g -Xms2g
       - discovery.type=zen
@@ -129,16 +140,17 @@ services:
     hostname: edm-elasticsearch
     networks:
       - elastest
-
+    labels:
+        - io.elastest.type=core
 
   esnode:
     image: elastest/edm-elasticsearch:latest
     volumes:
       - esbackup:/backup
       - esdata2:/usr/share/elasticsearch/data
-    ports:
-      - "9200"
-      - "9300"
+    expose:
+      - 9200
+      - 9300
     environment:
       - ES_JAVA_OPTS=-Xmx2g -Xms2g
       # use internal Docker round-robin DNS for unicast discovery
@@ -150,14 +162,15 @@ services:
     hostname: esnode
     networks:
       - elastest
-
+    labels:
+        - io.elastest.type=core
 
   edm_kibana:
     image: elastest/edm-kibana:latest
     volumes:
       - ./kibana/config/:/usr/share/kibana/config
-    ports:
-      - "5601:5601"
+    expose:
+      - 5601
     environment:
       - ES_JAVA_OPTS=-Xmx256m -Xms256m
       # use internal Docker round-robin DNS for unicast discovery
@@ -167,7 +180,8 @@ services:
       - elastest
     depends_on:
       - edm-elasticsearch
-
+    labels:
+        - io.elastest.type=core
 
   edm-cerebro:
     image: elastest/edm-cerebro:latest
@@ -176,18 +190,20 @@ services:
       - ./cerebro/logs:/opt/cerebro-0.6.5/logs
     depends_on:
       - edm-elasticsearch
-    ports:
-      - 9400:9000
+    expose:
+      - 9000
     environment:
       - ELASTICSEARCH_HOST=http://edm-elasticsearch:9200
     tty: true
     networks:
       - elastest
+    labels:
+        - io.elastest.type=core
 
   edm-mysql:
     image: elastest/edm-mysql:latest
-    ports:
-      - "3306:3306"
+    expose:
+      - 3306
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
       MYSQL_DATABASE: "elastest"
@@ -198,6 +214,9 @@ services:
     # restart: always
     networks:
       - elastest
+    labels:
+        - io.elastest.type=core
+
 volumes:
     esdata1:
       driver: local
