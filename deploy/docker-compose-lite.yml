@@ -1,0 +1,77 @@
+version: '3'
+services:
+  edm-hdfs-namenode:
+    image: elastest/edm-hadoop:latest
+    command: [ "sh", "-c", "/namenode.sh" ]
+    privileged: true
+    expose:
+        - 50070
+        - 9000
+        - 8020
+        - 8001
+    hostname: edm-hdfs-namenode
+    networks:
+        - elastest
+    labels:
+        - io.elastest.type=core
+
+  edm-hdfs-datanode:
+    image: elastest/edm-hadoop:latest
+    command: hdfs datanode
+    # The host port is randomly assigned by Docker,
+    # to allow scaling to multiple DataNodes on the same host
+    expose:
+        - 50075
+    links:
+        - edm-hdfs-namenode
+    networks:
+        - elastest
+    labels:
+        - io.elastest.type=core
+
+
+  edm-elasticsearch:
+    image: elastest/etm-elasticsearch:latest
+    volumes:
+      - esdata1:/usr/share/elasticsearch/data
+    expose:
+      - 9200
+      - 9300
+    environment:
+      - ES_JAVA_OPTS=-Xmx8g -Xms8g
+      - xpack.security.enabled=false
+      - http.host=0.0.0.0
+      - transport.host=127.0.0.1
+    hostname: edm-elasticsearch
+    networks:
+      - elastest
+    labels:
+        - io.elastest.type=core
+
+  edm-mysql:
+    image: elastest/edm-mysql:latest
+    expose:
+      - 3306
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_DATABASE: "elastest"
+      MYSQL_USER: elastest
+      MYSQL_PASSWORD: elastest
+    volumes:
+      - edm-mysql:/var/lib/mysql
+    # restart: always
+    networks:
+      - elastest
+    labels:
+        - io.elastest.type=core
+
+volumes:
+    esdata1:
+      driver: local
+    edm-mysql:
+      driver: local
+
+networks:
+  elastest:
+    external: true
+    # driver: bridge
