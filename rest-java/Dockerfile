@@ -1,6 +1,16 @@
 FROM tomcat:8.5-jre8
 MAINTAINER Savas Gioldasis (s.gioldasis@gmail.com)
 
+# Set Image Labels
+ARG GIT_COMMIT=unspecified
+LABEL git_commit=$GIT_COMMIT
+
+ARG COMMIT_DATE=unspecified
+LABEL commit_date=$COMMIT_DATE
+
+ARG VERSION=unspecified
+LABEL version=$VERSION 
+
 # RUN ["rm", "-fr", "/usr/local/tomcat/webapps/ROOT"]
 # COPY ./target/your-webapp-1.0-SNAPSHOT.war /usr/local/tomcat/webapps/ROOT.war
 
